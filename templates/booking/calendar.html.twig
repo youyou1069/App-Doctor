@@ -2,28 +2,17 @@
 
 {% block stylesheets %}
 
+    {{ parent() }}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.css" />
-    <style>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/calendar.css') }}" />
 
-        #calendar-holder {
-            height : 600px;
-            width: 600px;
-            margin:  auto;
-        }
-
-        .row{
-            margin-top:  30px;
-            margin-left: 200px;
-        }
-
-    </style>
 {% endblock %}
 {% block body %}
-    <div class="contenair">
+
+
         <div class="row">
             <div class="col-md-4">
-                <a class="btn btn-primary" href="{{ path('booking_new') }}" role="button">Nouveau RDV</a>
+                <a class="btn btn-primary" href="{{ path('booking_new') }}" role="button">Nouveau Rdv</a>
             </div>
         </div>
 
@@ -33,7 +22,7 @@
             </div>
         </div>
 
-    </div>
+
   {% endblock %}
 
 
