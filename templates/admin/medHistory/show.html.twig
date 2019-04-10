@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Les Antécèdents du Patient{% endblock %}
+
+{% block body %}
+<h1>Les Antécèdent du Patient</h1>
+
+<table class="record_properties">
+    <tbody>
+
+    <tr>
+        <th>les allergies</th>
+        <td>{{ medHistory.allergies }}</td>
+    </tr>
+    <tr>
+        <th>Autres</th>
+        <td>{{ medHistory.other }}</td>
+    </tr>
+    <tr>
+        <th>Les Traitements</th>
+        <td>{{ medHistory.treatment }}</td>
+    </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('medHistory_index') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('medHistory_edit', { 'id': medHistory.id }) }}">
+            Edit
+        </a>
+    </li>
+
+
+{% endblock %}

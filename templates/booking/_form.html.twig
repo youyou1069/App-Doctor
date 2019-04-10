@@ -1,0 +1,57 @@
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+    <br>
+    <div class="row">
+        <div class="col-md-4">
+            <a class="btn btn-primary" href="{{ path('booking_index') }}" role="button">Liste des RDV</a>
+        </div>
+    </div>
+    <br>
+{{ form_start(form) }}
+    <br>
+    <h4>Médecin</h4>
+    <div class="row">
+        <div class="col-md-2">
+            {{ form_label(form.doctor, 'Médecin Traitant') }}
+            {{ form_widget(form.doctor, {'attr':{'placeholder': "Médecin  "}}) }}
+        </div>
+    </div>
+    <br>
+
+    <h4>Patient</h4>
+<div class="row">
+    <div class="col-md-6">
+        {{ form_label(form.patient, 'Nom et Prénom du Patient') }}
+        {{ form_widget(form.patient, {'attr':{'placeholder': "Nom et Prénom du Patient"}}) }}
+    </div>
+    <div class="col-md-6">
+        {{ form_label(form.title, 'Titre') }}
+        {{ form_widget(form.title, {'attr':{'placeholder': "Titre"}}) }}
+    </div>
+    <div class="col-md-6">
+        {{ form_label(form.beginAt, 'Date du debut ') }}
+        {{ form_widget(form.beginAt, {'attr':{'placeholder': "Date du RDV "}}) }}
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-6">
+        {{ form_label(form.endAt, 'Date de fin') }}
+        {{ form_widget(form.endAt, {'attr':{'placeholder': "date de fin "}}) }}
+    </div>
+
+</div>
+<br>
+
+
+    <div class="row">
+        <div class="col-md-4">
+            <button type="submit" class="btn btn-success">Valider</button>
+        </div>
+    </div>
+
+{{ form_end(form) }}
+
+
+
+{% endblock %}

@@ -1,0 +1,162 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Fiche Patient
+{% endblock %}
+
+{% block body %}
+
+    <div class="dropdown float-right">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false"> Selectioner une action
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="{{ path('patient_index') }}">liste des patient</a>
+            <a class="dropdown-item" href="{{ path('patient_edit', { 'id': patient.id }) }}"> modifier</a>
+            <a class="dropdown-item" href="{{ path('consultation_new', {'id':patient.id }) }}"> nouvelle
+                consultation </a>
+            <a class="dropdown-item" href="#">imprimer</a>
+        </div>
+    </div>
+    <br>
+         <div class="row">
+             <div class="col-md-6">
+                 <div class="box">
+                     <header>
+                         <h4><span class="glyphicon glyphicon-file"></span> Identité du patient</h4>
+                     </header>
+                     <ul class="list-group">
+                         <li class="list-group-item"><strong>Nom :</strong> {{ patient.lastName }}</li>
+                         <li class="list-group-item"><strong>Prénom :</strong> {{ patient.firstname }} </li>
+                         <li class="list-group-item"><strong>Date de naissance :</strong> {{ patient.birthAt|date('d/m/Y') }}</li>
+                         <li class="list-group-item"><strong>Sexe :</strong> {{ patient.gender }}</li>
+                         <li class="list-group-item"><strong>NIR :</strong> {{ patient.nir }}</li>
+                     </ul>
+                 </div>
+             </div>
+             <div class="col-md-6">
+                 <div class="box">
+                     <header>
+                         <h4><span class="glyphicon glyphicon-pushpin"></span> Informations générales</h4>
+                     </header>
+                     <ul class="list-group">
+                         <Li class="list-group-item"><strong>Adresse :</strong> {{ patient.address }}</li>
+                         <li class="list-group-item"><strong>Ville :</strong> {{ patient.city }}</li>
+                         <li class="list-group-item"><strong>Code Postale :</strong> {{ patient.postcode }}</li>
+                         <li class="list-group-item"><strong>Tél :</strong> {{ patient.phone }}</li>
+                         <li class="list-group-item"><strong>Adresse email :</strong> <a
+                                     href="mailto:{{ patient.email }}">{{ patient.email }}</a></li>
+                     </ul>
+                 </div>
+             </div>
+         </div>
+     <br>
+<div class="row">
+    <div class="col-md-6">
+        <div class="box">
+            <header>
+                <h4><span class="glyphicon glyphicon-pushpin"></span> Médecin traitant</h4>
+            </header>
+            <ul class="list-group">
+                <Li class="list-group-item"><strong>Nom :</strong> {{ patient.DOCTOR.firstName }}</li>
+                <Li class="list-group-item"><strong>Prénom :</strong> {{ patient.DOCTOR.lastName }}</li>
+            </ul>
+        </div>
+    </div>
+</div>
+    <br>
+<div class="row">
+         <div class="col-md-12">
+             <div class="box">
+                 <header>
+                     <h4><span class="glyphicon glyphicon-tag"></span> Les Antécédents</h4>
+                 </header>
+                 <table class="table table-hover table-bordered">
+                     <thead>
+                     <tr>
+                         <th>Antécédents</th>
+                         <th>Allergies</th>
+                         <th>Traitements antérieurs</th>
+                         <th>Autres</th>
+                     </tr>
+                     </thead>
+                     <tbody>
+                     {#{% for item in patient.medicalHistories %}#}
+                     {#<tr>#}
+                     {#<td><a href="{{ path('medHistory_show', { 'id': item.id }) }}">Fiche</a></td>#}
+                     {#<td>{{ item.allergies }}</td>#}
+                     {#<td>{{ item.treatment }}</td>#}
+                     {#<td>{{ item.other }}</td>#}
+
+                     {#</tr>#}
+                     {#{% endfor %}#}
+                     </tbody>
+                 </table>
+             </div>
+         </div>
+     <br>
+</div>
+    <div class="row">
+             <div class="col-md-12">
+                 <div class="box">
+                     <header>
+                         <h4><span class="glyphicon glyphicon-tag"></span> Consultations</h4>
+                     </header>
+                     <table class="table table-hover table-bordered">
+                         <thead>
+                         <tr>
+                             <th>Motif</th>
+                             <th>Date</th>
+                             {#<th>Medecin Traitant</th>#}
+                             <th>Diagnostic</th>
+                             <th>Traitement</th>
+                         </tr>
+                         </thead>
+                         <tbody>
+                         {% for item in patient.consultations %}
+                             <tr>
+                                 <td><a href="{{ path('consultation_show', { 'id': item.id }) }} "  onclick="window.open(this.href); return false;  ">{{ item.name }}</a></td>
+                                 <td>{{ item.createdAt|date('d/m/Y') }}</td>
+                                 {#<td><a href="{{ path('ben_show_user', { 'id': item.user.id }) }}">{{ item.user.fullname }}</a></td>#}
+                                 <td>{{ item.diagnostic }}</td>
+                                 <td>{{ item.treatment }}</td>
+                             </tr>
+                         {% endfor %}
+                         </tbody>
+                     </table>
+                 </div>
+             </div>
+            </div>
+     <br>
+             <div class="row">
+                 <div class="col-md-12">
+                     <div class="box">
+                         <header>
+                             <h4><span class="glyphicon glyphicon-tag"></span>Liste des Rdv</h4>
+                         </header>
+                         <table class="table table-hover table-bordered">
+                             <thead>
+                             <tr>
+                                 <th>Titre</th>
+                                 <th>Date de debut</th>
+                                 <th>Date de fin</th>
+                             </tr>
+                             </thead>
+                             <tbody>
+                             {% for item in patient.booking %}
+                                 <tr>
+                                     <td><a href="{{ path('booking_show', { 'id': item.id }) }}">{{ item.title }}</a></td>
+                                     <td>{{ item.beginAt|date('d/m/Y H:i:s') }}</td>
+                                     <td>{{ item.endAt|date('d/m/Y H:i:s') }}</td>
+                                 </tr>
+                             {% endfor %}
+                             </tbody>
+                         </table>
+                     </div>
+                 </div>
+             </div>
+
+ {% endblock %}
+
+
+

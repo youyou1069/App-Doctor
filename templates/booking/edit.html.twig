@@ -1,0 +1,11 @@
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% extends 'base.html.twig' %}
+
+{% block title %}voir le rdv{% endblock %}
+
+{% block body %}
+    <h1>voir le rdv</h1>
+
+    {{ include('booking/_form.html.twig', {'button_label': 'Update'}) }}
+
+{% endblock %}

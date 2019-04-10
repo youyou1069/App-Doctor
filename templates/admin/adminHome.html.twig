@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Modifier les coordonnées</h1>
+
+    <table class="table table-striped">
+        <head>
+            <tr>
+                <th></th>
+                <th>Catégorie</th>
+                <th></th>
+            </tr>
+        </head>
+        <tbody>
+         <td><a href="{{ path('patient_index') }}" class="btn btn-secondary"> Editer les Patients</a></td>
+         <td><a href=" #" class="btn btn-secondary"> Editer les Médecin</a></td>
+         <td><a href=" #" class="btn btn-secondary"> Editer les Pharmacy</a></td>
+         </tbody>
+    </table>
+
+{% endblock %}

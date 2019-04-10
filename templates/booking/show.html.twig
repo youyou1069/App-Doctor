@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Booking{% endblock %}
+
+{% block body %}
+    <h1>Booking</h1>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Nom et Prénom du Docteur</th>
+            <td>{{ booking.doctor }}</td>
+        </tr>
+            <tr>
+                <th>Nom et Prénom du Patient</th>
+                <td>{{ booking.patient }}</td>
+            </tr>
+            <tr>
+                <th>Debut du Rdv</th>
+                <td>{{ booking.beginAt ? booking.beginAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Fin du Rdv</th>
+                <td>{{ booking.endAt ? booking.endAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ booking.title }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="text">
+
+        <a href="{{ path('booking_index') }}" class="btn btn-primary">Liste des Rdv</a>
+    </div>
+
+
+
+{% endblock %}

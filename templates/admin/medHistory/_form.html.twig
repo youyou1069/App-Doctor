@@ -1,0 +1,44 @@
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+
+    {{ form_start(form) }}
+
+    <div class="row">
+
+        <div class="col-md-5"> {{ form_row(form.patient, {'attr':{'placeholder': "Nom du patient"}}) }} </div>
+        <div class="col-md-5"> {{ form_row(form.allergies, {'attr':{'placeholder': "Allergies"}}) }} </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">    {{ form_row(form.other, {'attr':{'placeholder': "Autres "}}) }}</div>
+        <div class="col-md-6">    {{ form_row(form.treatment, {'attr':{'placeholder': "Traitement"}}) }}</div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-4">
+            <button type="submit" class="btn btn-success">Valider</button>
+        </div>
+    </div>
+
+    {{ form_end(form) }}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

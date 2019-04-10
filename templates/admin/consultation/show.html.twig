@@ -1,0 +1,57 @@
+{#{% extends 'base.html.twig' %}#}
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>
+        Consultation {{ consultation.patient.fullname }}
+    </title>
+
+      <link href="/public/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+
+<body>
+<div class="container">
+    <div style="text-align: center " class="row justify-content-center align-items-center flex-column mt-5 ">
+        <div><strong>CABINET DE MEDECINE GENERALE</strong></div>
+
+        <div><p> Address : </p></div>
+        <div><p>Tel : </p></div>
+    </div>
+    <div class="row align-content-start flex-column">
+        <div><strong>Docteur Lorem ipsum </strong></div>
+
+        <div><p> Consultations du lundi au samedi sur rendz-vous </p></div>
+        <div><p> Secrétariat téléphonique de 9h00 à 20h00 </p></div>
+        <div><p> ADELI :XXXXXXXXXX </p></div>
+        <div><p>N° RPPS : XX XX XX XX XX</p></div>
+    </div>
+    <div class="row flex-column">
+        <div style="float: right;">
+            <table>
+            <ul style="list-style: none; ">
+                <li>Le {{ consultation.createdAt|date('d M Y') }} </li>
+                <li> <strong> {{ consultation.patient.fullName }}  </strong></li>
+                <li>Né(e) le {{ consultation.patient.birthAt |date ('d M Y') }} </li>
+            </ul>
+            </table>
+        </div>
+
+
+    </div>
+    <div style="clear: both;" class="row align-content-start flex-column">
+        <p>Traitement</p>
+{#        {{ dump(consultation)}}#}
+
+        {% for medicament in consultation.medicament %}
+            <li>{{ medicament.denomination }}</li>
+        {% endfor %}
+{#        <p>{{ consultation.medicament }}</p>#}
+        <p>{{ consultation.treatment|nl2br }}</p>
+
+    </div>
+</div>
+</body>
+

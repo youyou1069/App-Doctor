@@ -1,0 +1,28 @@
+easy_admin:
+  entities:
+    Patient:
+#        controller: App\Controller\PatientController
+        class: App\Entity\Patient
+#        templates:
+#            edit: 'admin/patient/edit.html.twig'
+#            new: 'admin/patient/new.html.twig'
+#            show: 'admin/patient/show.html.twig'
+        form:  # <-- 'form' is applied to both 'new' and 'edit' views
+            fields:
+                - { property: 'gender', type: 'choice', type_options: {choices: {'Masculin':'Masculin', 'Féminin':'Féminin'}} label: 'Sexe' }
+                - 'lastName'
+                - 'firstName'
+                - 'birthAt'
+                - 'nir'
+                - { property: 'email', type: 'email', label: 'Contact' }
+                - 'phone'
+                - 'address'
+                - 'postcode'
+                - 'city'
+        list:
+            title: 'liste des Patients'
+            actions:
+                - {name: 'edit', icon: 'pencil', label: false, css_class: 'btn btn-secondary' }
+#                - { name: 'show', label: 'voir'}
+                - {name: 'delete', icon: 'trash', label: false,  css_class: 'btn btn-danger'}
+

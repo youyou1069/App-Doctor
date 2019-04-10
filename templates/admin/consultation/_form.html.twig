@@ -1,0 +1,76 @@
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+
+    {{ form_start(form) }}
+
+    <div class="row">
+        <div class="col-md-6">
+            {{ form_label(form.patient, 'Nom et Prénom') }}
+            {{ form_widget(form.patient, {'attr':{'placeholder': "Nom et Prénom du Patient"}}) }}
+
+        </div>
+
+        <div class="col-md-6">
+            {{ form_label(form.name, 'Motif de la visite') }}
+            {{ form_widget(form.name, {'attr':{'placeholder': "Motif de la consultation"}}) }}
+        </div>
+    </div>
+    <br>
+    <div class="row">
+
+        <div class="col-md-6">
+{#            {{ form_label(form.medicament, 'Médicament') }}#}
+            {{ form_row(form.medicament, {'attr':{'placeholder': "Médicament"}}) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_label(form.treatment, 'Traitement') }}
+            {{ form_widget(form.treatment, {'attr':{'placeholder': "Traitement préconisé"}}) }}
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-6">
+            {{ form_label(form.decision, 'Décision ') }}
+            {{ form_widget(form.decision, {'attr':{'placeholder': "décision "}}) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_label(form.allergies, 'Allergies') }}
+            {{ form_widget(form.allergies, {'attr':{'placeholder': "Antécèdent allergies "}}) }}
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-6">
+            {{ form_label(form.medTreatmentHistory, 'Traitements Antérieurs') }}
+            {{ form_widget(form.medTreatmentHistory, {'attr':{'placeholder': "Traitements Antérieurs"}}) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_label(form.medFamilyHistory, 'Antécédents familiaux') }}
+            {{ form_widget(form.medFamilyHistory, {'attr':{'placeholder': "Antécédents familiaux "}}) }}
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-6">
+            {{ form_label(form.diagnostic, 'Diagnostique') }}
+            {{ form_widget(form.diagnostic, {'attr':{'placeholder': "Diagnostique "}}) }}
+        </div>
+       <div class="col-md-6">
+            {{ form_label(form.others, 'Autres') }}
+            {{ form_widget(form.others, {'attr':{'placeholder': "Autres"}}) }}
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-4">
+            <button type="submit" class="btn btn-success">Valider</button>
+        </div>
+    </div>
+
+    {{ form_end(form) }}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/js/select2.js"></script>
+
+
+{% endblock %}

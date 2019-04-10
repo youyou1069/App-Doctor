@@ -1,0 +1,12 @@
+easy_admin:
+    user:
+        display_name: true
+        name_property_path: 'username'
+    formats:
+        date:     'd/m/Y'
+        time:     'H:i'
+        datetime: 'd/m/Y H:i:s'
+
+
+
+

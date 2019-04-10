@@ -1,0 +1,8 @@
+easy_admin:
+  entities:
+      Consultation:
+        class: App\Entity\Consultation
+        list:
+          title: 'liste des consultations'
+
+

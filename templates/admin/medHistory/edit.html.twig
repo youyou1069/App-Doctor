@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+
+    <h1>Modifier les Antécédents</h1>
+    {{  include ('admin/medHistory/_form.html.twig', {form: form, Button: 'Editer'})}}
+
+{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}
+
+{% block javascripts %}
+
+
+{% endblock %}

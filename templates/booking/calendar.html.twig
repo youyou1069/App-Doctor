@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.css" />
+    <style>
+
+        #calendar-holder {
+            height : 600px;
+            width: 600px;
+            margin:  auto;
+        }
+
+        .row{
+            margin-top:  30px;
+            margin-left: 200px;
+        }
+
+    </style>
+{% endblock %}
+{% block body %}
+    <div class="contenair">
+        <div class="row">
+            <div class="col-md-4">
+                <a class="btn btn-primary" href="{{ path('booking_new') }}" role="button">Nouveau RDV</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                {% include 'booking/calendarbase.html.twig' %}
+            </div>
+        </div>
+
+    </div>
+  {% endblock %}
+
+
+{% block javascripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#calendar-holder').fullCalendar({
+                locale: 'fr',
+                header: {
+                    left: 'prev, next, today',
+                    center: 'title',
+                    right: 'month, agendaWeek, agendaDay'
+                },
+                allDaySlot: false,
+                lazyFetching: true,
+                navLinks: true,
+                selectable: true,
+                editable: true,
+                eventDurationEditable: true,
+                select: function(beginAt, endAt, allDay)
+                {
+                    var title = prompt("Enter Event Title");
+                    if(title)
+                    {
+                        var beginAt = $.fullCalendar.formatDate(beginAt, "Y-MM-DD HH:mm:ss");
+                        var endAt = $.fullCalendar.formatDate(endAt, "Y-MM-DD HH:mm:ss");
+                        $.ajax({
+                            url:"{{ path('booking_new') }}",
+                            type:"POST",
+                            data:{title:title, start:beginAt, end:endAt},
+                            success:function()
+                            {
+                                calendar.fullCalendar('refetchEvents');
+                                alert("Added Successfully");
+                            }
+                        })
+                    }
+                },
+                eventSources: [
+                    {
+                        url: '/fc-load-events',
+                        type: 'POST',
+                        data:  {
+                            filters: {}
+                        },
+                        error: function () {
+                            alert('There was an error while fetching FullCalendar!');
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+
+
+
+{% endblock %}

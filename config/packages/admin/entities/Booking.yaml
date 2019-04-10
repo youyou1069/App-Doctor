@@ -1,0 +1,8 @@
+easy_admin:
+  entities:
+      Booking:
+        class: App\Entity\Booking
+        list:
+          title: 'liste des RDV'
+
+

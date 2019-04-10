@@ -1,0 +1,13 @@
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau Rdv{% endblock %}
+
+{% block body %}
+    <h1>Ajouter un Rdv</h1>
+
+    {{ include('booking/_form.html.twig') }}
+
+
+
+{% endblock %}

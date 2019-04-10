@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>Nouvelle consultation</h1>
+    {{ include ('/admin/consultation/_form.html.twig', {form: form, Button: 'Ajouter'}) }}
+{% endblock %}
+
+
+

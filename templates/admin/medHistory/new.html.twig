@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+
+    <h1>Ajouter un Antécèdent </h1>
+    {{ include ('/admin/medHistory/_form.html.twig', {form: form, Button: 'Ajouter'}) }}
+{% endblock %}
+{% block stylesheets %}
+
+{% endblock %}
+
+{% block javascripts %}
+
+
+{% endblock %}
