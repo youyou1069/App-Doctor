@@ -3,10 +3,12 @@
 namespace App\Repository;
 
 use App\Entity\Booking;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+
 
 /**
  * @method Booking|null find($id, $lockMode = null, $lockVersion = null)
@@ -21,27 +23,15 @@ class BookingRepository extends ServiceEntityRepository
         parent::__construct($registry, Booking::class);
     }
 
-    /**
-     * @return Query
-     */
-    public function findAllQuery():Query
-    {
-        $query= $this->findQuery();
-
-        return $query->getQuery();
-    }
-
-
-    /**
-     * @return QueryBuilder
-     */
-    private function findQuery():QueryBuilder
-    {
-        return $this->createQueryBuilder('p')
-            ->orderBy('p.patient');
-
-
-    }
+	public function findActive(DateTime $date)
+	{
+		return $this->createQueryBuilder('j')
+		            ->andWhere('j.beginAt > :date')
+		            ->setParameter('date', $date)
+					->orderBy('j.beginAt', 'ASC')
+		            ->getQuery()
+		            ->getResult();
+	}
 
     // /**
     //  * @return Booking[] Returns an array of Booking objects

@@ -20,8 +20,8 @@
             <tr>
                 <td> {{ booking.doctor }}</td>
                 <td>{{ booking.patient }}</td>
-                <td>{{ booking.beginAt ? booking.beginAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ booking.endAt ? booking.endAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ booking.beginAt ? booking.beginAt|date('d-m-Y H:i:s') : '' }}</td>
+                <td>{{ booking.endAt ? booking.endAt|date('d-m-Y H:i:s') : '' }}</td>
 
                 <td>
                     <a href="{{ path('booking_show', {'id':booking.id }) }}" class="btn btn-secondary"> <i class="fa fa-file-o" aria-hidden="true"></i> Fiche Rdv </a>

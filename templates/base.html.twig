@@ -90,6 +90,9 @@
                                 {% endif %}
                                 {% if is_granted('ROLE_USER') %}
                                     <li class="nav-item">
+                                        <a class="nav-link" href="{{ path('booking_calendar') }}"> Rdv</a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a class="nav-link" href="{{ path('booking_new') }}">Ajouter un Rdv</a>
                                     </li>
                                     <li class="nav-item">
