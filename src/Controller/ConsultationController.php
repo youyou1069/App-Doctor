@@ -67,8 +67,13 @@ class ConsultationController extends AbstractController
             $manager->persist($entity);
             $manager->flush();
             $this->addFlash('sucess', 'La consultation a été enregistré avec succès');
+            $entityPatient=$entity->getPatient();
+            $idPatient=$entityPatient->getId();
 
-        return $this->redirect($this->generateUrl('consultation_show', array('id' => $entity->getId())));
+//            return $this->redirectToRoute('patient_show', array(
+//                'id' => $entity->getPatient()
+//            ));
+        return $this->redirect($this->generateUrl('patient_show', array('id' => $idPatient)));
         }
 
         return $this->render('admin/consultation/new.html.twig', array(

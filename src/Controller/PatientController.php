@@ -38,9 +38,10 @@ class PatientController extends AbstractController
         $this->em = $sm;
     }
 
-       /**
+    /**
      * @Route("/patient/", name="patient_index")
-     * @param PatientRepository $PatientRepository
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(PaginatorInterface $paginator, Request $request)
@@ -64,6 +65,11 @@ class PatientController extends AbstractController
 
     /**
      * @Route("/patient/new/", name="patient_new")
+     * @param Request $request
+     * @param ObjectManager $manager
+     * @param UserPasswordEncoderInterface $encoder
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Exception
      */
     public function newAction(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder)
     {
@@ -93,6 +99,10 @@ class PatientController extends AbstractController
 
     /**
      * @Route("/patient{id}/edit/", name="patient_edit", methods={"GET|POST"})
+     * @param Patient $patient
+     * @param Request $request
+     * @param ObjectManager $manager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function editAction(Patient $patient , Request $request, ObjectManager $manager)
     {
@@ -115,6 +125,9 @@ class PatientController extends AbstractController
 
     /**
      * @Route("/patient/{id}/edit/", name="patient_delete", methods={"DELETE"})
+     * @param Patient $patient
+     * @param ObjectManager $manager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Patient $patient, ObjectManager $manager)
     {
@@ -125,7 +138,9 @@ class PatientController extends AbstractController
 
 
     /**
-     *  @Route ("/patient/{id}", name="patient_show")
+     * @Route ("/patient/{id}", name="patient_show")
+     * @param Patient $patient
+     * @return Response
      */
     public function showAction(Patient $patient)
     {
@@ -133,10 +148,12 @@ class PatientController extends AbstractController
 
     }
 
-	/**
-	 * @Route("/Patient/search", name="patient_search")
-	 * @Method({"GET"})
-	 */
+    /**
+     * @Route("/Patient/search", name="patient_search")
+     * @Method({"GET"})
+     * @param Request $request
+     * @return Response
+     */
 	public function searchAction(Request $request)
 	{
 		$searchString = $request->get('q');

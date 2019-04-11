@@ -81,6 +81,7 @@ class Patient
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Consultation", mappedBy="patient")
+     * @ORM\OrderBy({"createdAt" = "DESC"})
      */
     private $consultations;
 
@@ -324,6 +325,7 @@ class Patient
 
     /**
      * @return Collection|Consultation[]
+     *
      */
     public function getConsultations(): Collection
     {
