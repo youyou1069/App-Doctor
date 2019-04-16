@@ -33,7 +33,7 @@ class Booking
     private $title;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Patient", inversedBy="booking")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Patient", inversedBy="bookings")
      * @ORM\JoinColumn(nullable=false)
      */
     private $patient;

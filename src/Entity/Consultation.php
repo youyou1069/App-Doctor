@@ -50,7 +50,7 @@ class Consultation
     private $patient;
 
 //    /**
-//     * @ORM\ManyToOne(targetEntity="App\Entity\MedicalHistory", inversedBy="consultations" ,cascade={"persist"})
+//     * @ORM\ManyToOne(targetEntity="App\Entity\MedicalHistory", inversedBy="consultations", cascade={"persist"})
 //     */
 //    private $medHistory;
 

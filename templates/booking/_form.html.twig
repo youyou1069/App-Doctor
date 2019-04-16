@@ -21,8 +21,9 @@
     <h4>Patient</h4>
 <div class="row">
     <div class="col-md-6">
-        {{ form_label(form.patient, 'Nom et Prénom du Patient') }}
+        {{ form_label(form.patient, 'Nom et Prénom') }}
         {{ form_widget(form.patient, {'attr':{'placeholder': "Nom et Prénom du Patient"}}) }}
+
     </div>
     <div class="col-md-6">
         {{ form_label(form.title, 'Titre') }}

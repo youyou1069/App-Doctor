@@ -367,7 +367,7 @@ class Patient
     public function addBooking(Booking $booking): self
     {
         if (!$this->bookings->contains($booking)) {
-            $this->bookings[] = $bookingn;
+            $this->bookings[] = $booking;
             $booking->setPatient($this);
         }
 
