@@ -33,13 +33,13 @@ class Booking
     private $title;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Patient", inversedBy="bookings")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Patient", inversedBy="bookings", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $patient;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="bookings")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="bookings" , cascade={"remove"})
      */
     private $doctor;
 
@@ -61,7 +61,10 @@ class Booking
         return $this;
     }
 
-
+	public function __toString(): string
+	{
+		return $this->title;
+	}
 
     public function getId(): ?int
     {

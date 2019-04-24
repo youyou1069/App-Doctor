@@ -9,10 +9,11 @@ easy_admin:
 #            show: 'admin/patient/show.html.twig'
         form:  # <-- 'form' is applied to both 'new' and 'edit' views
             fields:
+                - { property: 'DOCTOR', type: 'easyadmin_autocomplete', type_options: { class: 'App\Entity\User'}  }
                 - { property: 'gender', type: 'choice', type_options: {choices: {'Masculin':'Masculin', 'Féminin':'Féminin'}} label: 'Sexe' }
                 - 'lastName'
                 - 'firstName'
-                - 'birthAt'
+                -  { property: 'birthAt', type: 'App\Form\MyCustomDateType', label: 'BirthDay' }
                 - 'nir'
                 - { property: 'email', type: 'email', label: 'Contact' }
                 - 'phone'

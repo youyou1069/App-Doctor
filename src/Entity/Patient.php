@@ -80,7 +80,7 @@ class Patient
 //    private $medicalHistories;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Consultation", mappedBy="patient")
+     * @ORM\OneToMany(targetEntity="App\Entity\Consultation", mappedBy="patient", cascade={"remove"})
      * @ORM\OrderBy({"createdAt" = "DESC"})
      */
     private $consultations;
@@ -92,7 +92,7 @@ class Patient
     private $gender;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Booking", mappedBy="patient")
+     * @ORM\OneToMany(targetEntity="App\Entity\Booking", mappedBy="patient", cascade={"remove"})
      */
     private $bookings;
 

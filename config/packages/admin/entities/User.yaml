@@ -4,17 +4,14 @@ easy_admin:
       class: App\Entity\User
       list:
         title: 'liste des Utilisateurs'
-#      form:  # <-- 'form' is applied to both 'new' and 'edit' views
-#        fields:
-##          - { property: 'gender', type: 'choice', type_options: {choices: {'Masculin':'Masculin', 'Féminin':'Féminin'}} label: 'Sexe' }
-#          - 'lastName'
-#          - 'firstName'
+        fields: ['id', 'lastName', 'firstName', 'enabled', 'roles']
+      form:  # <-- 'form' is applied to both 'new' and 'edit' views
+        fields:
+
+          - 'lastName'
+          - 'firstName'
 #          - 'username'
-#          - { property: 'Email', type: 'email', label: 'Contact' }
-#          - 'Enabled'
-#          - 'Password'
-#          - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_ADMIN': 'ROLE_ADMIN', 'ROLE_DOCTOR': 'ROLE_DOCTOR', 'ROLE_COLABORATOR': 'ROLE_COLABORATOR' } } }
-#          - 'phone'
-#          - 'address'
-#          - 'postcode'
-#          - 'city'
+          - { property: 'Email', type: 'email', label: 'Contact' }
+          - { property: 'Enabled', type: 'checkbox', label: 'Enabled' }
+          - { property: 'plainPassword', type: 'password', label: 'password' , type_option:{required: 'true' } }
+          - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_ADMIN': 'ROLE_ADMIN', 'ROLE_DOCTOR': 'ROLE_DOCTOR', 'ROLE_COLABORATOR': 'ROLE_COLABORATOR' } } }

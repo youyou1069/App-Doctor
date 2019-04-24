@@ -27,7 +27,7 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Patient", mappedBy="DOCTOR")
+     * @ORM\OneToMany(targetEntity="App\Entity\Patient", mappedBy="DOCTOR", cascade={"remove"})
      */
     private $patients;
 
@@ -42,7 +42,7 @@ class User extends BaseUser
     private $firstName;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Booking", mappedBy="doctor")
+     * @ORM\OneToMany(targetEntity="App\Entity\Booking", mappedBy="doctor", cascade={"remove"})
      */
     private $bookings;
 

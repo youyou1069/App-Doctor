@@ -72,7 +72,8 @@ class BookingController extends AbstractController {
 	 *
 	 * @return Response
 	 */
-	public function newAction( Request $request ): Response {
+	public function newAction( Request $request )
+	{
 		$booking = new Booking();
 		$form    = $this->createForm( BookingType::class, $booking );
 		$form->handleRequest( $request );
@@ -90,6 +91,7 @@ class BookingController extends AbstractController {
 			'form'    => $form->createView(),
 		] );
 	}
+
 
 	/**
 	 * @Route("booking/{id}", name="booking_show", methods={"GET"})
@@ -141,3 +143,40 @@ class BookingController extends AbstractController {
 
 
 }
+
+
+
+///**
+// * @Route("booking/calendar/new", name="calendar_new", methods={"GET","POST"})
+// * @param Request $request
+// *
+// * @return Response
+// */
+//public function newCalendarAction( Request $request, ObjectManager $manager )
+//{
+//
+//	dump($request);
+//
+//
+//
+//	$entityManager = $this->getDoctrine()->getManager();
+//	$booking = new Booking();
+////		$title= $request->query->get('title');
+////		$beginAt= $request->query->get('start');
+////		$endAt= $request->query->get('end');
+////		$booking ->setPatient($manager->getReference('Booking', ($request->query->get('patient'))));
+//
+//	$booking ->setDoctor($request->query->get('doctor'));
+//
+//	$booking ->setTitle($request->query->get('title'));
+//	$booking ->setBeginAt(new \DateTime($request->query->get('start')));
+//	$booking ->setEndAt(new \DateTime($request->query->get('end')));
+//
+//	// tell Doctrine you want to (eventually) save the Product (no queries yet)
+//	$entityManager->persist($booking);
+//
+//	// actually executes the queries (i.e. the INSERT query)
+//	$entityManager->flush();
+//
+//	return new Response('Saved new product with id '.$booking->getId());
+//}

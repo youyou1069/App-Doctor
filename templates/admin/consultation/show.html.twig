@@ -47,9 +47,12 @@
 
         {% for medicament in consultation.medicament %}
             <li>{{ medicament.denomination }}</li>
+            <p>{{ consultation.treatment|nl2br }}</p>
         {% endfor %}
 {#        <p>{{ consultation.medicament }}</p>#}
-        <p>{{ consultation.treatment|nl2br }}</p>
+{#        <p>{{ consultation.treatment|nl2br }}</p>#}
+
+        <p>{{ consultation.decision|nl2br }}</p>
 
     </div>
 </div>

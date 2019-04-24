@@ -75,17 +75,10 @@ class Consultation
      */
     private $others;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Drug", mappedBy="consultation")
-     */
-    private $drug;
-
-    /**
+      /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Drug", inversedBy="consultations")
      */
     private $medicament;
-
-
 
     /**
      * @return mixed

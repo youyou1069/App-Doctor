@@ -99,6 +99,34 @@
         </div>
     </div>
     <br>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <header>
+                    <h4><span class="glyphicon glyphicon-tag"></span>Liste des Rdv</h4>
+                </header>
+                <table class="table table-hover table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Date du Rdv</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in patient.booking %}
+                        <tr>
+                            <td><a href="{{ path('booking_show', { 'id': item.id }) }}">{{ item.title }}</a></td>
+                            <td>{{ item.beginAt|date('d/m/Y H:i:s') }}</td>
+
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <br>
 <div class="row">
          <div class="col-md-12">
              <div class="box">
@@ -114,17 +142,6 @@
                          <th>Autres</th>
                      </tr>
                      </thead>
-                     <tbody>
-                     {#{% for item in patient.medicalHistories %}#}
-                     {#<tr>#}
-                     {#<td><a href="{{ path('medHistory_show', { 'id': item.id }) }}">Fiche</a></td>#}
-                     {#<td>{{ item.allergies }}</td>#}
-                     {#<td>{{ item.treatment }}</td>#}
-                     {#<td>{{ item.other }}</td>#}
-
-                     {#</tr>#}
-                     {#{% endfor %}#}
-                     </tbody>
                  </table>
              </div>
          </div>
@@ -132,33 +149,7 @@
 </div>
 
      <br>
-             <div class="row">
-                 <div class="col-md-12">
-                     <div class="box">
-                         <header>
-                             <h4><span class="glyphicon glyphicon-tag"></span>Liste des Rdv</h4>
-                         </header>
-                         <table class="table table-hover table-bordered">
-                             <thead>
-                             <tr>
-                                 <th>Titre</th>
-                                 <th>Date de debut</th>
-                                 <th>Date de fin</th>
-                             </tr>
-                             </thead>
-                             <tbody>
-                             {% for item in patient.booking %}
-                                 <tr>
-                                     <td><a href="{{ path('booking_show', { 'id': item.id }) }}">{{ item.title }}</a></td>
-                                     <td>{{ item.beginAt|date('d/m/Y H:i:s') }}</td>
-                                     <td>{{ item.endAt|date('d/m/Y H:i:s') }}</td>
-                                 </tr>
-                             {% endfor %}
-                             </tbody>
-                         </table>
-                     </div>
-                 </div>
-             </div>
+
 
  {% endblock %}
 

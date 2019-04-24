@@ -48,9 +48,12 @@ class FullCalendarListener
 
             // create the events with your own entity (here booking entity)
             $bookingEvent = new Event(
+//	            $booking->getPatient() ,
                 $booking->getTitle(),
                 $booking->getBeginAt(),
-                $booking->getEndAt() // If end date is null or not defined, it create an all day event
+                $booking->getEndAt()
+
+            // If end date is null or not defined, it create an all day event
             );
 
             /*

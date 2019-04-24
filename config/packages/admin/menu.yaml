@@ -12,7 +12,7 @@ easy_admin:
       - label: 'consultations'
         children:
           - { label: 'Consultation', icon: 'file-list', entity: 'Consultation' }
-          - { label: 'Nouvelle consultation', icon: 'file-new', route: 'consultation_new' }
+
       - label: 'RDV'
         children:
           - { label: 'RDV', icon: 'file-list', entity: 'Booking' }

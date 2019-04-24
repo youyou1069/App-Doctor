@@ -24,22 +24,28 @@ class BookingType extends AbstractType
                 'placeholder' => 'Nom et Prénom'
             ])
 //            ->add('patient', EntityType::class, [
-////                'class'=> Patient::class,
-////                'choice_label' => 'FullName',
-////                'placeholder' => 'Nom et Prénom'
-////            ])
+//                'class'=> Patient::class,
+//                'choice_label' => 'FullName',
+//                'placeholder' => 'Nom et Prénom'
+//            ])
 	        ->add('patient', Select2EntityType::class, array(
 		        'multiple' => false,
 		        'remote_route'=>'patient_search',
 		        'class'=> Patient::class,
 		        'primary_key' => 'id',
-		        'text_property' => 'firstName',
+		        'text_property' => 'FullName',
 		        'minimum_input_length' => 2,
 		        'page_limit' => 10,
 		        'allow_clear' => true,
 		        'delay' => 250,
 		        'cache' => true,
 		        'cache_timeout' => 60000, // if 'cache' is true
+		        'allow_add' => [
+			        'enabled' => true,
+			        'new_tag_text' => ' (NEW)',
+			        'new_tag_prefix' => '__',
+			        'tag_separators' => '[",", " "]'
+		        ],
 	        ))
             ->add('beginAt',  DateTimeType::class)
             ->add('endAt',  DateTimeType::class)

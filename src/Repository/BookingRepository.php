@@ -33,6 +33,20 @@ class BookingRepository extends ServiceEntityRepository
 		            ->getResult();
 	}
 
+	public function newEvent($title, $beginAt, $endAt)
+	{
+		return $this
+			->createQueryBuilder('e')
+			->update('AppBundle:CalendarEvent', 'e')
+			->set('e.beginAt', '?1')
+			->set('e.endAt', '?2')
+			->where('e.title = ?3')
+			->setParameter(1, $beginAt)
+			->setParameter(2, $endAt)
+			->setParameter(2, $title)
+			->getQuery()
+			->getResult();
+	}
     // /**
     //  * @return Booking[] Returns an array of Booking objects
     //  */

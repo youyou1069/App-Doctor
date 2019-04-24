@@ -46,22 +46,32 @@
                 selectable: true,
                 editable: true,
                 eventDurationEditable: true,
-                select: function(beginAt, endAt, allDay)
+                select: function(start, end, allDay)
                 {
+                    // var doctor = prompt("Enter Event Doctor");
+                    // var patient= prompt("Enter Event Patient");
                     var title = prompt("Enter Event Title");
                     if(title)
                     {
-                        var beginAt = $.fullCalendar.formatDate(beginAt, "Y-MM-DD HH:mm:ss");
-                        var endAt = $.fullCalendar.formatDate(endAt, "Y-MM-DD HH:mm:ss");
+                        var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
+                        var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
+                        // console.log(title);
+                        // console.log(start);
+                        // console.log(end);
+                        // var donnee = [title,  start, end ]   ;
+                        // console.log(donnee);
+                        // console.log(dataEvent);
                         $.ajax({
                             url:"{{ path('booking_new') }}",
-                            type:"POST",
-                            data:{title:title, start:beginAt, end:endAt},
+                            type:"get",
+                            data: 'title='+ title+'&start='+ start +'&end='+ end ,
                             success:function()
+
                             {
-                                calendar.fullCalendar('refetchEvents');
+                                // calendar.fullCalendar('refetchEvents');
                                 alert("Added Successfully");
                             }
+
                         })
                     }
                 },
