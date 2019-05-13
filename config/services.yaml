@@ -5,7 +5,10 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'fr'
-
+    session_max_idle_time: 20// set to whatever value you want in seconds
+#    session:
+#      handler_id: ~
+#      cookie_lifetime: 15778800
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -29,3 +32,11 @@ services:
     App\EventListener\FullCalendarListener:
         tags:
             - { name: 'kernel.event_listener', event: 'fullcalendar.set_data', method: loadEvents }
+
+
+    App\Security\SessionIdleHandler:
+        arguments: ['%session_max_idle_time%']
+        tags: [{ name: kernel.event_listener, event: kernel.request }]
+    authentication.handler.login_success_handler:
+        class:  App\Security\LoginSuccessHandler
+        arguments:  ['@router', '@security.authorization_checker']

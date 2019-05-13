@@ -41,6 +41,8 @@ class User extends BaseUser
      */
     private $firstName;
 
+
+
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Booking", mappedBy="doctor", cascade={"remove"})
      */

@@ -8,7 +8,7 @@
 
     <div class="dropdown float-right">
         <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false"> Selectioner une action
+                aria-haspopup="true" aria-expanded="false"> Sélectionner une action
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" href="{{ path('patient_index') }}">liste des patient</a>
@@ -80,6 +80,7 @@
                         {#<th>Medecin Traitant</th>#}
                         <th>Diagnostic</th>
                         <th>Traitement</th>
+                        <th style="text-align: center">Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -91,6 +92,15 @@
                             {#<td><a href="{{ path('ben_show_user', { 'id': item.user.id }) }}">{{ item.user.fullname }}</a></td>#}
                             <td>{{ item.diagnostic }}</td>
                             <td>{{ item.treatment }}</td>
+                            <td style="text-align: right">
+                                <a href="{{ path('consultation_edit', {'id': item.id }) }}"  class="btn btn-secondary "> <i class="fa fa-pencil"></i>  </a>
+                                <form method="post" action="{{ path('consultation_delete', {'id':item.id }) }}"
+                                      style="display: inline-block" onsubmit="return confirm('Etes vous vraiment sûr ?')">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button class="btn btn-danger" >  <i class="fa fa-trash-o"></i> </button>
+                                </form>
+
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>

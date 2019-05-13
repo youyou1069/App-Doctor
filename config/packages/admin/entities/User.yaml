@@ -4,14 +4,14 @@ easy_admin:
       class: App\Entity\User
       list:
         title: 'liste des Utilisateurs'
-        fields: ['id', 'lastName', 'firstName', 'enabled', 'roles']
+        fields: ['id', 'lastName', 'firstName', 'username', 'enabled', 'roles']
       form:  # <-- 'form' is applied to both 'new' and 'edit' views
         fields:
 
           - 'lastName'
           - 'firstName'
-#          - 'username'
-          - { property: 'Email', type: 'email', label: 'Contact' }
-          - { property: 'Enabled', type: 'checkbox', label: 'Enabled' }
+          - 'username'
+          - { property: 'Email', type: 'email', label: 'Email', type_option: {required: 'true' } }
+          - { property: 'Enabled', type: 'checkbox', label: 'Enabled'  }
           - { property: 'plainPassword', type: 'password', label: 'password' , type_option:{required: 'true' } }
           - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_ADMIN': 'ROLE_ADMIN', 'ROLE_DOCTOR': 'ROLE_DOCTOR', 'ROLE_COLABORATOR': 'ROLE_COLABORATOR' } } }

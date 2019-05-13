@@ -1,20 +1,6 @@
 easy_admin:
   design:
     menu:
-      - label: 'User'
-        icon: 'user'
-        children:
-          - { label: 'User', icon: 'user', entity: 'User' }
-      - label: 'Patients'
-        children:
-          - { label: 'Patient', icon: 'file-list', entity: 'Patient' }
-#          - { label: 'Nouveau Patient', icon: 'file-new', route: 'patient_new'}
-      - label: 'consultations'
-        children:
-          - { label: 'Consultation', icon: 'file-list', entity: 'Consultation' }
+      - { label: 'User', icon: 'user', entity: 'User' }
 
-      - label: 'RDV'
-        children:
-          - { label: 'RDV', icon: 'file-list', entity: 'Booking' }
-          - { label: 'Nouveau', icon: 'file-new', route: 'booking_new'}
 

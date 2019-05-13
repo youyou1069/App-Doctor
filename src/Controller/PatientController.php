@@ -47,9 +47,10 @@ class PatientController extends AbstractController {
 	 *
 	 * @return \Symfony\Component\HttpFoundation\Response
 	 */
-	public function indexAction( PaginatorInterface $paginator, Request $request ) {
+	public function indexAction (PaginatorInterface $paginator, Request $request)
+	{
 		$search = new PatientSearch();
-		$form   = $this->createForm( PatientSearchType::class, $search );
+		$form   = $this->createForm (PatientSearchType::class, $search );
 		$form->handleRequest( $request );
 //        var_dump($search);
 		$patients = $paginator->paginate(
@@ -70,23 +71,17 @@ class PatientController extends AbstractController {
 	 * @param Request $request
 	 * @param ObjectManager $manager
 	 * @param UserPasswordEncoderInterface $encoder
-	 *
 	 * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
 	 * @throws \Exception
 	 */
-	public function newAction( Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder ) {
+	public function newAction (Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder)
+	{
 		// 1) build the form
 		$patient = new Patient();
 		$form    = $this->createForm( PatientType::class, $patient );
 		// 2) handle the submit (will only happen on POST)
 		$form->handleRequest( $request );
 		if ( $form->isSubmitted() && $form->isValid() ) {
-			// 3) Encode the password (you could also do this via Doctrine listener)
-//            $hash = $encoder->encodePassword($patient, $patient->getPassword());
-//            $patient->setPassword($hash);
-
-//          $patient->addRole("ROLE_ADMIN");
-//            $patient->addRole("ROLE_patient");
 			// 4) save the patient!
 			$manager->persist( $patient );
 			$manager->flush();
@@ -106,7 +101,6 @@ class PatientController extends AbstractController {
 	 * @param Patient $patient
 	 * @param Request $request
 	 * @param ObjectManager $manager
-	 *
 	 * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
 	 */
 	public function editAction( Patient $patient, Request $request, ObjectManager $manager ) {
@@ -156,6 +150,7 @@ class PatientController extends AbstractController {
 	}
 
 	/**
+	 * TetranzSelect2EntityBundle
 	 * @Route("/Patient/search", name="patient_search")
 	 * @Method({"GET"})
 	 * @param Request $request

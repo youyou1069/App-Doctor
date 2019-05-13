@@ -13,12 +13,14 @@ use App\Entity\Consultation;
 use App\Entity\MedicalHistory;
 use App\Entity\Patient;
 use App\Form\ConsultationType;
+use App\Form\PatientType;
 use App\Repository\ConsultationRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 
@@ -67,12 +69,9 @@ class ConsultationController extends AbstractController
             $manager->persist($entity);
             $manager->flush();
             $this->addFlash('sucess', 'La consultation a été enregistré avec succès');
-            $entityPatient=$entity->getPatient();
-            $idPatient=$entityPatient->getId();
+	        $idPatient=$entity->getPatient()->getId();
 
-//            return $this->redirectToRoute('patient_show', array(
-//                'id' => $entity->getPatient()
-//            ));
+
         return $this->redirect($this->generateUrl('patient_show', array('id' => $idPatient)));
         }
 
@@ -114,31 +113,53 @@ class ConsultationController extends AbstractController
 		]);
 
 	}
+	/**
+	 * @Route("/consultation{id}/edit/", name="consultation_edit", methods={"GET|POST"})
+	 * @param Consultation $consultation
+	 * @param Request $request
+	 * @param ObjectManager $manager
+	 *
+	 * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+	 */
+	public function editAction (Consultation $consultation, Request $request, ObjectManager $manager )
+	{
 
-//	/**
-//	 * @Route ("consultation/{id}", name="consultation_show")
-//	 */
-//	public function showAction (Consultation $consultation)
-//	{
-//
-//		return $this->render('admin/consultation/show.html.twig', [ 'consultation'=> $consultation   ] );
-//
-//	}
+		$form = $this->createForm( ConsultationType::class, $consultation );
 
-//    /**
-//     *  @Route ("consultation/{id}", name="consultation_show")
-//     */
-//    public function showAction (Consultation $consultation)
-//    {
-////        return $this->render('admin/consultation/show.html.twig', [ 'consultation'=> $consultation   ] );
-//	    return  $this->get('knp_snappy.pdf')->generateFromHtml(
-//		    $this->renderView(
-//			    'admin/consultation/show.html.twig',
-//			    array(
-//				    'consultation'  => $consultation
-//			    )
-//		    ),
-//		    '/path/to/the/file.pdf'
-//	    );
-//    }
+		$form->handleRequest( $request );
+		if ( $form->isSubmitted() && $form->isValid() ) {
+			$manager->flush();
+			//confirmation de la mise à jour
+			$this->addFlash( 'success', 'l\'ordonnance a Bien été modifiée' );
+			$idPatient=$consultation->getPatient()->getId();
+
+			return $this->redirect($this->generateUrl('patient_show', array ( 'id' => $idPatient)));
+		}
+
+		return $this->render( 'admin/consultation/edit.html.twig', [
+			'form'    => $form->createView(),
+			'consultation' => $consultation,
+
+		] );
+
+	}
+	/**
+	 * @Route("/consultation/{id}/delete/", name="consultation_delete", methods={"DELETE"})
+	 * @param Consultation $consultation
+	 * @param ObjectManager $manager
+	 */
+	public function deleteAction ( Consultation $consultation, ObjectManager $manager)
+	{
+
+		$manager->remove( $consultation );
+		$manager->flush();
+		$this->addFlash( 'success', 'l\'ordonnance a Bien été supprimée' );
+		$idPatient=$consultation->getPatient()->getId();
+
+		return $this->redirect($this->generateUrl('patient_show', array ( 'id' => $idPatient)));
+
+	}
+
+
+
 }
