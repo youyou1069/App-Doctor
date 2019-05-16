@@ -60,7 +60,8 @@ class Patient
 
     /**
      * @ORM\Column(type="integer")
-     * @Assert\Regex("/^[0-9]{5}$/")
+     * @Assert\Regex("/^[0-9]/")
+     * @Assert\Length(value="5" , exactMessage="Votre code postale doit faire 5 caractères")
      */
     private $postcode;
 

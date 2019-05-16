@@ -55,9 +55,9 @@ class BookingController extends AbstractController {
 	public function indexAction( PaginatorInterface $paginator, Request $request ) {
 
 		$bookings = $paginator->paginate(
-			$this->repo->findActive(new DateTime('-20 day')),
+			$this->repo->findActive(new DateTime('-12hours')),
 			$request->query->getInt( 'page', 1 ),
-			5
+			20
 		);
 
 		return $this->render( 'booking/index.html.twig', [

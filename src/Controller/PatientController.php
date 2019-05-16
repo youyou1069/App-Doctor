@@ -51,8 +51,10 @@ class PatientController extends AbstractController {
 	{
 		$search = new PatientSearch();
 		$form   = $this->createForm (PatientSearchType::class, $search );
+
 		$form->handleRequest( $request );
 //        var_dump($search);
+//		$this->addFlash('error', 'Pas de résultats');
 		$patients = $paginator->paginate(
 			$this->repo->findAllQuery( $search ),
 			$request->query->getInt( 'page', 1 ),

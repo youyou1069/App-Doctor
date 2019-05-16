@@ -1,4 +1,5 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
+
 {% block body %}
     <br>
     <div class="row">
@@ -30,15 +31,15 @@
         {{ form_widget(form.title, {'attr':{'placeholder': "Titre"}}) }}
     </div>
     <div class="col-md-6">
-        {{ form_label(form.beginAt, 'Date du debut ') }}
-        {{ form_widget(form.beginAt, {'attr':{'placeholder': "Date du RDV "}}) }}
+        {{ form_label(form.beginAt, 'Date et heure ') }}
+        {{ form_widget(form.beginAt,  { attr:{ class:'js-datetimepicker' } }) }}
     </div>
 </div>
 <br>
 <div class="row">
     <div class="col-md-6">
-        {{ form_label(form.endAt, 'Date de fin') }}
-        {{ form_widget(form.endAt, {'attr':{'placeholder': "date de fin "}}) }}
+        {{ form_label(form.endAt, 'fin du rdv ') }}
+        {{ form_widget(form.endAt, {'attr':{'placeholder': "fin du rdv "}}) }}
     </div>
 
 </div>

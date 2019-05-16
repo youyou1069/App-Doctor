@@ -11,3 +11,12 @@
 
 
 {% endblock %}
+
+{% block javascripts %}
+   {{ parent()}}
+    <script>
+        $('.js-datetimepicker').datetimepicker({
+            format:'yyyy.MM.dd HH:ii'
+        });
+    </script>
+{% endblock %}

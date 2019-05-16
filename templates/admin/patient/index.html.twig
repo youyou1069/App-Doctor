@@ -3,32 +3,34 @@
 {% block title %} Coordonnées des Patients {% endblock %}
 
 {% block body %}
-    <script>src="https://code.jquery.com/jquery-3.4.0.min.js"</script>
+
+{#    <script>src="https://code.jquery.com/jquery-3.4.0.min.js"</script>#}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <div class="jumbotron">
         <div class="container">
             <h4>Rechercher un Patient</h4>
+
             {{ form_start(form) }}
             <div class="form-row align-items-end">
                 <div class="col">{{ form_row(form.lastName) }}</div>
                 <div class="col">{{ form_row(form.firstName) }}</div>
                 <div class="col">{{ form_row(form.nir) }}</div>
                 <div class="col">{{ form_row(form.postcode) }}</div>
-
                 <button class="btn-primary"><i class="fa fa-search" aria-hidden="true"></i></button>
 
             </div>
             {{ form_end(form) }}
         </div>
     </div>
-    <div class="container mt:4 ">
-        <h3>Liste des patients</h3>
-        {% for message in app.flashes ('success') %}
-            <div class="alert alert-success">
-                {{ message }}
-            </div>
-        {% endfor %}
-    </div>
+{#    <div class="container mt:4 ">#}
+{#        <h3>Liste des patients</h3>#}
+{#        {% for message in app.flashes ('success') %}#}
+{#            <div class="alert alert-success">#}
+{#                {{ message }}#}
+{#            </div>#}
+{#        {% endfor %}#}
+
+{#    </div>#}
 
     <table class="table table-striped">
         <head>
@@ -41,7 +43,8 @@
             </tr>
         </head>
         <tbody>
-        {% for patient in patients %}
+{#        {% if  %}#}
+        {% for patient in app.user.patients %}
             <tr>
                 <td>
                     <input  type="checkbox"  class="sub_chk" data-id=" {{ patient.id }}" />
@@ -51,7 +54,7 @@
                 <td>{{ patient.firstName }}</td>
                 <td style="text-align: right">
 
-                    <a href="{{ path('patient_show', {'id':patient.id }) }}" class="btn btn-secondary"> <i class="fa fa-file-o" aria-hidden="true"></i> Dossier Médical </a>
+                    <a href="{{ path('patient_show', {'id':patient.id }) }}" class="btn btn-secondary"> <i class="fa fa-folder-o" aria-hidden="true"></i> Dossier Médical </a>
 
                     <a href="{{ path('consultation_new', {'id':patient.id }) }}" class="btn btn-secondary"> <i class="fa fa-plus-circle" aria-hidden="true"></i> Nouvelle Consultation </a>
 
@@ -69,7 +72,7 @@
     </table>
 
     <div class="text">
-        <button  class="btn btn-danger delete_all" data-url="/itemDelete"> <i class="fa fa-trash-o"></i> Effacer maintenant</button>
+        <button  class="btn btn-danger delete_all" data-url="/itemDelete"> <i class="fa fa-trash-o"></i> Supprimer tout</button>
         <a href="{{ path('patient_new' ) }}" class="btn btn-primary"> <i class="fa fa-plus-circle" aria-hidden="true"></i> Nouveau Patient</a>
     </div>
 
@@ -131,5 +134,8 @@ console.log(join_selected_values);
             });
         });
     </script>
+
+{% endblock %}
+{% block javascripts %}
 
 {% endblock %}

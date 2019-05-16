@@ -3,25 +3,26 @@
 {% block title %} Afficher les rdv {% endblock %}
 
 {% block body %}
-    <h1>Afficher les rdv </h1>
+    <h1>Liste des rdv </h1>
 
     <table class="table">
+        {% if is_granted('ROLE_COLLABORATOR') %}
         <thead>
-            <tr>
-                <th>Médecin</th>
+        <tr>
+                <th>Docteur </th>
                 <th>Patient </th>
                 <th>Date du Rdv </th>
-                <th>Fin de Rdv </th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
+
         {% for booking in bookings %}
             <tr>
-                <td> {{ booking.doctor }}</td>
+                <td>{{ booking.DOCTOR.FullName }}</td>
                 <td>{{ booking.patient }}</td>
                 <td>{{ booking.beginAt ? booking.beginAt|date('d-m-Y H:i:s') : '' }}</td>
-                <td>{{ booking.endAt ? booking.endAt|date('d-m-Y H:i:s') : '' }}</td>
+
 
                 <td>
                     <a href="{{ path('booking_show', {'id':booking.id }) }}" class="btn btn-secondary"> <i class="fa fa-file-o" aria-hidden="true"></i> Fiche Rdv </a>
@@ -38,10 +39,41 @@
                 <td colspan="5">Aucun résultat</td>
             </tr>
         {% endfor %}
+        {% endif %}
+        </tbody>
+        {% if is_granted('ROLE_DOCTOR') %}
+            <thead>
+            <tr>
+                <th>Patient </th>
+                <th>Date du Rdv </th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for booking in app.user.bookings %}
+                <tr>
+
+                    <td>{{ booking.patient }}</td>
+                    <td>{{ booking.beginAt ? booking.beginAt|date('d-m-Y H:i:s') : '' }}</td>
+                    <td>
+                        <a href="{{ path('booking_show', {'id':booking.id }) }}" class="btn btn-secondary"> <i class="fa fa-file-o" aria-hidden="true"></i> Fiche Rdv </a>
+                        <a href="{{ path('booking_edit', {'id': booking.id}) }}" class="btn btn-secondary"> <i class="fa fa-pencil"></i> </a>
+                        <form method="post" action="{{ path('booking_delete', {'id':booking.id }) }}"
+                              style="display: inline-block" onsubmit="return confirm('Etes vous vraiment sûr ?')">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+                        </form>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">Aucun résultat</td>
+                </tr>
+            {% endfor %}
+        {% endif %}
         </tbody>
     </table>
     <div class="text">
-
         <a href="{{ path('booking_new') }}" class="btn btn-primary"> <i class="fa fa-plus-circle" aria-hidden="true"></i> Nouveau Rdv</a>
     </div>
 

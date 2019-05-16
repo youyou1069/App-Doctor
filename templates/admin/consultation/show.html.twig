@@ -21,7 +21,7 @@
         <div><p>Tel : </p></div>
     </div>
     <div class="row align-content-start flex-column">
-        <div><strong>Docteur Lorem ipsum </strong></div>
+        <div><strong>Docteur {{ app.user.FullName }} </strong></div>
 
         <div><p> Consultations du lundi au samedi sur rendz-vous </p></div>
         <div><p> Secrétariat téléphonique de 9h00 à 20h00 </p></div>
@@ -46,13 +46,13 @@
 {#        {{ dump(consultation)}}#}
 
         {% for medicament in consultation.medicament %}
-            <li>{{ medicament.denomination }}</li>
-            <p>{{ consultation.treatment|nl2br }}</p>
+            <li style="list-style: none;">{{ medicament.denomination }}</li>
+
         {% endfor %}
 {#        <p>{{ consultation.medicament }}</p>#}
-{#        <p>{{ consultation.treatment|nl2br }}</p>#}
+        <p>{{ consultation.treatment|nl2br }}</p>
 
-        <p>{{ consultation.decision|nl2br }}</p>
+
 
     </div>
 </div>

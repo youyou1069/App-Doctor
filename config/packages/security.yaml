@@ -1,6 +1,6 @@
 security:
     encoders:
-        FOS\UserBundle\Model\UserInterface: bcrypt
+        FOS\UserBundle\Model\UserInterface: argon2i
 
     role_hierarchy:
         ROLE_DOCTOR: ROLE_USER
@@ -23,8 +23,19 @@ security:
                 provider: fos_userbundle
                 csrf_token_generator: security.csrf.token_manager
                 success_handler: authentication.handler.login_success_handler
+                login_path:     fos_user_security_login
+                check_path:     fos_user_security_check
+
+                use_forward: false
+                # login success redirecting options (read further below)
+                target_path_parameter: _target_path
+                always_use_default_target_path: false
+                use_referer: true
+            access_denied_handler: App\Security\AccessDeniedHandler
+
 
             logout: true
+
 
             anonymous:    true
 #            remember_me:

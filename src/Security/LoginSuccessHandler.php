@@ -20,7 +20,8 @@ class LoginSuccessHandler implements AuthenticationSuccessHandlerInterface
 		$this->authorizationChecker = $authorizationChecker;
 	}
 
-	public function onAuthenticationSuccess(Request $request, TokenInterface $token) {
+	public function onAuthenticationSuccess(Request $request, TokenInterface $token)
+	{
 
 		$response = null;
 

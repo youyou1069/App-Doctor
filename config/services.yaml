@@ -5,10 +5,10 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'fr'
-    session_max_idle_time: 20// set to whatever value you want in seconds
-#    session:
-#      handler_id: ~
-#      cookie_lifetime: 15778800
+    session_max_idle_time: 1800// set to whatever value you want in seconds
+    session:
+      handler_id: ~
+      cookie_lifetime: 15778800
 services:
     # default configuration for services in *this* file
     _defaults:

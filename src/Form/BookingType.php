@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class BookingType extends AbstractType
 {
@@ -47,8 +48,18 @@ class BookingType extends AbstractType
 			        'tag_separators' => '[",", " "]'
 		        ],
 	        ))
-            ->add('beginAt',  DateTimeType::class)
-            ->add('endAt',  DateTimeType::class)
+            ->add('beginAt',   DateTimeType::class, [
+	            'label'=>'invoice_date',
+	            'widget'=>'single_text',
+	            'required'=>true,
+
+            ])
+            ->add('endAt',  DateTimeType::class, [
+	            'label'=>'invoice_date',
+	            'widget'=>'single_text',
+	            'required'=>false,
+
+            ])
             ->add('title', TextType::class)
 
         ;
