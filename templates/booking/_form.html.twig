@@ -1,62 +1,59 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 
 {% block body %}
-    <br>
-    <div class="row">
-        <div class="col-md-4">
-            <a class="btn btn-primary" href="{{ path('booking_index') }}" role="button">Liste des RDV</a>
-        </div>
-    </div>
-    <br>
+<br>
 {{ form_start(form) }}
-    <br>
-    <h4>Médecin</h4>
-    <div class="row">
-        <div class="col-md-2">
-            {{ form_label(form.doctor, 'Médecin Traitant') }}
-            {{ form_widget(form.doctor, {'attr':{'placeholder': "Médecin  "}}) }}
-        </div>
-    </div>
-    <br>
 
-    <h4>Patient</h4>
+<h4>Médecin traitant</h4>
 <div class="row">
     <div class="col-md-6">
-        {{ form_label(form.patient, 'Nom et Prénom') }}
+        {{ form_widget(form.doctor, {'attr':{'placeholder': "Médecin "}}) }}
+    </div>
+</div>
+<br>
+
+<h4>Patient</h4>
+<div class="row">
+    <div class="col-md-6">
+        {{ form_label(form.patient, 'Nom et Prénom *') }}
         {{ form_widget(form.patient, {'attr':{'placeholder': "Nom et Prénom du Patient"}}) }}
 
     </div>
     <div class="col-md-6">
-        {{ form_label(form.title, 'Titre') }}
-        {{ form_widget(form.title, {'attr':{'placeholder': "Titre"}}) }}
-    </div>
-    <div class="col-md-6">
-        {{ form_label(form.beginAt, 'Date et heure ') }}
-        {{ form_widget(form.beginAt,  { attr:{ class:'js-datetimepicker' } }) }}
+        {{ form_label(form.title, 'Titre *') }}
+        {{ form_widget(form.title, {'attr':{'placeholder': "Titre "}}) }}
     </div>
 </div>
 <br>
-<div class="row">
-    <div class="col-md-6">
-        {{ form_label(form.endAt, 'fin du rdv ') }}
-        {{ form_widget(form.endAt, {'attr':{'placeholder': "fin du rdv "}}) }}
-    </div>
-
-</div>
-<br>
-
 
     <div class="row">
-        <div class="col-md-4">
+    <div class="col-md-6">
+        {{ form_label(form.beginAt, 'Date et heure * ') }}
+        {{ form_widget(form.beginAt) }}
+    </div>
+    <div class="col-md-6">
+        {{ form_label(form.endAt, 'Fin du rdv ') }}
+
+        {{ form_widget(form.endAt, {'attr':{'placeholder': "fin du rdv "}}) }}
+    </div>
+</div>
+
+<br>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="row">
+            <a class="btn btn-primary" href="{{ path('booking_index') }}" role="button">Liste des RDV</a>
+
             <button type="submit" class="btn btn-success">Valider</button>
         </div>
     </div>
 
-{{ form_end(form) }}
+    {{ form_end(form) }}
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/js/select2.js"></script>
 
 
-{% endblock %}
+    {% endblock %}

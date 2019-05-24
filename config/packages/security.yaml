@@ -1,14 +1,15 @@
 security:
     encoders:
-        FOS\UserBundle\Model\UserInterface: argon2i
-
+        FOS\UserBundle\Model\UserInterface:
+            algorithm: argon2i
+            memory_cost: 1024 # Amount in KiB. 16 MiB
+            time_cost:            2 # Number of iterations
+            threads:              2 # Number of parallel threads
     role_hierarchy:
         ROLE_DOCTOR: ROLE_USER
         ROLE_COLLABORATOR: ROLE_USER
         ROLE_ADMIN: [ROLE_USER, ROLE_DOCTOR, ROLE_COLLABORATOR]
         ROLE_SUPER_ADMIN: ROLE_ADMIN
-
-    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         fos_userbundle:
             id: fos_user.user_provider.username
@@ -25,31 +26,16 @@ security:
                 success_handler: authentication.handler.login_success_handler
                 login_path:     fos_user_security_login
                 check_path:     fos_user_security_check
-
-                use_forward: false
-                # login success redirecting options (read further below)
-                target_path_parameter: _target_path
-                always_use_default_target_path: false
-                use_referer: true
             access_denied_handler: App\Security\AccessDeniedHandler
-
-
             logout: true
-
-
             anonymous:    true
-#            remember_me:
-#              secret:   '%kernel.secret%'
-#              lifetime: 604800 # 1 week in seconds
-#              path:     /
-
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: ROLE_ADMIN}
+        - { path: ^/resetting, role: ROLE_ADMIN }
         - { path: ^/admin/, role: ROLE_ADMIN }
         - { path: ^/patient/, role: ROLE_DOCTOR }
         - { path: ^/consultation/, role: ROLE_DOCTOR }

@@ -5,13 +5,13 @@
 
     <div class="row">
         <div class="col-md-6">
-            {{ form_label(form.patient, 'Nom et Prénom') }}
+            {{ form_label(form.patient, 'Nom et Prénom *') }}
             {{ form_widget(form.patient, {'attr':{'placeholder': "Nom et Prénom du Patient"}}) }}
 
         </div>
 
         <div class="col-md-6">
-            {{ form_label(form.name, 'Motif de la visite') }}
+            {{ form_label(form.name, 'Motif de la visite *') }}
             {{ form_widget(form.name, {'attr':{'placeholder': "Motif de la consultation"}}) }}
         </div>
     </div>
@@ -19,7 +19,7 @@
     <div class="row">
 
         <div class="col-md-6">
-{#            {{ form_label(form.medicament, 'Médicament') }}#}
+
             {{ form_row(form.medicament, {'attr':{'placeholder': "Médicament"}}) }}
         </div>
         <div class="col-md-6">

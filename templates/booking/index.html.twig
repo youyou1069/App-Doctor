@@ -22,13 +22,11 @@
                 <td>{{ booking.DOCTOR.FullName }}</td>
                 <td>{{ booking.patient }}</td>
                 <td>{{ booking.beginAt ? booking.beginAt|date('d-m-Y H:i:s') : '' }}</td>
-
-
                 <td>
                     <a href="{{ path('booking_show', {'id':booking.id }) }}" class="btn btn-secondary"> <i class="fa fa-file-o" aria-hidden="true"></i> Fiche Rdv </a>
                     <a href="{{ path('booking_edit', {'id': booking.id}) }}" class="btn btn-secondary"> <i class="fa fa-pencil"></i> </a>
                     <form method="post" action="{{ path('booking_delete', {'id':booking.id }) }}"
-                          style="display: inline-block" onsubmit="return confirm('Etes vous vraiment sûr ?')">
+                          style="display: inline-block" onsubmit="return confirm('Vous voulez vraiment supprimer ce rendez-vous ?')">
                         <input type="hidden" name="_method" value="DELETE">
                         <button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
                     </form>
@@ -80,6 +78,6 @@
     <br/>
     <br/>
 
-    {#<div class="text-center">{{ knp_pagination_render(bookings) }}</div>#}
+    <div class="text-center">{{ knp_pagination_render(bookings) }}</div>
 
 {% endblock %}

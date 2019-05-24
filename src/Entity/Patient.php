@@ -35,6 +35,7 @@ class Patient
     /**
      * @ORM\Column(type="date")
      * @var string A "Y-m-d" formatted value
+     * @Assert\LessThan("1 min")
      */
     private $birthAt;
 
@@ -75,17 +76,11 @@ class Patient
      */
     private $createdAt;
 
-//    /**
-//     * @ORM\OneToMany(targetEntity="App\Entity\MedicalHistory", mappedBy="patient")
-//     */
-//    private $medicalHistories;
-
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Consultation", mappedBy="patient", cascade={"remove"})
      * @ORM\OrderBy({"createdAt" = "DESC"})
      */
     private $consultations;
-
 
     /**
      * @ORM\Column(type="string", length=255)

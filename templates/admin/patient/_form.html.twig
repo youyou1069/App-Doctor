@@ -3,11 +3,10 @@
 
     {{ form_start(form) }}
     <br>
-    <h4>Médecin</h4>
+    <h4>Médecin Traitant</h4>
     <div class="row">
-        <div class="col-md-2">
-            {{ form_label(form.DOCTOR, 'Médecin Traitant') }}
-            {{ form_widget(form.DOCTOR, {'attr':{'placeholder': "Médecin  "}}) }}
+        <div class="col-md-6">
+            {{ form_widget(form.DOCTOR) }}
         </div>
     </div>
     <br>
@@ -15,23 +14,23 @@
     <h4>Patient</h4>
 
     <div class="row">
-    <div class="col-md-2">
-        {{ form_label(form.gender, 'Genre') }}
-        {{ form_widget(form.gender, {'attr':{'placeholder': "Genre "}}) }}
+        <div class="col-md-2">
+            {{ form_label(form.gender, 'Genre *') }}
+            {{ form_widget(form.gender, {'attr':{'placeholder': "Genre "}}) }}
+        </div>
+        <div class="col-md-5">
+            {{ form_label(form.lastName, 'Nom * ') }}
+            {{ form_widget(form.lastName, {'attr':{'placeholder': "Nom du Patient "}}) }}
+        </div>
+        <div class="col-md-5">
+            {{ form_label(form.firstName, 'Prénom *') }}
+            {{ form_widget(form.firstName, {'attr':{'placeholder': "Prénom du Patient"}}) }}
+        </div>
     </div>
-    <div class="col-md-4">
-        {{ form_label(form.lastName, 'Nom ') }}
-        {{ form_widget(form.lastName, {'attr':{'placeholder': "Nom du Patient "}}) }}
-    </div>
-    <div class="col-md-4">
-        {{ form_label(form.firstName, 'Prénom') }}
-        {{ form_widget(form.firstName, {'attr':{'placeholder': "Prénom du Patient"}}) }}
-    </div>
-</div>
     <br>
     <div class="row">
         <div class="col-md-6">
-            {{ form_label(form.birthAt, 'Date de naissance') }}
+            {{ form_label(form.birthAt, 'Date de naissance *') }}
             {{ form_widget(form.birthAt, {'attr':{'placeholder': "date de naissance"}}) }}
         </div>
         <div class="col-md-6">
@@ -41,11 +40,11 @@
     </div>
     <br>
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-6">
             {{ form_label(form.email, 'Email') }}
             {{ form_widget(form.email, {'attr':{'placeholder': "Email "}}) }}
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
             {{ form_label(form.phone, 'Numéro de Téléphone') }}
             {{ form_widget(form.phone, {'attr':{'placeholder': "Téléphone "}}) }}
         </div>
@@ -53,21 +52,20 @@
     <br>
     <div class="row">
         <div class="col-md-4">
-            {{ form_label(form.address, 'Adresse') }}
-            {{ form_widget(form.address, {'attr':{'placeholder': "Adresse "}}) }}
+            {{ form_label(form.address, 'Rue *') }}
+            {{ form_widget(form.address, {'attr':{'placeholder': "Rue "}}) }}
         </div>
         <div class="col-md-4">
-            {{ form_label(form.city, 'Ville') }}
+            {{ form_label(form.city, 'Ville *') }}
             {{ form_widget(form.city, {'attr':{'placeholder': "Ville "}}) }}
         </div>
         <div class="col-md-4">
-            {{ form_label(form.postcode, 'Code Postale') }}
+            {{ form_label(form.postcode, 'Code Postale *') }}
             {{ form_widget(form.postcode, {'attr':{'placeholder': " Code postale "}}) }}
         </div>
     </div>
     <br>
     <div class="row">
-        {#<div class="col-md-4">{{ form_widget(form., {'attr':{'placeholder': "Ordonnace "}}) }}</div>#}
     </div>
     <div class="row">
 

@@ -1,20 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{#{% extends '@EasyAdmin/default/new.html.twig' %}#}
-
 {% block body %}
-{#{% block main %}#}
-<h1>Ajouter un Nouveau Patient</h1>
-{#{% block entity_form %}#}
-    {{ include ('/admin/patient/_form.html.twig', {form: form, Button: 'Ajouter'}) }}
-{#{% endblock entity_form %}#}
-{#{% endblock %}#}
-{% endblock %}
-{#{% block body %}#}
 
-    {#<h1>Ajouter un Nouveau Patient</h1>#}
-    {#{{ include ('/admin/patient/_form.html.twig', {form: form, Button: 'Ajouter'}) }}#}
-{#{% endblock %}#}
+<h1> Nouveau Patient</h1>
+
+    {{ include ('/admin/patient/_form.html.twig')}}
+
+{% endblock %}
+
 
 
 

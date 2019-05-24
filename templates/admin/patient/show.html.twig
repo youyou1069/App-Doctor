@@ -51,42 +51,34 @@
              </div>
          </div>
      <br>
-<div class="row">
-    <div class="col-md-6">
-        <div class="box">
-            <header>
-                <h4><span class="glyphicon glyphicon-pushpin"></span> Médecin traitant</h4>
-            </header>
-            <ul class="list-group">
-                <Li class="list-group-item"><strong>Nom :</strong> {{ patient.DOCTOR.firstName }}</li>
-                <Li class="list-group-item"><strong>Prénom :</strong> {{ patient.DOCTOR.lastName }}</li>
-            </ul>
-        </div>
-    </div>
-</div>
-    <br>
-    <div class="row">
+      <div class="row">
         <div class="col-md-12">
             <div class="box">
-                <header>
+                <header style=" text-align: center ">
                     <h4><span class="glyphicon glyphicon-tag"></span> Consultations</h4>
-                </header>
+                </header >
                 <table class="table table-hover table-bordered">
-                    <thead>
+                    <thead style=" text-align: center ">
                     <tr>
                         <th>Date</th>
-                        <th> Ordonnance</th>
+                        <th > Ordonnance</th>
                         {#<th>Medecin Traitant</th>#}
                         <th>Diagnostic</th>
                         <th>Traitement</th>
                         <th style="text-align: center">Action</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody style=" text-align: center ">
                     {% for item in patient.consultations %}
                         <tr>
                             <td>{{ item.createdAt|date('d/m/Y') }}</td>
-                            <td><a href="{{ path('consultation_show', { 'id': item.id }) }} "  onclick="window.open(this.href); return false;  ">{{ item.name }}</a></td>
+                            <td>
+
+                                   <a  href="{{ path('consultation_show', { 'id': item.id }) }} "  onclick="window.open(this.href); return false;  ">
+                                       <i style="color:darkslategray" class="fa fa-download"></i> </a>
+
+                            </td>
+
 
                             {#<td><a href="{{ path('ben_show_user', { 'id': item.user.id }) }}">{{ item.user.fullname }}</a></td>#}
                             <td>{{ item.diagnostic }}</td>
@@ -108,33 +100,7 @@
         </div>
     </div>
     <br>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="box">
-                <header>
-                    <h4><span class="glyphicon glyphicon-tag"></span>Liste des Rdv</h4>
-                </header>
-                <table class="table table-hover table-bordered">
-                    <thead>
-                    <tr>
-                        <th>Titre</th>
-                        <th>Date du Rdv</th>
 
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for item in patient.booking %}
-                        <tr>
-                            <td><a href="{{ path('booking_show', { 'id': item.id }) }}">{{ item.title }}</a></td>
-                            <td>{{ item.beginAt|date('d/m/Y H:i:s') }}</td>
-
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
     <br>
 <div class="row">
          <div class="col-md-12">
@@ -151,13 +117,51 @@
                          <th>Autres</th>
                      </tr>
                      </thead>
+                     <tbody>
+                     {% for item in patient.consultations %}
+                         <tr>
+                             <td>{{ item.medFamilyHistory }}</td>
+                             <td>{{ item.allergies }}</td>
+                             <td>{{ item.medTreatmentHistory }}</td>
+                             <td>{{ item.others }}</td>
+                         </tr>
+                     {% endfor %}
+                     </tbody>
                  </table>
              </div>
          </div>
      <br>
 </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <header>
+                    <h4><span class="glyphicon glyphicon-tag"></span>Liste des Rdv</h4>
+                </header>
+                <table class="table table-hover table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Date du Rdv</th>
+                        <th style="text-align: center">Action</th>
 
-     <br>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in patient.booking %}
+                        <tr>
+                            <td><a href="{{ path('booking_show', { 'id': item.id }) }}">{{ item.title }}</a></td>
+                            <td>{{ item.beginAt|date('d/m/Y H:i:s') }}</td>
+                            <td style="text-align: right">
+                                <a href="{{ path('booking_edit', {'id': item.id }) }}"  class="btn btn-secondary "> <i class="fa fa-pencil"></i>  </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
 
  {% endblock %}

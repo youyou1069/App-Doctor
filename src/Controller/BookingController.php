@@ -59,7 +59,6 @@ class BookingController extends AbstractController {
 			$request->query->getInt( 'page', 1 ),
 			20
 		);
-
 		return $this->render( 'booking/index.html.twig', [
 			'current_menu' => 'bookings',
 			'bookings'     => $bookings,
@@ -82,7 +81,7 @@ class BookingController extends AbstractController {
 			$entityManager = $this->getDoctrine()->getManager();
 			$entityManager->persist( $booking );
 			$entityManager->flush();
-
+			$this->addFlash('success', 'Le rendez-vous à bien enregistré');
 			return $this->redirectToRoute( 'booking_index' );
 		}
 
@@ -118,7 +117,7 @@ class BookingController extends AbstractController {
 
 		if ( $form->isSubmitted() && $form->isValid() ) {
 			$this->getDoctrine()->getManager()->flush();
-
+			$this->addFlash('success', 'Le rendez-vous à bien modifié');
 			return $this->redirectToRoute( 'booking_index', [
 				'id' => $booking->getId(),
 			] );
@@ -137,6 +136,7 @@ class BookingController extends AbstractController {
 	public function deleteAction( Booking $booking, ObjectManager $manager ) {
 		$manager->remove( $booking );
 		$manager->flush();
+		$this->addFlash( 'success', 'Le rendez-vous a Bien été supprime' );
 
 		return $this->redirectToRoute( 'booking_index' );
 	}
@@ -144,39 +144,3 @@ class BookingController extends AbstractController {
 
 }
 
-
-
-///**
-// * @Route("booking/calendar/new", name="calendar_new", methods={"GET","POST"})
-// * @param Request $request
-// *
-// * @return Response
-// */
-//public function newCalendarAction( Request $request, ObjectManager $manager )
-//{
-//
-//	dump($request);
-//
-//
-//
-//	$entityManager = $this->getDoctrine()->getManager();
-//	$booking = new Booking();
-////		$title= $request->query->get('title');
-////		$beginAt= $request->query->get('start');
-////		$endAt= $request->query->get('end');
-////		$booking ->setPatient($manager->getReference('Booking', ($request->query->get('patient'))));
-//
-//	$booking ->setDoctor($request->query->get('doctor'));
-//
-//	$booking ->setTitle($request->query->get('title'));
-//	$booking ->setBeginAt(new \DateTime($request->query->get('start')));
-//	$booking ->setEndAt(new \DateTime($request->query->get('end')));
-//
-//	// tell Doctrine you want to (eventually) save the Product (no queries yet)
-//	$entityManager->persist($booking);
-//
-//	// actually executes the queries (i.e. the INSERT query)
-//	$entityManager->flush();
-//
-//	return new Response('Saved new product with id '.$booking->getId());
-//}

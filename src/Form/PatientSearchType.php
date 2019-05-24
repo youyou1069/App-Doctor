@@ -5,6 +5,7 @@ namespace App\Form;
 
 use App\Entity\PatientSearch;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,6 +17,7 @@ class PatientSearchType extends  AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+
             ->add('lastName', TextType::class, [
                 'required' =>  false,
                 'label'   => false,
@@ -28,13 +30,6 @@ class PatientSearchType extends  AbstractType
                 'label'   => false,
                 'attr'    => [
                     'placeholder' => 'Prénom'
-                ]
-            ])
-            ->add('nir', IntegerType::class, [
-                'required' =>  false,
-                'label'   => false,
-                'attr'    => [
-                    'placeholder' => 'N° de Sécurité sociale'
                 ]
             ])
             ->add('postcode', IntegerType::class, [

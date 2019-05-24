@@ -1,10 +1,10 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 {% extends 'base.html.twig' %}
 
-{% block title %}voir le rdv{% endblock %}
+{% block title %} Modification rendez-vous {% endblock %}
 
 {% block body %}
-    <h1>voir le rdv</h1>
+    <h3> Rendez-vous de {{ booking.patient.FullName }}</h3>
 
     {{ include('booking/_form.html.twig', {'button_label': 'Update'}) }}
 

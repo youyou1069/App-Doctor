@@ -1,2 +1,13 @@
 imports:
     - {resource: admin/}
+easy_admin:
+  list:
+      actions:
+        # displays both the action label and a custom icon
+#        - { name: 'edit', icon: 'pencil' }
+
+#        # hides the action label and displays only the icon
+        - { name: 'edit', icon: 'pencil', label: false }
+#
+#        # the 'title' content is displayed when the cursor is over the icon
+        - { name: 'delete', icon: 'trash', label: false}

@@ -41,31 +41,56 @@ class PatientController extends AbstractController {
 	}
 
 	/**
-	 * @Route("/patient/", name="patient_index")
+	 * @Route("/patient", name="patient_index")
+	 */
+	public function indexAction(PatientRepository $repo, PaginatorInterface $paginator, Request $request)
+	{
+		$user= $this->getUser()->getId();
+		$patients = $paginator->paginate(
+			$this->repo->findBy(['DOCTOR'=> $user]),
+			$request->query->getInt( 'page', 1 ),
+			4
+		);
+		return $this->render ('admin/patient/index.html.twig', [
+			'current_menu' => 'patients',
+			'patients'     => $patients,
+
+		]);
+	}
+
+	/**
+	 * @Route("/patient/rechercher/", name="patient_rechercher")
 	 * @param PaginatorInterface $paginator
 	 * @param Request $request
 	 *
 	 * @return \Symfony\Component\HttpFoundation\Response
 	 */
-	public function indexAction (PaginatorInterface $paginator, Request $request)
+	public function rechercherAction (PaginatorInterface $paginator, Request $request)
 	{
 		$search = new PatientSearch();
 		$form   = $this->createForm (PatientSearchType::class, $search );
-
+//		$user=$this->getUser()->getId();
 		$form->handleRequest( $request );
 //        var_dump($search);
 //		$this->addFlash('error', 'Pas de résultats');
-		$patients = $paginator->paginate(
-			$this->repo->findAllQuery( $search ),
-			$request->query->getInt( 'page', 1 ),
-			5
-		);
+		if ( $form->isSubmitted() && $form->isValid() ){
+			$patients = $paginator->paginate(
+				$this->repo->findAllQuery($search),
+				$request->query->getInt( 'page', 1 ),
+				9
+			);
 
-		return $this->render( 'admin/patient/index.html.twig', [
-			'current_menu' => 'patients',
-			'patients'     => $patients,
-			'form'         => $form->createView()
+			return $this->render( 'admin/patient/index.html.twig', [
+				'current_menu' => 'patients',
+				'patients'     => $patients,
+				'form'         => $form->createView()
+			] );
+
+		}
+		return $this->render( 'admin/patient/search.html.twig', [
+			'form'    => $form->createView()
 		] );
+
 	}
 
 	/**
@@ -87,7 +112,7 @@ class PatientController extends AbstractController {
 			// 4) save the patient!
 			$manager->persist( $patient );
 			$manager->flush();
-			$this->addFlash( 'sucess', 'patient ajouté avec succès' );
+			$this->addFlash( 'success', 'Le patient ajouté avec succès' );
 
 			return $this->redirectToRoute( 'patient_index' );
 		}
@@ -132,10 +157,9 @@ class PatientController extends AbstractController {
 	 */
 	public function deleteAction( Patient $patient, ObjectManager $manager)
 	{
-
 		$manager->remove( $patient );
 		$manager->flush();
-
+		$this->addFlash( 'success', 'le patient a Bien été supprimé' );
 		return $this->redirectToRoute( 'patient_index' );
 
 	}
@@ -148,7 +172,6 @@ class PatientController extends AbstractController {
 	 */
 	public function showAction( Patient $patient ) {
 		return $this->render( 'admin/patient/show.html.twig', [ 'patient' => $patient ] );
-
 	}
 
 	/**
@@ -162,8 +185,9 @@ class PatientController extends AbstractController {
 	public function searchAction( Request $request ) {
 		$searchString = $request->get( 'q' );
 		if ( strlen( $searchString ) < 2 ) {
-			return new Response( "Invalid search query", 406 );
+			return new Response( 'Invalid search query', 406 );
 		}
+//		$user= $this->getUser()->getId();
 //		dump($searchString);
 		$entityManager = $this->getDoctrine()->getManager();
 		$query         = $entityManager->createQuery( '
@@ -204,9 +228,10 @@ class PatientController extends AbstractController {
 				$manager->remove( $patient );
 			}
 			$manager->flush();
+
 			return new JsonResponse($ids);
 		}
-
+		$this->addFlash( 'success', 'le patient a Bien été modifié' );
 		return new JsonResponse('no results found', Response::HTTP_NOT_FOUND);
 	}
 

@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Patient;
 use App\Entity\PatientSearch;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Doctrine\ORM\Query;
@@ -21,6 +22,7 @@ class PatientRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Patient::class);
     }
+
 
     /**
      * @return Query
@@ -60,8 +62,11 @@ class PatientRepository extends ServiceEntityRepository
      */
     private function findQuery():QueryBuilder
     {
+
         return $this->createQueryBuilder('p')
-            ->orderBy('p.id');
+	        ->orderBy( 'p.DOCTOR', 'ASC' );
+
+
 
 
     }

@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Booking{% endblock %}
+{% block title %}Rendez-vous {% endblock %}
 
 {% block body %}
-    <h1>Rdv</h1>
+    <h3>{{ booking.patient }}</h3>
 
     <table class="table">
         <tbody>
@@ -12,7 +12,7 @@
             <td>{{ booking.doctor }}</td>
         </tr>
         <tr>
-            <th>Nom et Prénom du Patient</th>
+            <th>Nom et Prénom du Patient </th>
             <td>{{ booking.patient }}</td>
         </tr>
         <tr>

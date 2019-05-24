@@ -3,7 +3,7 @@ easy_admin:
     User:
       class: App\Entity\User
       list:
-        title: 'liste des Utilisateurs'
+        title: 'Liste des Utilisateurs'
         fields: ['id', 'lastName', 'firstName', 'username', 'enabled', 'roles']
       form:  # <-- 'form' is applied to both 'new' and 'edit' views
         fields:

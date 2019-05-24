@@ -17,8 +17,9 @@
     <div style="text-align: center " class="row justify-content-center align-items-center flex-column mt-5 ">
         <div><strong>CABINET DE MEDECINE GENERALE</strong></div>
 
-        <div><p> Address : </p></div>
-        <div><p>Tel : </p></div>
+        <div><p> Address : 108 Rue du Parc </p>
+       <p> Yerres 91330</p> </div>
+        <p>Tel : 01 XX XX XX XX XX </p>
     </div>
     <div class="row align-content-start flex-column">
         <div><strong>Docteur {{ app.user.FullName }} </strong></div>
@@ -29,7 +30,7 @@
         <div><p>N° RPPS : XX XX XX XX XX</p></div>
     </div>
     <div class="row flex-column">
-        <div style="float: right;">
+        <div class="col-md-6" style="float: right;">
             <table>
             <ul style="list-style: none; ">
                 <li>Le {{ consultation.createdAt|date('d M Y') }} </li>

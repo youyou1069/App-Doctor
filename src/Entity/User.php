@@ -54,7 +54,6 @@ class User extends BaseUser
         parent::__construct();
         $this->patients = new ArrayCollection();
         $this->bookings = new ArrayCollection();
-        // your own logic
     }
 
     /**

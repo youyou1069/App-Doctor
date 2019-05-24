@@ -10,6 +10,7 @@ use App\Entity\Patient;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
@@ -19,11 +20,7 @@ class ConsultationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-//            ->add('patient', EntityType::class, [
-//                'class'=> Patient::class,
-//                'choice_label' => 'FullName',
-//                'placeholder' => 'Nom et Prénom'
-//            ])
+
 	        ->add('patient', Select2EntityType::class, array(
 		        'multiple' => false,
 		        'remote_route'=>'patient_search',
@@ -40,8 +37,17 @@ class ConsultationType extends AbstractType
 	        ))
 
 
-            ->add('name')
-            ->add('diagnostic')
+            ->add('name', TextType::class, [
+	            'required' =>  true,
+	            'label'   => false,
+	            'attr'    => [
+		            'placeholder' => 'Motif de la visite'
+	            ]
+            ])
+            ->add('diagnostic', TextType::class, [
+	            'required' =>  false,
+	            'label'   => false,
+            ])
 
             ->add('medicament', Select2EntityType::class, array(
 		        'multiple' => true,
@@ -63,12 +69,30 @@ class ConsultationType extends AbstractType
 		        ],
 
 	        ))
-            ->add('treatment')
-            ->add('decision')
-            ->add('allergies')
-            ->add('medFamilyHistory')
-            ->add('medTreatmentHistory')
-            ->add('others')
+            ->add('treatment', TextType::class, [
+	            'required' =>  false,
+	            'label'   => false,
+            ])
+            ->add('decision', TextType::class, [
+	            'required' =>  false,
+	            'label'   => false,
+            ])
+            ->add('allergies', TextType::class, [
+	            'required' =>  false,
+	            'label'   => false,
+            ])
+            ->add('medFamilyHistory', TextType::class, [
+	            'required' =>  false,
+	            'label'   => false,
+            ])
+            ->add('medTreatmentHistory', TextType::class, [
+	            'required' =>  false,
+	            'label'   => false,
+            ])
+            ->add('others', TextType::class, [
+	            'required' =>  false,
+	            'label'   => false,
+            ])
 
 
 // Ajouter le formulaire des MedHistory

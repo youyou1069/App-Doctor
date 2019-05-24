@@ -4,6 +4,7 @@ namespace App\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BookingRepository")
@@ -19,11 +20,13 @@ class Booking
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\GreaterThan("+10min ")
      */
     private $beginAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     *  @Assert\GreaterThan(propertyPath="beginAt")
      */
     private $endAt;
 
@@ -39,7 +42,7 @@ class Booking
     private $patient;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="bookings" , cascade={"remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="bookings")
      */
     private $doctor;
 
