@@ -8,54 +8,43 @@ use App\Form\PatientSearchType;
 use App\Form\PatientType;
 use App\Repository\PatientRepository;
 use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\ORM\EntityManager;
+use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
 class PatientController extends AbstractController {
 	private $repo;
-	/**
-	 * @var ObjectManager
-	 */
-	private $em;
 
-	/**
-	 * PropertyController constructor.
-	 *
-	 * @param PatientRepository $repo
-	 * @param ObjectManager $sm
-	 */
-	public function __construct( PatientRepository $repo, ObjectManager $sm ) {
+	public function __construct( PatientRepository $repo ) {
 		$this->repo = $repo;
-		/** @noinspection UnusedConstructorDependenciesInspection */
-		/** @noinspection UnusedConstructorDependenciesInspection */
-		$this->em = $sm;
 	}
 
 	/**
 	 * @Route("/patient", name="patient_index")
+	 * @param PaginatorInterface $paginator
+	 * @param Request $request
+	 * @return Response
 	 */
-	public function indexAction(PatientRepository $repo, PaginatorInterface $paginator, Request $request)
+	public function indexAction(PaginatorInterface $paginator, Request $request ): Response
 	{
-		$user= $this->getUser()->getId();
+		$user = $this->getUser()->getId();
 		$patients = $paginator->paginate(
-			$this->repo->findBy(['DOCTOR'=> $user]),
+			$this->repo->findBy( [ 'DOCTOR' => $user ] ),
 			$request->query->getInt( 'page', 1 ),
 			4
 		);
-		return $this->render ('admin/patient/index.html.twig', [
+
+		return $this->render( 'admin/patient/index.html.twig', [
 			'current_menu' => 'patients',
 			'patients'     => $patients,
-
-		]);
+		] );
 	}
 
 	/**
@@ -63,19 +52,18 @@ class PatientController extends AbstractController {
 	 * @param PaginatorInterface $paginator
 	 * @param Request $request
 	 *
-	 * @return \Symfony\Component\HttpFoundation\Response
+	 * @return Response
 	 */
-	public function rechercherAction (PaginatorInterface $paginator, Request $request)
-	{
+	public function rechercherAction( PaginatorInterface $paginator, Request $request ): Response {
 		$search = new PatientSearch();
-		$form   = $this->createForm (PatientSearchType::class, $search );
+		$form   = $this->createForm( PatientSearchType::class, $search );
 //		$user=$this->getUser()->getId();
 		$form->handleRequest( $request );
 //        var_dump($search);
 //		$this->addFlash('error', 'Pas de résultats');
-		if ( $form->isSubmitted() && $form->isValid() ){
+		if ( $form->isSubmitted() && $form->isValid() ) {
 			$patients = $paginator->paginate(
-				$this->repo->findAllQuery($search),
+				$this->repo->findAllQuery( $search ),
 				$request->query->getInt( 'page', 1 ),
 				9
 			);
@@ -85,24 +73,22 @@ class PatientController extends AbstractController {
 				'patients'     => $patients,
 				'form'         => $form->createView()
 			] );
-
 		}
-		return $this->render( 'admin/patient/search.html.twig', [
-			'form'    => $form->createView()
-		] );
 
+		return $this->render( 'admin/patient/search.html.twig', [
+			'form' => $form->createView()
+		] );
 	}
 
 	/**
 	 * @Route("/patient/new/", name="patient_new")
 	 * @param Request $request
 	 * @param ObjectManager $manager
-	 * @param UserPasswordEncoderInterface $encoder
-	 * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-	 * @throws \Exception
+	 *
+	 * @return RedirectResponse|Response
+	 * @throws Exception
 	 */
-	public function newAction (Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder)
-	{
+	public function newAction( Request $request, ObjectManager $manager ) {
 		// 1) build the form
 		$patient = new Patient();
 		$form    = $this->createForm( PatientType::class, $patient );
@@ -128,7 +114,8 @@ class PatientController extends AbstractController {
 	 * @param Patient $patient
 	 * @param Request $request
 	 * @param ObjectManager $manager
-	 * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+	 *
+	 * @return RedirectResponse|Response
 	 */
 	public function editAction( Patient $patient, Request $request, ObjectManager $manager ) {
 		$form = $this->createForm( PatientType::class, $patient );
@@ -154,35 +141,63 @@ class PatientController extends AbstractController {
 	 * @Route("/patient/{id}/delete/", name="patient_delete", methods={"DELETE"})
 	 * @param Patient $patient
 	 * @param ObjectManager $manager
+	 *
+	 * @return RedirectResponse
 	 */
-	public function deleteAction( Patient $patient, ObjectManager $manager)
-	{
+	public function deleteAction( Patient $patient, ObjectManager $manager ): RedirectResponse {
 		$manager->remove( $patient );
 		$manager->flush();
 		$this->addFlash( 'success', 'le patient a Bien été supprimé' );
+
 		return $this->redirectToRoute( 'patient_index' );
 
 	}
 
-
 	/**
 	 * @Route ("/patient/{id}", name="patient_show")
 	 * @param Patient $patient
+	 *
 	 * @return Response
 	 */
-	public function showAction( Patient $patient ) {
+	public function showAction( Patient $patient ): Response {
 		return $this->render( 'admin/patient/show.html.twig', [ 'patient' => $patient ] );
+	}
+
+
+	/**
+	 * @Route("/item/deleteAll/", name="delete_item", methods={"POST"})
+	 * @param ObjectManager $manager
+	 * @param Request $request
+	 *
+	 * @return JsonResponse
+	 */
+	public function deleteAll( ObjectManager $manager, Request $request ): JsonResponse {
+
+		$ids = explode( ',', $request->get( 'ids' ) );
+		foreach ( $ids as $id ) {
+			$patients = $this->repo->findBy( array( 'id' => $ids ) );
+			foreach ( $patients as $patient ) {
+				$manager->remove( $patient );
+			}
+			$manager->flush();
+
+			return new JsonResponse( $ids );
+		}
+		$this->addFlash( 'success', 'le patient a Bien été supprimé' );
+
+		return new JsonResponse( 'Pas de résultats', Response::HTTP_NOT_FOUND );
 	}
 
 	/**
 	 * TetranzSelect2EntityBundle
 	 * @Route("/Patient/search", name="patient_search")
 	 * @Method({"GET"})
+	 *
 	 * @param Request $request
 	 *
 	 * @return Response
 	 */
-	public function searchAction( Request $request ) {
+	public function searchAction( Request $request ): Response {
 		$searchString = $request->get( 'q' );
 		if ( strlen( $searchString ) < 2 ) {
 			return new Response( 'Invalid search query', 406 );
@@ -194,8 +209,7 @@ class PatientController extends AbstractController {
             SELECT a FROM App:Patient a
             WHERE a.lastName LIKE :searchString
             OR a.firstName LIKE :searchString
-            ORDER BY a.firstName ASC
-              
+            ORDER BY a.firstName ASC           
        ' )
 		                               ->setParameter( 'searchString', '%' . $searchString . '%' );
 
@@ -206,33 +220,10 @@ class PatientController extends AbstractController {
 			$patientsArray[] = array(
 				'id'   => $patient->getId(),
 				'text' => $patient->__toString()
-
 			);
 		}
 
 		return new Response( json_encode( $patientsArray ), 200, array( 'Content-Type' => 'application/json' ) );
-	}
-
-
-	/**
-	 * @Route("/item/deleteAll/", name="delete_item", methods={"POST"})
-	 *
-	 */
-	public function deleteAll(ObjectManager $manager, Request $request)
-	{
-
-		$ids = explode(",", $request->get('ids'));
-		foreach ($ids as $id){
-			$patients = $this->repo->findBy(array('id' => $ids));
-			foreach ($patients as $patient){
-				$manager->remove( $patient );
-			}
-			$manager->flush();
-
-			return new JsonResponse($ids);
-		}
-		$this->addFlash( 'success', 'le patient a Bien été modifié' );
-		return new JsonResponse('no results found', Response::HTTP_NOT_FOUND);
 	}
 
 }

@@ -2,13 +2,9 @@
 
 namespace App\Form;
 
-use App\Entity\Actor;
 use App\Entity\Consultation;
 use App\Entity\Drug;
-use App\Entity\MedicalHistory;
 use App\Entity\Patient;
-use Doctrine\ORM\EntityRepository;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -32,10 +28,8 @@ class ConsultationType extends AbstractType
 		        'allow_clear' => true,
 		        'delay' => 250,
 		        'cache' => true,
-		        'cache_timeout' => 60000, // if 'cache' is true
-
+		        'cache_timeout' => 60000,
 	        ))
-
 
             ->add('name', TextType::class, [
 	            'required' =>  true,
@@ -67,7 +61,6 @@ class ConsultationType extends AbstractType
 			        'new_tag_prefix' => '__',
 			        'tag_separators' => '[",", " "]'
 		        ],
-
 	        ))
             ->add('treatment', TextType::class, [
 	            'required' =>  false,
@@ -92,13 +85,7 @@ class ConsultationType extends AbstractType
             ->add('others', TextType::class, [
 	            'required' =>  false,
 	            'label'   => false,
-            ])
-
-
-// Ajouter le formulaire des MedHistory
-//            ->add('medHistory', MedicalHistoryType::class)
-
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -64,54 +64,46 @@ class ConsultationController extends AbstractController
         $entity = new Consultation();
         $form = $this->createForm(ConsultationType::class, $entity);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $manager->persist($entity);
             $manager->flush();
             $this->addFlash('sucess', 'La consultation a été enregistré avec succès');
 	        $idPatient=$entity->getPatient()->getId();
 
-
         return $this->redirect($this->generateUrl('patient_show', array('id' => $idPatient)));
         }
-
         return $this->render('admin/consultation/new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
     }
+
 	/**
 	 * @Route ("consultation/{id}", name="consultation_show")
+	 * @param Consultation $consultation
 	 */
-	public function showAction(Consultation $consultation)
+	public function showAction(Consultation $consultation): void
 	{
-		$nom = $consultation->getPatient();
+		$name = $consultation->getPatient();
 		// Configure Dompdf according to your needs
 		$pdfOptions = new Options();
 		$pdfOptions->set('defaultFont', 'Arial');
-
 		// Instantiate Dompdf with our options
 		$dompdf = new Dompdf($pdfOptions);
-
 		// Retrieve the HTML generated in our twig file
 		$html = $this->renderView('admin/consultation/show.html.twig', [
 			'consultation'=> $consultation,
 		]);
-
 		// Load HTML to Dompdf
 		$dompdf->loadHtml($html);
-
 		// (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
 		$dompdf->setPaper('A4', 'portrait');
-
 		// Render the HTML as PDF
 		$dompdf->render();
-
 		// Output the generated PDF to Browser (force download)
-		$dompdf->stream("$nom.pdf", [
-			"Attachment" => false
+		$dompdf->stream("$name.pdf", [
+			'Attachment' => false
 		]);
-
 	}
 	/**
 	 * @Route("/consultation{id}/edit/", name="consultation_edit", methods={"GET|POST"})

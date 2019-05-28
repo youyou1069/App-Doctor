@@ -32,25 +32,27 @@
     <div class="row flex-column">
         <div class="col-md-6" style="float: right;">
             <table>
-            <ul style="list-style: none; ">
-                <li>Le {{ consultation.createdAt|date('d M Y') }} </li>
-                <li> <strong> {{ consultation.patient.fullName }}  </strong></li>
-                <li>Né(e) le {{ consultation.patient.birthAt |date ('d M Y') }} </li>
-            </ul>
+                <tr>
+                    <td> Le {{ consultation.createdAt|date('d M Y') }}</td>
+                </tr>
+                <tr>
+                    <td> <strong> {{ consultation.patient.fullName |nl2br}}</td>
+                </tr>
+                <tr>
+                    <td>Né(e) le {{ consultation.patient.birthAt |date("m/d/Y", "Europe/Paris")  }}</td>
+                </tr>
             </table>
         </div>
-
 
     </div>
     <div style="clear: both;" class="row align-content-start flex-column">
         <p>Traitement</p>
-{#        {{ dump(consultation)}}#}
 
         {% for medicament in consultation.medicament %}
             <li style="list-style: none;">{{ medicament.denomination }}</li>
 
         {% endfor %}
-{#        <p>{{ consultation.medicament }}</p>#}
+
         <p>{{ consultation.treatment|nl2br }}</p>
 
 

@@ -51,15 +51,17 @@
                     </ul>
                     <ul class="navbar-nav flex-row ">
 
-                        {% if is_granted('ROLE_USER') %}
+                        {% if is_granted('ROLE_DOCTOR') %}
 
                             <li class="nav-item ">
                                 <a class="nav-item btn btn-secondary border-bottom"><i class="fa fa-user fa-fw"></i>
-                                    Bienvenue {{ app.user.username | title }}  </a>
+                                       Bienvenue Dr {{ app.user.firstName | title }}  </a>
                             </li>
+                        {% elseif is_granted('ROLE_COLLABORATOR') %}
+                            <a class="nav-item btn btn-secondary border-bottom"><i class="fa fa-user fa-fw"></i>
+                            Bienvenue  {{ app.user.firstName | title }}  </a>
+
                         {% endif %}
-
-
 
                         {% if is_granted('ROLE_USER') %}
                             <li class="nav-item">
@@ -105,9 +107,6 @@
                         </li>
                     {% endif %}
                     {% if is_granted('ROLE_USER') %}
-{#                        <li class="nav-item">#}
-{#                            <a class="nav-link" href="{{ path('booking_calendar') }}"> Agenda </a>#}
-{#                        </li>#}
 
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('booking_index') }}">Liste des Rdv</a>

@@ -4,22 +4,34 @@ namespace App\Form;
 
 use App\Entity\Patient;
 use App\Entity\User;
-
 use Doctrine\ORM\EntityRepository;
+use phpDocumentor\Reflection\Types\Void_;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class PatientType extends AbstractType {
-	public function buildForm( FormBuilderInterface $builder, array $options ) {
+	public function buildForm( FormBuilderInterface $builder, array $options ):Void {
 		$builder
+			->add( 'DOCTOR', EntityType::class, array(
+				'class'         => User::class,
+				'choice_label'  => 'FullName',
+				'placeholder'   => 'Nom et Prénom *',
+				'query_builder' => static function ( EntityRepository $er ) {
+					$role = 'ROLE_DOCTOR';
+
+					return $er->createQueryBuilder( 'u' )
+					          ->orderBy( 'u.firstName', 'ASC' )
+					          ->andWhere( 'u.roles LIKE :role' )
+					          ->setParameter( 'role', '%' . $role . '%' );
+				},
+			) )
 			->add('lastName', TextType::class, [
 				'required' =>  true,
 				'label'   => false,
@@ -43,9 +55,18 @@ class PatientType extends AbstractType {
 				'required' => true,
 				'placeholder'   => 'Genre'
 			) )
-			->add( 'nir' )
-			->add( 'email' )
-			->add( 'phone' )
+			->add( 'nir', IntegerType::class, [
+				'required' =>  false,
+				'label'   => false,
+			])
+			->add( 'email', EmailType::class, [
+				'required' =>  false,
+				'label'   => false,
+			])
+			->add( 'phone' , IntegerType::class, [
+				'required' =>  false,
+				'label'   => false,
+			])
 			->add( 'address', TextType::class, [
 				'required' =>  true,
 				'label'   => false,
@@ -58,31 +79,10 @@ class PatientType extends AbstractType {
 				'required' =>  true,
 				'label'   => false,
 			])
-			->add( 'DOCTOR', EntityType::class, [
-				'class'         => User::class,
-				'choice_label'  => 'FullName',
-				'placeholder'   => 'Nom et Prénom *',
-				'query_builder' => function ( EntityRepository $er ) {
-					$role = "ROLE_DOCTOR";
-
-					return $er->createQueryBuilder( 'u' )
-					          ->orderBy( 'u.firstName', 'ASC' )
-					          ->andWhere( 'u.roles LIKE :role' )
-					          ->setParameter( 'role', '%' . $role . '%' );
-				},
-			] )
-
-//	        ->add('DOCTOR', EntityType::class, [
-//		        'class'=> User::class,
-//		        'choice_label' => 'FullName',
-//		        'placeholder' => 'Nom et Prénom'
-//	        ])
-
-
 		;
 	}
 
-	public function configureOptions( OptionsResolver $resolver ) {
+	public function configureOptions( OptionsResolver $resolver ):void {
 		$resolver->setDefaults( [
 			'data_class' => Patient::class,
 		] );
