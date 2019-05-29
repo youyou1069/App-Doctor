@@ -36,7 +36,7 @@ class Patient
     /**
      * @ORM\Column(type="date")
      * @var string A "Y-m-d" formatted value
-     * @Assert\LessThan("1 min")
+     * @Assert\LessThan("UTC + 2 hours")
      */
     private $birthAt;
 

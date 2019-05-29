@@ -17,79 +17,75 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class PatientType extends AbstractType {
-	public function buildForm( FormBuilderInterface $builder, array $options ):Void {
+	public function buildForm( FormBuilderInterface $builder, array $options ): Void {
 		$builder
-			->add( 'DOCTOR', TextType::class)
-			->add('lastName', TextType::class, [
-				'required' =>  true,
-				'label'   => false,
-				'attr'    => [
+			->add( 'DOCTOR', EntityType::class, array(
+				'class'         => User::class,
+				'choice_label'  => 'FullName',
+				'placeholder'   => 'Nom et Prénom *',
+				'query_builder' => static function ( EntityRepository $er ) {
+					$role = 'ROLE_DOCTOR';
+
+					return $er->createQueryBuilder( 'u' )
+					          ->orderBy( 'u.firstName', 'ASC' )
+					          ->andWhere( 'u.roles LIKE :role' )
+					          ->setParameter( 'role', '%' . $role . '%' );
+				},
+			) )
+			->add( 'lastName', TextType::class, [
+				'required' => true,
+				'label'    => false,
+				'attr'     => [
 					'placeholder' => 'Nom'
 				]
-			])
-			->add('firstName', TextType::class, [
-				'required' =>  true,
-				'label'   => false,
-				'attr'    => [
+			] )
+			->add( 'firstName', TextType::class, [
+				'required' => true,
+				'label'    => false,
+				'attr'     => [
 					'placeholder' => 'Prénom'
 				]
-			])
+			] )
 			->add( 'birthAt', BirthdayType::class, [
 				'widget' => 'single_text',
 				'format' => 'yyyy-MM-dd',
 			] )
 			->add( 'gender', ChoiceType::class, array(
-				'choices'  => array( 'Féminin' => 'Féminin', 'Masculin' => 'Masculin' ),
-				'required' => true,
-				'placeholder'   => 'Genre'
+				'choices'     => array( 'Féminin' => 'Féminin', 'Masculin' => 'Masculin' ),
+				'required'    => true,
+				'placeholder' => 'Genre'
 			) )
 			->add( 'nir', IntegerType::class, [
-				'required' =>  false,
-				'label'   => false,
-			])
+				'required' => false,
+				'label'    => false,
+			] )
 			->add( 'email', EmailType::class, [
-				'required' =>  false,
-				'label'   => false,
-			])
-			->add( 'phone' , IntegerType::class, [
-				'required' =>  false,
-				'label'   => false,
-			])
+				'required' => false,
+				'label'    => false,
+			] )
+			->add( 'phone', IntegerType::class, [
+				'required' => false,
+				'label'    => false,
+			] )
 			->add( 'address', TextType::class, [
-				'required' =>  true,
-				'label'   => false,
-			])
+				'required' => true,
+				'label'    => false,
+			] )
 			->add( 'postcode', IntegerType::class, [
-				'required' =>  true,
-				'label'   => false,
-			])
-			->add( 'city' , TextType::class, [
-				'required' =>  true,
-				'label'   => false,
-			])
-		;
+				'required' => true,
+				'label'    => false,
+			] )
+			->add( 'city', TextType::class, [
+				'required' => true,
+				'label'    => false,
+			] );
 	}
 
-	public function configureOptions( OptionsResolver $resolver ):void {
+	public function configureOptions( OptionsResolver $resolver ): void {
 		$resolver->setDefaults( [
 			'data_class' => Patient::class,
 		] );
 	}
 
-
-
-//->add( 'DOCTOR'	, EntityType::class, array(
-//				'class'         => User::class,
-//				'choice_label'  => 'FullName',
-//				'placeholder'   => 'Nom et Prénom *',
-//				'query_builder' => static function ( EntityRepository $er ) {
-//					$role = 'ROLE_DOCTOR';
-//
-//					return $er->createQueryBuilder( 'u' )
-//					          ->orderBy( 'u.firstName', 'ASC' )
-//					          ->andWhere( 'u.roles LIKE :role' )
-//					          ->setParameter( 'role', '%' . $role . '%' );
-//				},
-//			) )
-
 }
+

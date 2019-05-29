@@ -87,7 +87,8 @@ class PatientController extends AbstractController {
 	 * @return RedirectResponse|Response
 	 * @throws Exception
 	 */
-	public function newAction( Request $request, ObjectManager $manager ) {
+	public function newAction( Request $request, ObjectManager $manager )
+	{
 		// 1) build the form
 		$user = $this->getUser();
 		$patient = new Patient();
@@ -100,7 +101,6 @@ class PatientController extends AbstractController {
 			$manager->persist( $patient );
 			$manager->flush();
 			$this->addFlash( 'success', 'Le patient ajouté avec succès' );
-
 			return $this->redirectToRoute( 'patient_index' );
 		}
 		return $this->render( 'admin/patient/new.html.twig', [
