@@ -19,19 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 class PatientType extends AbstractType {
 	public function buildForm( FormBuilderInterface $builder, array $options ):Void {
 		$builder
-			->add( 'DOCTOR', EntityType::class, array(
-				'class'         => User::class,
-				'choice_label'  => 'FullName',
-				'placeholder'   => 'Nom et Prénom *',
-				'query_builder' => static function ( EntityRepository $er ) {
-					$role = 'ROLE_DOCTOR';
-
-					return $er->createQueryBuilder( 'u' )
-					          ->orderBy( 'u.firstName', 'ASC' )
-					          ->andWhere( 'u.roles LIKE :role' )
-					          ->setParameter( 'role', '%' . $role . '%' );
-				},
-			) )
+			->add( 'DOCTOR', TextType::class)
 			->add('lastName', TextType::class, [
 				'required' =>  true,
 				'label'   => false,
@@ -88,5 +76,20 @@ class PatientType extends AbstractType {
 		] );
 	}
 
+
+
+//->add( 'DOCTOR'	, EntityType::class, array(
+//				'class'         => User::class,
+//				'choice_label'  => 'FullName',
+//				'placeholder'   => 'Nom et Prénom *',
+//				'query_builder' => static function ( EntityRepository $er ) {
+//					$role = 'ROLE_DOCTOR';
+//
+//					return $er->createQueryBuilder( 'u' )
+//					          ->orderBy( 'u.firstName', 'ASC' )
+//					          ->andWhere( 'u.roles LIKE :role' )
+//					          ->setParameter( 'role', '%' . $role . '%' );
+//				},
+//			) )
 
 }

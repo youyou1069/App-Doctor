@@ -20,7 +20,7 @@ class Booking
 
     /**
      * @ORM\Column(type="datetime")
-     * @Assert\GreaterThan("+10min ")
+     * @Assert\GreaterThan("UTC + 2hours")
      */
     private $beginAt;
 

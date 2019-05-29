@@ -84,13 +84,14 @@ class PatientController extends AbstractController {
 	 * @Route("/patient/new/", name="patient_new")
 	 * @param Request $request
 	 * @param ObjectManager $manager
-	 *
 	 * @return RedirectResponse|Response
 	 * @throws Exception
 	 */
 	public function newAction( Request $request, ObjectManager $manager ) {
 		// 1) build the form
+		$user = $this->getUser();
 		$patient = new Patient();
+		$patient->setDOCTOR($user);
 		$form    = $this->createForm( PatientType::class, $patient );
 		// 2) handle the submit (will only happen on POST)
 		$form->handleRequest( $request );
@@ -102,7 +103,6 @@ class PatientController extends AbstractController {
 
 			return $this->redirectToRoute( 'patient_index' );
 		}
-
 		return $this->render( 'admin/patient/new.html.twig', [
 			'patient' => '$patient',
 			'form'    => $form->createView()

@@ -19,6 +19,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -55,19 +56,27 @@ class ConsultationController extends AbstractController
         return $this->render('admin/consultation/index.html.twig');
     }
 
-    /**
-     * @Route("/consultation/new", name="consultation_new")
-     */
+	/**
+	 * @Route("/consultation/new", name="consultation_new")
+	 * @param Request $request
+	 * @param ObjectManager $manager
+	 * @return RedirectResponse|Response
+	 */
     public function newAction(Request $request, ObjectManager $manager)
     {
-
+//    	$id= $request->query->get('id');
+//		var_dump($id);
+//		die();
+//		if(!$id){
+//
+//		}
         $entity = new Consultation();
         $form = $this->createForm(ConsultationType::class, $entity);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $manager->persist($entity);
             $manager->flush();
-            $this->addFlash('sucess', 'La consultation a été enregistré avec succès');
+            $this->addFlash('success', 'La consultation a été enregistré avec succès');
 	        $idPatient=$entity->getPatient()->getId();
 
         return $this->redirect($this->generateUrl('patient_show', array('id' => $idPatient)));
@@ -111,7 +120,7 @@ class ConsultationController extends AbstractController
 	 * @param Request $request
 	 * @param ObjectManager $manager
 	 *
-	 * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+	 * @return RedirectResponse|Response
 	 */
 	public function editAction (Consultation $consultation, Request $request, ObjectManager $manager )
 	{

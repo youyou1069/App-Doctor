@@ -55,11 +55,11 @@
 
                             <li class="nav-item ">
                                 <a class="nav-item btn btn-secondary border-bottom"><i class="fa fa-user fa-fw"></i>
-                                       Bienvenue Dr {{ app.user.firstName | title }}  </a>
+                                       Bienvenue Dr {{ app.user.lastName | title }}  </a>
                             </li>
                         {% elseif is_granted('ROLE_COLLABORATOR') %}
                             <a class="nav-item btn btn-secondary border-bottom"><i class="fa fa-user fa-fw"></i>
-                            Bienvenue  {{ app.user.firstName | title }}  </a>
+                            Bienvenue  {{ app.user.lastName | title }}  </a>
 
                         {% endif %}
 

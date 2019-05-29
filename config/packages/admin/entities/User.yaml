@@ -7,7 +7,6 @@ easy_admin:
         fields: ['id', 'lastName', 'firstName', 'username', 'enabled', 'roles']
       form:  # <-- 'form' is applied to both 'new' and 'edit' views
         fields:
-
           - 'lastName'
           - 'firstName'
           - 'username'
