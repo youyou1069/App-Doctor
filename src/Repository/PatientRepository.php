@@ -42,11 +42,6 @@ class PatientRepository extends ServiceEntityRepository
                 ->andWhere('p.lastName = :lastName')
                 ->setParameter('lastName', $search->getLastName());
         }
-        if($search->getNir()){
-            $query = $query
-                ->andWhere('p.nir = :nir')
-                ->setParameter('nir', $search->getNir());
-        }
 
         if($search->getPostcode()){
             $query = $query

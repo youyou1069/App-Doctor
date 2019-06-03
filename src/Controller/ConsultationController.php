@@ -62,15 +62,15 @@ class ConsultationController extends AbstractController
 	 * @param ObjectManager $manager
 	 * @return RedirectResponse|Response
 	 */
-    public function newAction(Request $request, ObjectManager $manager)
+    public function newAction( Request $request, ObjectManager $manager)
     {
-//    	$id= $request->query->get('id');
-//		var_dump($id);
-//		die();
-//		if(!$id){
-//
-//		}
+    	$id= $request->query->get('id');
+
         $entity = new Consultation();
+        if(!$id){$entity->setPatient($id);
+
+}
+
         $form = $this->createForm(ConsultationType::class, $entity);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

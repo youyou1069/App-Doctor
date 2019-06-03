@@ -34,13 +34,17 @@ class PatientController extends AbstractController {
 	 */
 	public function indexAction(PaginatorInterface $paginator, Request $request ): Response
 	{
+//		Récupération de l'identifiant de l'utilisateur connecté
 		$user = $this->getUser()->getId();
+//		Creation d'une pagination avec KnpPaginator
 		$patients = $paginator->paginate(
+//	    Requête qui permet de sélectionner tous les éléments de la table patient
+//		en passant un paramètre l'idendifiant de l'utlisateur
 			$this->repo->findBy( [ 'DOCTOR' => $user ] ),
 			$request->query->getInt( 'page', 1 ),
-			4
+			8
 		);
-
+//		Affiche la vue, en passant un tableau contenant tous les enregistrements de la table.
 		return $this->render( 'admin/patient/index.html.twig', [
 			'current_menu' => 'patients',
 			'patients'     => $patients,
@@ -89,20 +93,35 @@ class PatientController extends AbstractController {
 	 */
 	public function newAction( Request $request, ObjectManager $manager )
 	{
-		// 1) build the form
+		// 1) Construction du formulaire
+//		Récupérer l'utilisateur connecté
 		$user = $this->getUser();
+//	    Créer un nouvel objet de type Patient
 		$patient = new Patient();
+//		Affecter une valeur user l'attribut Doctor
 		$patient->setDOCTOR($user);
+//		création d’un objet de type form. Cet objet va contenir le formulaire qui sera affiché.
+//      La création d’un formulaire nécessite au moins deux paramètres : un formType, et un objet correspondant au type pour lequel le formulaire est destiné
 		$form    = $this->createForm( PatientType::class, $patient );
-		// 2) handle the submit (will only happen on POST)
+		// 2) Gérer la soumission du formulaire
+//		Coïncider les éléments  issus du navigateur avec les données attendues dans le formulaire précédemment initialisé,
+//      elle recopie les données du navigateur dans les propriétés de l’objet.
 		$form->handleRequest( $request );
+//		Ce test permet de vérifier si le formulaire a ´été bien soumis (POST)
+//      et si les données saisies sont valides avec le descriptif donné dans le formType
 		if ( $form->isSubmitted() && $form->isValid() ) {
-			// 4) save the patient!
+			// 4) Enregistrer le patient
+//			EntityManager demande à doctrine de persister  l’objet dans la file d’attente de la base de données.
+//          A ce stade $patient contient les informations saisies par l’utilisateur.
 			$manager->persist( $patient );
+//			EntityManager demande à doctrine  Doctrine d'exécuter effectivement les requêtes nécessaires
+//          pour sauvegarder les entités qu'on lui a demandé de persister précédemment
 			$manager->flush();
 			$this->addFlash( 'success', 'Le patient ajouté avec succès' );
+//			L’application est redirigée vers la page de la liste des patients
 			return $this->redirectToRoute( 'patient_index' );
 		}
+
 		return $this->render( 'admin/patient/new.html.twig', [
 			'patient' => '$patient',
 			'form'    => $form->createView()
@@ -138,6 +157,16 @@ class PatientController extends AbstractController {
 
 
 	/**
+	 * @Route ("/patient/{id}", name="patient_show")
+	 * @param Patient $patient
+	 *
+	 * @return Response
+	 */
+	public function showAction( Patient $patient ): Response {
+		return $this->render( 'admin/patient/show.html.twig', [ 'patient' => $patient ] );
+	}
+
+	/**
 	 * @Route("/patient/{id}/delete/", name="patient_delete", methods={"DELETE"})
 	 * @param Patient $patient
 	 * @param ObjectManager $manager
@@ -151,16 +180,6 @@ class PatientController extends AbstractController {
 
 		return $this->redirectToRoute( 'patient_index' );
 
-	}
-
-	/**
-	 * @Route ("/patient/{id}", name="patient_show")
-	 * @param Patient $patient
-	 *
-	 * @return Response
-	 */
-	public function showAction( Patient $patient ): Response {
-		return $this->render( 'admin/patient/show.html.twig', [ 'patient' => $patient ] );
 	}
 
 
