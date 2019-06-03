@@ -159,7 +159,6 @@ class PatientController extends AbstractController {
 	/**
 	 * @Route ("/patient/{id}", name="patient_show")
 	 * @param Patient $patient
-	 *
 	 * @return Response
 	 */
 	public function showAction( Patient $patient ): Response {
