@@ -133,7 +133,6 @@ class PatientController extends AbstractController {
 	 * @param Patient $patient
 	 * @param Request $request
 	 * @param ObjectManager $manager
-	 *
 	 * @return RedirectResponse|Response
 	 */
 	public function editAction( Patient $patient, Request $request, ObjectManager $manager ) {
@@ -143,16 +142,13 @@ class PatientController extends AbstractController {
 			$manager->flush();
 			//confirmation de la mise à jour
 			$this->addFlash( 'success', 'le patient a Bien été modifié' );
-
 			return $this->redirectToRoute( 'patient_index' );
 		}
-
 		return $this->render( 'admin/patient/edit.html.twig', [
 			'form'    => $form->createView(),
 			'patient' => $patient,
 
 		] );
-
 	}
 
 
@@ -169,7 +165,6 @@ class PatientController extends AbstractController {
 	 * @Route("/patient/{id}/delete/", name="patient_delete", methods={"DELETE"})
 	 * @param Patient $patient
 	 * @param ObjectManager $manager
-	 *
 	 * @return RedirectResponse
 	 */
 	public function deleteAction( Patient $patient, ObjectManager $manager ): RedirectResponse {

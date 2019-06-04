@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Form;
-
 use App\Entity\Patient;
 use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
@@ -15,11 +14,9 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-
 class PatientType extends AbstractType {
 	public function buildForm( FormBuilderInterface $builder, array $options ): Void {
 		$builder
-
 			->add( 'lastName', TextType::class, [
 				'required' => true,
 				'label'    => false,

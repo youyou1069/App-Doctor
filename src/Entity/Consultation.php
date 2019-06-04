@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ConsultationRepository")
  */
@@ -104,10 +105,10 @@ class Consultation
 //     */
 //    private $doctor;
 
-    /**
-     * Consultation constructor.
-     * @param $createdAt
-     */
+	/**
+	 * Consultation constructor.
+	 * @throws \Exception
+	 */
     public function __construct()
     {
         $this->createdAt = new \DateTime('now');

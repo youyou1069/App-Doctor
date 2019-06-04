@@ -22,7 +22,7 @@ class ConsultationType extends AbstractType
 		        'remote_route'=>'patient_search',
 		        'class'=> Patient::class,
 		        'primary_key' => 'id',
-		        'text_property' => 'firstName',
+		        'text_property' => 'FullName',
 		        'minimum_input_length' => 2,
 		        'page_limit' => 10,
 		        'allow_clear' => true,

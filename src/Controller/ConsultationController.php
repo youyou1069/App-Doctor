@@ -61,16 +61,22 @@ class ConsultationController extends AbstractController
 	 * @param Request $request
 	 * @param ObjectManager $manager
 	 * @return RedirectResponse|Response
+	 * @throws \Exception
 	 */
     public function newAction( Request $request, ObjectManager $manager)
     {
-    	$id= $request->query->get('id');
-
-        $entity = new Consultation();
-        if(!$id){$entity->setPatient($id);
-
-}
-
+	    $entity = new Consultation();
+//	    dump($request->getMethod());die;
+//	    si id Patient est passé dans l'url
+	    if (isset($_GET['id'])){
+//	    récupérer l'id passé en url
+			$id= $request->query->get('id');
+			$em = $this->getDoctrine()->getManager();
+			$patient = $em->find(Patient::class, $id);
+//		    dump($patient);die;
+//		    Hydrater l'attribut patient
+			$entity->setPatient($patient);
+		}
         $form = $this->createForm(ConsultationType::class, $entity);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
