@@ -98,7 +98,7 @@ class PatientController extends AbstractController {
 		$user = $this->getUser();
 //	    Créer un nouvel objet de type Patient
 		$patient = new Patient();
-//		Affecter une valeur user l'attribut Doctor
+//		Hydrater l'attribut Doctor
 		$patient->setDOCTOR($user);
 //		création d’un objet de type form. Cet objet va contenir le formulaire qui sera affiché.
 //      La création d’un formulaire nécessite au moins deux paramètres : un formType, et un objet correspondant au type pour lequel le formulaire est destiné

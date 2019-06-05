@@ -11,10 +11,11 @@
                 aria-haspopup="true" aria-expanded="false"> Sélectionner une action
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="{{ path('patient_index') }}">liste des patient</a>
-            <a class="dropdown-item" href="{{ path('patient_edit', { 'id': patient.id }) }}"> modifier</a>
-            <a class="dropdown-item" href="{{ path('consultation_new', {'id':patient.id }) }}"> nouvelle
+            <a class="dropdown-item" href="{{ path('patient_index') }}">Liste des patients</a>
+            <a class="dropdown-item" href="{{ path('patient_edit', { 'id': patient.id }) }}"> Modifier </a>
+            <a class="dropdown-item" href="{{ path('consultation_new', {'id':patient.id }) }}"> Nouvelle
                 consultation </a>
+            <a class="dropdown-item" href="{{ path('booking_new', {'id':patient.id }) }}"> Nouveau rdv </a>
             <a class="dropdown-item" href="#">imprimer</a>
         </div>
     </div>

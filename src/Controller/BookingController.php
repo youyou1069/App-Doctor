@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Booking;
+use App\Entity\Patient;
 use App\Form\BookingType;
 use App\Repository\BookingRepository;
 use DateTime;
@@ -75,6 +76,25 @@ class BookingController extends AbstractController {
 	public function newAction( Request $request ): Response
 	{
 		$booking = new Booking();
+//      si user a le role doctor
+		if (true === $this->get('security.authorization_checker')->isGranted('ROLE_DOCTOR')){
+//		Récupérer l'utilisateur connecté
+		$user = $this->getUser();
+//		Hydrater l'attribut Doctor
+		$booking->setDoctor($user);
+		}
+//		si Id du patient est passé en URL
+		if (isset($_GET['id'])){
+//	    récupérer l'id passé en  GET
+			$id= $request->query->get('id');
+//		récupérer le patient dans la bdd
+			$em = $this->getDoctrine()->getManager();
+			$patient = $em->find(Patient::class, $id);
+//		    dump($patient);die;
+//		    Hydrater l'attribut patient
+			$booking->setPatient($patient);
+		}
+
 		$form    = $this->createForm( BookingType::class, $booking );
 		$form->handleRequest( $request );
 
