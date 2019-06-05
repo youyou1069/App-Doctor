@@ -157,7 +157,7 @@ class BookingController extends AbstractController {
 	public function deleteAction( Booking $booking, ObjectManager $manager ): RedirectResponse {
 		$manager->remove( $booking );
 		$manager->flush();
-		$this->addFlash( 'success', 'Le rendez-vous a Bien été supprime' );
+		$this->addFlash( 'success', 'Le rendez-vous a bien été supprime' );
 
 		return $this->redirectToRoute( 'booking_index' );
 	}
