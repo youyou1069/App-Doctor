@@ -10,10 +10,8 @@ namespace App\Controller;
 
 
 use App\Entity\Consultation;
-use App\Entity\MedicalHistory;
 use App\Entity\Patient;
 use App\Form\ConsultationType;
-use App\Form\PatientType;
 use App\Repository\ConsultationRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Dompdf\Dompdf;

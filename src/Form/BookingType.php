@@ -75,7 +75,8 @@ class BookingType extends AbstractType {
 			->add( 'title', TextType::class );
 	}
 
-	public function configureOptions( OptionsResolver $resolver ) {
+	public function configureOptions( OptionsResolver $resolver ): void
+	{
 		$resolver->setDefaults( [
 			'data_class' => Booking::class,
 		] );

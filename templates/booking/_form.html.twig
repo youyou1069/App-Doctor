@@ -42,6 +42,14 @@
         </div>
     </div>
     {{ form_end(form) }}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/js/select2.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/js/select2.js"></script>
+
+
     {% endblock %}
+{% block javascripts %}
+
+       <script src="{{ asset('bundles/tetranzselect2entity/js/select2entity.js') }}"></script>
+
+
+{% endblock %}

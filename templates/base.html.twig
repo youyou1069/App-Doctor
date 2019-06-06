@@ -11,19 +11,18 @@
         {% endblock %}
     </title>
     {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
               integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
               crossorigin="anonymous">
         <link rel="stylesheet" href="https://bootswatch.com/4/cerulean/bootstrap.min.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet"
-              href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker-standalone.css">
 
     {% endblock %}
 </head>
 <body>
 {% block nav %}
-    <header class="navbar navbar-expand  flex-column flex-md-row bd-navbar">
+    <header id="header" class="navbar navbar-expand  flex-column flex-md-row bd-navbar">
         <nav id="main-nav"
              class="container-fluid navbar navbar-expand-lg navbar-light bg-light border rounded mb-3 d-flex">
             <div class="container-fluid">
@@ -130,9 +129,9 @@
     </div>
 </div>
 
-<div id="footer">
+<div id="footer" >
     {% block footer %}
-        &copy; Copyright 2019 by <a href="#">InnovMed</a>.
+        &copy; Copyright 2019 by <a href="#" style="font: italic bold 15px/25px Georgia, serif">InnovMed</a>
     {% endblock %}
 </div>
 
