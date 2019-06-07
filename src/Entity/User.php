@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: REMYELFI
- * Date: 26/03/2019
- * Time: 12:06
- */
 
 namespace App\Entity;
 
@@ -41,8 +35,6 @@ class User extends BaseUser
      * @ORM\Column(type="string", length=255)
      */
     private $firstName;
-
-
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Booking", mappedBy="doctor", cascade={"remove"})
@@ -90,17 +82,6 @@ class User extends BaseUser
 
     /**
      * Get FullName
-     *
-     * @return string
-     */
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    /**
-     * Get FullName
-     *
      * @return string
      */
     public function getFullName()
