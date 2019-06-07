@@ -98,19 +98,24 @@ class Patient
      */
     private $DOCTOR;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Appointment", mappedBy="patient" , cascade={"remove"})
+     */
+    private $appointments;
+
 	/**
 	 * @return mixed
 	 */
 	public function getBookings() {
-         		return $this->bookings;
-         	}
+                        		return $this->bookings;
+                        	}
 
 	/**
 	 * @param mixed $bookings
 	 */
 	public function setBookings( $bookings ): void {
-         		$this->bookings = $bookings;
-         	}
+                        		$this->bookings = $bookings;
+                        	}
 
     /**
      * Patient constructor.
@@ -122,6 +127,7 @@ class Patient
 //        $this->medicalHistories = new ArrayCollection();
         $this->consultations = new ArrayCollection();
         $this->bookings = new ArrayCollection();
+        $this->appointments = new ArrayCollection();
     }
 
 
@@ -392,6 +398,37 @@ class Patient
     public function setDOCTOR(?User $DOCTOR): self
     {
         $this->DOCTOR = $DOCTOR;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Appointment[]
+     */
+    public function getAppointments(): Collection
+    {
+        return $this->appointments;
+    }
+
+    public function addAppointment(Appointment $appointment): self
+    {
+        if (!$this->appointments->contains($appointment)) {
+            $this->appointments[] = $appointment;
+            $appointment->setPatient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAppointment(Appointment $appointment): self
+    {
+        if ($this->appointments->contains($appointment)) {
+            $this->appointments->removeElement($appointment);
+            // set the owning side to null (unless already changed)
+            if ($appointment->getPatient() === $this) {
+                $appointment->setPatient(null);
+            }
+        }
 
         return $this;
     }

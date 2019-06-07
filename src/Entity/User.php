@@ -41,12 +41,18 @@ class User extends BaseUser
      */
     private $bookings;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Appointment", mappedBy="doctor", cascade={"remove"})
+     */
+    private $appointments;
+
 
     public function __construct()
     {
         parent::__construct();
         $this->patients = new ArrayCollection();
         $this->bookings = new ArrayCollection();
+        $this->appointments = new ArrayCollection();
     }
 
     /**
@@ -148,6 +154,37 @@ class User extends BaseUser
             // set the owning side to null (unless already changed)
             if ($booking->getDoctor() === $this) {
                 $booking->setDoctor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Appointment[]
+     */
+    public function getAppointments(): Collection
+    {
+        return $this->appointments;
+    }
+
+    public function addAppointment(Appointment $appointment): self
+    {
+        if (!$this->appointments->contains($appointment)) {
+            $this->appointments[] = $appointment;
+            $appointment->setDoctor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAppointment(Appointment $appointment): self
+    {
+        if ($this->appointments->contains($appointment)) {
+            $this->appointments->removeElement($appointment);
+            // set the owning side to null (unless already changed)
+            if ($appointment->getDoctor() === $this) {
+                $appointment->setDoctor(null);
             }
         }
 

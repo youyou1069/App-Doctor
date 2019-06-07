@@ -107,10 +107,10 @@
                     {% if is_granted('ROLE_USER') %}
 
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('booking_index') }}">Liste des Rdv</a>
+                            <a class="nav-link" href="{{ path('appointment_index') }}">Liste des Rdv</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('booking_new') }}">Nouveau Rdv</a>
+                            <a class="nav-link" href="{{ path('appointment_new') }}">Nouveau Rdv</a>
                         </li>
                     {% endif %}
                 </ul>
