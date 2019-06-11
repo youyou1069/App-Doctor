@@ -1,0 +1,55 @@
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+<br>
+{{ form_start(form) }}
+<h4>Médecin traitant</h4>
+<div class="row">
+    <div class="col-md-6">
+        {{ form_widget(form.doctor, {'attr':{'placeholder': "Médecin "}}) }}
+    </div>
+</div>
+<br>
+<h4>Patient</h4>
+<div class="row">
+    <div class="col-md-6">
+        {{ form_label(form.patient, 'Nom et Prénom *') }}
+        {{ form_widget(form.patient, {'attr':{'placeholder': "Nom et Prénom du Patient"}}) }}
+    </div>
+    <div class="col-md-6">
+        {{ form_label(form.title, 'Titre *') }}
+        {{ form_widget(form.title, {'attr':{'placeholder': "Titre "}}) }}
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-6">
+        {{ form_label(form.startAt, 'Date et heure * ') }}
+        {{ form_widget(form.startAt) }}
+    </div>
+    <div class="col-md-6">
+        {{ form_label(form.endAt, 'Fin du rdv ') }}
+
+        {{ form_widget(form.endAt, {'attr':{'placeholder': "fin du rdv "}}) }}
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-4">
+        <div class="row">
+            <a class="btn btn-primary" href="{{ path('appointment_index') }}" role="button">Liste des RDV</a>
+
+            <button type="submit" class="btn btn-success">Valider</button>
+        </div>
+    </div>
+    {{ form_end(form) }}
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/js/select2.js"></script>
+
+
+    {% endblock %}
+{% block javascripts %}
+
+       <script src="{{ asset('bundles/tetranzselect2entity/js/select2entity.js') }}"></script>
+
+
+{% endblock %}

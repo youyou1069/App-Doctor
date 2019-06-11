@@ -1,0 +1,16 @@
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau Rdv{% endblock %}
+{% block stylesheets %}
+    {{ parent()}}
+    <link  rel="stylesheet" {{ asset('/node_modules/jquery-datetimepicker/jquery.datetimepicker.css') }}>
+{% endblock %}
+{% block body %}
+    <h1>Nouveau Rendez-vous</h1>
+
+    {{ include('appointment/_form.html.twig') }}
+
+
+{% endblock %}
+

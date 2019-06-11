@@ -39,4 +39,4 @@ security:
         - { path: ^/admin/, role: ROLE_ADMIN }
         - { path: ^/patient/, role: ROLE_DOCTOR }
         - { path: ^/consultation/, role: ROLE_DOCTOR }
-        - { path: ^/booking/, role: [ROLE_COLLABORATOR , ROLE_DOCTOR] }
+        - { path: ^/appointment/, role: [ROLE_COLLABORATOR , ROLE_DOCTOR] }

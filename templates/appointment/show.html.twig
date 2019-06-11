@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Rendez-vous {% endblock %}
+
+{% block body %}
+    <h3>{{ appointment.patient }}</h3>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Nom et Prénom du Docteur</th>
+            <td>{{ appointment.doctor }}</td>
+        </tr>
+        <tr>
+            <th>Nom et Prénom du Patient </th>
+            <td>{{ appointment.patient }}</td>
+        </tr>
+        <tr>
+            <th>Titre</th>
+            <td>{{ appointment.title }}</td>
+        </tr>
+        <tr>
+            <th>Debut du Rdv</th>
+            <td>{{ appointment.startAt ? appointment.startAt|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Fin du Rdv</th>
+            <td>{{ appointment.endAt ? appointment.endAt|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
+
+        </tbody>
+    </table>
+    <div class="text">
+
+        <a href="{{ path('appointment_index') }}" class="btn btn-primary">Liste des Rdv</a>
+        <form method="post" action="{{ path('appointment_delete', {'id':appointment.id }) }}"
+              style="display: inline-block" onsubmit="return confirm('Etes vous vraiment sûr ?')">
+            <input type="hidden" name="_method" value="DELETE">
+            <button class="btn btn-danger" >  <i class="fa fa-trash-o"></i> </button>
+        </form>
+    </div>
+{% endblock %}
+{% block javascripts %}
+
+{% endblock %}

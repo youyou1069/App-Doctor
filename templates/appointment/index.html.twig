@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Afficher les rdv {% endblock %}
+
+{% block body %}
+    <h1>Liste des rdv </h1>
+
+    <table class="table">
+        {% if is_granted('ROLE_COLLABORATOR') %}
+        <thead>
+        <tr>
+            <th>Docteur </th>
+            <th>Patient </th>
+            <th>Date du Rdv </th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for appointment in appointments %}
+            <tr>
+                <td>{{ appointment.DOCTOR.FullName }}</td>
+                <td>{{ appointment.patient }}</td>
+                <td>{{ appointment.startAt ? appointment.startAt|date('d-m-Y H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('appointment_show', {'id':appointment.id }) }}" class="btn btn-secondary"> <i class="fa fa-file-o" aria-hidden="true"></i> Fiche Rdv </a>
+                    <a href="{{ path('appointment_new', {'id':appointment.patient.id }) }}" class="btn btn-secondary"> <i
+                                class="fa fa-plus-circle" aria-hidden="true"></i> Nouveau rdv </a>
+                    <a href="{{ path('appointment_edit', {'id': appointment.id}) }}" class="btn btn-secondary"> <i class="fa fa-pencil"></i> </a>
+                    <form method="post" action="{{ path('appointment_delete', {'id':appointment.id }) }}"
+                          style="display: inline-block" onsubmit="return confirm('Vous voulez vraiment supprimer ce rendez-vous ?')">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+                    </form>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucun résultat</td>
+            </tr>
+        {% endfor %}
+        {% endif %}
+        </tbody>
+        {% if is_granted('ROLE_DOCTOR') %}
+        <thead>
+        <tr>
+            <th>Patient </th>
+            <th>Date du Rdv </th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for appointment in app.user.appointments %}
+            <tr>
+
+                <td>{{ appointment.patient }}</td>
+                <td>{{ appointment.startAt ? appointment.startAt|date('d-m-Y H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('appointment_show', {'id':appointment.id }) }}" class="btn btn-secondary"> <i class="fa fa-file-o" aria-hidden="true"></i> Fiche Rdv </a>
+                    <a href="{{ path('appointment_new', {'id':appointment.patient.id }) }}" class="btn btn-secondary"> <i
+                                class="fa fa-plus-circle" aria-hidden="true"></i> Nouveau Rdv </a>
+                    <a href="{{ path('appointment_edit', {'id': appointment.id}) }}" class="btn btn-secondary"> <i class="fa fa-pencil"></i> </a>
+                    <form method="post" action="{{ path('appointment_delete', {'id':appointment.id }) }}"
+                          style="display: inline-block" onsubmit="return confirm('Etes vous vraiment sûr ?')">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+                    </form>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucun résultat</td>
+            </tr>
+        {% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+    <div class="text">
+        <a href="{{ path('appointment_new') }}" class="btn btn-primary"> <i class="fa fa-plus-circle" aria-hidden="true"></i> Nouveau Rdv</a>
+    </div>
+
+    <br/>
+    <br/>
+
+    <div class="text-center">{{ knp_pagination_render(appointments) }}</div>
+
+{% endblock %}

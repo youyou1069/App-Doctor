@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/calendar.css') }}" />
+
+{% endblock %}
+{% block body %}
+
+
+        <div class="row">
+            <div class="col-md-4">
+                <a class="btn btn-primary" href="{{ path('appointment_new') }}" role="button">Nouveau Rdv</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                {% include 'appointment/calendarbase.html.twig' %}
+            </div>
+        </div>
+
+
+  {% endblock %}
+
+
+{% block javascripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#calendar-holder').fullCalendar({
+                locale: 'fr',
+                header: {
+                    left: 'prev, next, today',
+                    center: 'title',
+                    right: 'month, agendaWeek, agendaDay'
+                },
+                allDaySlot: false,
+                lazyFetching: true,
+                navLinks: true,
+                selectable: true,
+                editable: true,
+                eventDurationEditable: true,
+                select: function(start, end, allDay)
+                {
+                    // var doctor = prompt("Enter Event Doctor");
+                    // var patient= prompt("Enter Event Patient");
+                    var title = prompt("Enter Event Title");
+                    if(title)
+                    {
+                        var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
+                        var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
+                        // console.log(title);
+                        // console.log(start);
+                        // console.log(end);
+                        // var donnee = [title,  start, end ]   ;
+                        // console.log(donnee);
+                        // console.log(dataEvent);
+                        $.ajax({
+                            url:"{{ path('appointment_new') }}",
+                            type:"get",
+                            data: 'title='+ title+'&start='+ start +'&end='+ end ,
+                            success:function()
+
+                            {
+                                // calendar.fullCalendar('refetchEvents');
+                                alert("Added Successfully");
+                            }
+
+                        })
+                    }
+                },
+                eventSources: [
+                    {
+                        url: '/fc-load-events',
+                        type: 'POST',
+                        data:  {
+                            filters: {}
+                        },
+                        error: function () {
+                            alert('There was an error while fetching FullCalendar!');
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+
+
+
+{% endblock %}
