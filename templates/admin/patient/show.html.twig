@@ -147,10 +147,10 @@
                     <tbody>
                     {% for item in patient.appointments %}
                         <tr>
-                            <td><a href="{{ path('appointment_show', { 'id': item.id }) }}">{{ item.title }}</a></td>
+                            <td><a href="{{ path('appointment_show', { 'id': item.id}) }}">{{ item.title }}</a></td>
                             <td>{{ item.startAt|date('d/m/Y H:i:s') }}</td>
                             <td style="text-align: right">
-                                <a href="{{ path('appointment_edit', {'id': item.id }) }}"  class="btn btn-secondary "> <i class="fa fa-pencil"></i>  </a>
+                                <a href="{{ path('appointment-edit', {'id': item.id, mode:1, 'pid':item.patient.id }) }}"  class="btn btn-secondary "> <i class="fa fa-pencil"></i>  </a>
                             </td>
                         </tr>
                     {% endfor %}

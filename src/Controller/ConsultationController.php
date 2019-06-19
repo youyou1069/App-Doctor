@@ -16,6 +16,7 @@ use App\Repository\ConsultationRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,7 +48,7 @@ class ConsultationController extends AbstractController
     /**
      * @Route("/consultation/", name="consultation_index")
      */
-    public function indexAction()
+    public function indexAction(): Response
     {
         return $this->render('admin/consultation/index.html.twig');
     }
@@ -57,7 +58,7 @@ class ConsultationController extends AbstractController
 	 * @param Request $request
 	 * @param ObjectManager $manager
 	 * @return RedirectResponse|Response
-	 * @throws \Exception
+	 * @throws Exception
 	 */
     public function newAction( Request $request, ObjectManager $manager)
     {
@@ -126,14 +127,13 @@ class ConsultationController extends AbstractController
 	 */
 	public function editAction (Consultation $consultation, Request $request, ObjectManager $manager )
 	{
-
 		$form = $this->createForm( ConsultationType::class, $consultation );
 
 		$form->handleRequest( $request );
 		if ( $form->isSubmitted() && $form->isValid() ) {
 			$manager->flush();
 			//confirmation de la mise à jour
-			$this->addFlash( 'success', 'l\'ordonnance a Bien été modifiée' );
+			$this->addFlash( 'success', 'L\'ordonnance a  bien été modifiée' );
 			$idPatient=$consultation->getPatient()->getId();
 
 			return $this->redirect($this->generateUrl('patient_show', array ( 'id' => $idPatient)));
@@ -146,17 +146,18 @@ class ConsultationController extends AbstractController
 		] );
 
 	}
+
 	/**
 	 * @Route("/consultation/{id}/delete/", name="consultation_delete", methods={"DELETE"})
 	 * @param Consultation $consultation
 	 * @param ObjectManager $manager
+	 * @return RedirectResponse
 	 */
-	public function deleteAction ( Consultation $consultation, ObjectManager $manager)
+	public function deleteAction ( Consultation $consultation, ObjectManager $manager): RedirectResponse
 	{
-
 		$manager->remove( $consultation );
 		$manager->flush();
-		$this->addFlash( 'success', 'l\'ordonnance a Bien été supprimée' );
+		$this->addFlash( 'success', 'L\'ordonnance a bien été supprimée' );
 		$idPatient=$consultation->getPatient()->getId();
 
 		return $this->redirect($this->generateUrl('patient_show', array ( 'id' => $idPatient)));

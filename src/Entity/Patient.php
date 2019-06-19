@@ -89,11 +89,6 @@ class Patient
     private $gender;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Booking", mappedBy="patient", cascade={"remove"})
-     */
-    private $bookings;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="patients")
      */
     private $DOCTOR;
@@ -103,20 +98,6 @@ class Patient
      */
     private $appointments;
 
-	/**
-	 * @return mixed
-	 */
-	public function getBookings() {
-                        		return $this->bookings;
-                        	}
-
-	/**
-	 * @param mixed $bookings
-	 */
-	public function setBookings( $bookings ): void {
-                        		$this->bookings = $bookings;
-                        	}
-
     /**
      * Patient constructor.
      * @throws \Exception
@@ -124,9 +105,7 @@ class Patient
     public function __construct()
     {
         $this->createdAt = new DateTime('now');
-//        $this->medicalHistories = new ArrayCollection();
         $this->consultations = new ArrayCollection();
-        $this->bookings = new ArrayCollection();
         $this->appointments = new ArrayCollection();
     }
 
@@ -352,38 +331,6 @@ class Patient
             // set the owning side to null (unless already changed)
             if ($consultation->getPatient() === $this) {
                 $consultation->setPatient(null);
-            }
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * @return Collection|Booking[]
-     */
-    public function getBooking(): Collection
-    {
-        return $this->bookings;
-    }
-
-    public function addBooking(Booking $booking): self
-    {
-        if (!$this->bookings->contains($booking)) {
-            $this->bookings[] = $booking;
-            $booking->setPatient($this);
-        }
-
-        return $this;
-    }
-
-    public function removeBooking(Booking $booking): self
-    {
-        if ($this->bookings->contains($booking)) {
-            $this->bookings->removeElement($booking);
-            // set the owning side to null (unless already changed)
-            if ($booking->getPatient() === $this) {
-                $booking->setPatient(null);
             }
         }
 

@@ -89,7 +89,7 @@
                     alert("Sélectionner un patient");
                 } else {
 
-                    var check = confirm("Etes vous sur ?");
+                    var check = confirm("Etes vous sur de supprimer ?");
                     if (check == true) {
 
                         var join_selected_values = allVals.join(",");
@@ -104,7 +104,7 @@
                                 $(".sub_chk:checked").each(function () {
                                     $(this).parents("tr").remove();
                                 });
-                                alert("Item Deleted successfully.");
+                                alert("Elément supprimé avec succès!");
                             },
                             error: function (data) {
                                 alert(data.responseText);

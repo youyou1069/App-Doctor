@@ -2,7 +2,7 @@
 
 namespace App\EventListener;
 
-use App\Entity\Booking;
+use App\Entity\Appointment;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Toiba\FullCalendarBundle\Entity\Event;
@@ -37,21 +37,21 @@ class FullCalendarListener
 
         // Modify the query to fit to your entity and needs
         // Change b.beginAt by your start date in you custom entity
-        $bookings = $this->em->getRepository(Booking::class)
+        $appointments = $this->em->getRepository(Appointment::class)
             ->createQueryBuilder('b')
-            ->andWhere('b.beginAt BETWEEN :startDate and :endDate')
+            ->andWhere('b.startAt BETWEEN :startDate and :endDate')
             ->setParameter('startDate', $startDate->format('Y-m-d H:i:s'))
             ->setParameter('endDate', $endDate->format('Y-m-d H:i:s'))
             ->getQuery()->getResult();
 
-        foreach($bookings as $booking) {
+        foreach($appointments as $appointment) {
 
             // create the events with your own entity (here booking entity)
-            $bookingEvent = new Event(
+            $appointmentEvent = new Event(
 //	            $booking->getPatient() ,
-                $booking->getTitle(),
-                $booking->getBeginAt(),
-                $booking->getEndAt()
+                $appointment->getTitle(),
+                $appointment->getStartAt(),
+                $appointment->getEndAt()
 
             // If end date is null or not defined, it create an all day event
             );
@@ -63,14 +63,14 @@ class FullCalendarListener
             // $bookingEvent->setBackgroundColor($booking->getColor());
             // $bookingEvent->setCustomField('borderColor', $booking->getColor());
 
-            $bookingEvent->setUrl(
-                $this->router->generate('booking_show', array(
-                    'id' => $booking->getId(),
+            $appointmentEvent->setUrl(
+                $this->router->generate('appointment_show', array(
+                    'id' => $appointment->getId(),
                 ))
             );
 
             // finally, add the booking to the CalendarEvent for displaying on the calendar
-            $calendar->addEvent($bookingEvent);
+            $calendar->addEvent($appointmentEvent);
         }
     }
 }

@@ -126,20 +126,31 @@ class AppointmentController extends AbstractController
 
 	/**
 	 * @Route("appointment/{id}/edit", name="appointment_edit", methods={"GET","POST"})
+	 * @Route("appointment/{id}/edit/{mode}/{pid}", name="appointment-edit", methods={"GET","POST"})
 	 * @param Request $request
 	 * @param Appointment $appointment
 	 * @return Response
 	 */
-	public function editAction( Request $request, Appointment $appointment ): Response {
+	public function editAction($pid=null, $mode=null,  Request $request, Appointment $appointment): Response {
 		$form = $this->createForm( AppointmentType::class, $appointment );
 		$form->handleRequest( $request );
 
 		if ( $form->isSubmitted() && $form->isValid() ) {
 			$this->getDoctrine()->getManager()->flush();
 			$this->addFlash('success', 'Le rendez-vous à bien modifié');
-			return $this->redirectToRoute( 'appointment_index', [
-				'id' => $appointment->getId(),
-			] );
+			if($mode==null){
+				return $this->redirectToRoute( 'appointment_index', [
+					'id' => $appointment->getId(),
+				] );
+			}
+			else{
+
+				return $this->redirectToRoute( 'patient_show', [
+					'id' => $pid,
+				] );
+			}
+
+
 		}
 		return $this->render( 'appointment/edit.html.twig', [
 			'appointment' => $appointment,
