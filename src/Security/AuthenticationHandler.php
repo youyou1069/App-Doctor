@@ -41,13 +41,13 @@ class AuthenticationHandler extends AbstractFormLoginAuthenticator
 	public function getCredentials(Request $request)
 	{
 		$credentials = [
-			'email' => $request->request->get('username'),
+			'username' => $request->request->get('username'),
 			'password' => $request->request->get('password'),
 			'csrf_token' => $request->request->get('_csrf_token'),
 		];
 		$request->getSession()->set(
 			Security::LAST_USERNAME,
-			$credentials['email']
+			$credentials['username']
 		);
 		return $credentials;
 	}
@@ -57,7 +57,7 @@ class AuthenticationHandler extends AbstractFormLoginAuthenticator
 		if (!$this->csrfTokenManager->isTokenValid($token)) {
 			throw new InvalidCsrfTokenException();
 		}
-		return $this->userRepository->findOneBy(['email' => $credentials['email']]);
+		return $this->userRepository->findOneBy(['username' => $credentials['username']]);
 	}
 	public function checkCredentials($credentials, UserInterface $user)
 	{

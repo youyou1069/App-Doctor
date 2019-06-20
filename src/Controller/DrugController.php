@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +12,7 @@ class DrugController extends AbstractController
     /**
      * @Route("/drug", name="drug")
      */
-    public function index()
+    public function indexAction(): Response
     {
         return $this->render('drug/index.html.twig', [
             'controller_name' => 'DrugController',
@@ -22,14 +21,16 @@ class DrugController extends AbstractController
 
 	/**
 	 * @Route(path="/search", name="drug_search")
-	 * @Method({"GET"})
+	 * @param Request $request
+	 * @return Response
 	 */
-	public function searchAction(Request $request)
+	public function searchAction(Request $request): Response
 	{
 		$searchString = $request->get('q');
-		if(strlen($searchString) < 2)
-			return new Response("Invalid search query", 406);
-		dump($searchString);
+		if(strlen($searchString) < 2){
+			return new Response( 'Invalid search query', 406);
+		}
+//		dump($searchString);
 		$entityManager = $this->getDoctrine()->getManager();
 		$query = $entityManager->createQuery('
             SELECT a FROM App:Drug a
@@ -40,7 +41,7 @@ class DrugController extends AbstractController
 		                       ->setParameter('searchString', '%' . $searchString . '%');
 
 		$drugs = $query->getResult();
-		dump($drugs);
+//		dump($drugs);
 		$drugsArray = array();
 		foreach($drugs as $drug)
 		{

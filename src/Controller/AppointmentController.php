@@ -127,8 +127,11 @@ class AppointmentController extends AbstractController
 	/**
 	 * @Route("appointment/{id}/edit", name="appointment_edit", methods={"GET","POST"})
 	 * @Route("appointment/{id}/edit/{mode}/{pid}", name="appointment-edit", methods={"GET","POST"})
+	 * @param null $pid
+	 * @param null $mode
 	 * @param Request $request
 	 * @param Appointment $appointment
+	 *
 	 * @return Response
 	 */
 	public function editAction($pid=null, $mode=null,  Request $request, Appointment $appointment): Response {
@@ -138,20 +141,16 @@ class AppointmentController extends AbstractController
 		if ( $form->isSubmitted() && $form->isValid() ) {
 			$this->getDoctrine()->getManager()->flush();
 			$this->addFlash('success', 'Le rendez-vous à bien modifié');
-			if($mode==null){
+			if($mode===null){
 				return $this->redirectToRoute( 'appointment_index', [
 					'id' => $appointment->getId(),
 				] );
 			}
-			else{
-
 				return $this->redirectToRoute( 'patient_show', [
 					'id' => $pid,
 				] );
 			}
 
-
-		}
 		return $this->render( 'appointment/edit.html.twig', [
 			'appointment' => $appointment,
 			'form'    => $form->createView(),
@@ -163,7 +162,6 @@ class AppointmentController extends AbstractController
 	 * @Route("appointment/{id}", name="appointment_delete", methods={"DELETE"})
 	 * @param Appointment $appointment
 	 * @param ObjectManager $manager
-	 *
 	 * @return RedirectResponse
 	 */
 	public function deleteAction( Appointment $appointment, ObjectManager $manager ): RedirectResponse

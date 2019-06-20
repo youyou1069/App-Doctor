@@ -38,7 +38,7 @@ class SessionIdleHandler
 
 			if ($lapse > $this->maxIdleTime) {
 
-				$this->securityToken->setToken(null);
+				$this->securityToken->setToken();
 				$this->session->getFlashBag()->set('info', ' Vous êtes automatiquement déconnecté!');
 
 				// logout is defined in security.yaml.  See 'Logging Out' section here:

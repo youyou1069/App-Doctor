@@ -48,7 +48,6 @@
             </tr>
         {% endfor %}
 
-
         </tbody>
 
     </table>
@@ -90,7 +89,7 @@
                 } else {
 
                     var check = confirm("Etes vous sur de supprimer ?");
-                    if (check == true) {
+                    if (check === true) {
 
                         var join_selected_values = allVals.join(",");
                         console.log(join_selected_values);
@@ -104,7 +103,7 @@
                                 $(".sub_chk:checked").each(function () {
                                     $(this).parents("tr").remove();
                                 });
-                                alert("Elément supprimé avec succès!");
+                                alert("Elément(s) supprimé(s) avec succès!");
                             },
                             error: function (data) {
                                 alert(data.responseText);

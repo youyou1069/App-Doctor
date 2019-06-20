@@ -20,6 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 
 class PatientController extends AbstractController {
+
 	private $repo;
 
 	public function __construct( PatientRepository $repo ) {
@@ -55,7 +56,6 @@ class PatientController extends AbstractController {
 	 * @Route("/patient/rechercher/", name="patient_rechercher")
 	 * @param PaginatorInterface $paginator
 	 * @param Request $request
-	 *
 	 * @return Response
 	 */
 	public function rechercherAction( PaginatorInterface $paginator, Request $request ): Response {
@@ -117,7 +117,7 @@ class PatientController extends AbstractController {
 //			EntityManager demande à doctrine  Doctrine d'exécuter effectivement les requêtes nécessaires
 //          pour sauvegarder les entités qu'on lui a demandé de persister précédemment
 			$manager->flush();
-			$this->addFlash( 'success', 'Le patient ajouté avec succès' );
+			$this->addFlash( 'success', 'Le patient a été bien ajouté' );
 //			L’application est redirigée vers la page de la liste des patients
 			return $this->redirectToRoute( 'patient_index' );
 		}
@@ -141,7 +141,7 @@ class PatientController extends AbstractController {
 		if ( $form->isSubmitted() && $form->isValid() ) {
 			$manager->flush();
 			//confirmation de la mise à jour
-			$this->addFlash( 'success', 'le patient a Bien été modifié' );
+			$this->addFlash( 'success', 'le patient a bien été modifié' );
 			return $this->redirectToRoute( 'patient_index' );
 		}
 		return $this->render( 'admin/patient/edit.html.twig', [
@@ -157,7 +157,8 @@ class PatientController extends AbstractController {
 	 * @param Patient $patient
 	 * @return Response
 	 */
-	public function showAction( Patient $patient ): Response {
+	public function showAction( Patient $patient ): Response
+	{
 		return $this->render( 'admin/patient/show.html.twig', [ 'patient' => $patient ] );
 	}
 
@@ -170,7 +171,7 @@ class PatientController extends AbstractController {
 	public function deleteAction( Patient $patient, ObjectManager $manager ): RedirectResponse {
 		$manager->remove( $patient );
 		$manager->flush();
-		$this->addFlash( 'success', 'le patient a Bien été supprimé' );
+		$this->addFlash( 'success', 'le patient a bien été supprimé' );
 
 		return $this->redirectToRoute( 'patient_index' );
 
@@ -196,7 +197,7 @@ class PatientController extends AbstractController {
 
 			return new JsonResponse( $ids );
 		}
-		$this->addFlash( 'success', 'le patient a Bien été supprimé' );
+		$this->addFlash( 'success', 'le patient a bien été supprimé' );
 
 		return new JsonResponse( 'Pas de résultats', Response::HTTP_NOT_FOUND );
 	}
@@ -204,10 +205,7 @@ class PatientController extends AbstractController {
 	/**
 	 * TetranzSelect2EntityBundle
 	 * @Route("/Patient/search", name="patient_search")
-	 * @Method({"GET"})
-	 *
 	 * @param Request $request
-	 *
 	 * @return Response
 	 */
 	public function searchAction( Request $request ): Response {

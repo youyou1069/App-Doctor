@@ -18,6 +18,7 @@ class ConsultationType extends AbstractType
         $builder
 
 	        ->add('patient', Select2EntityType::class, array(
+		        'required' =>  true,
 		        'multiple' => false,
 		        'remote_route'=>'patient_search',
 		        'class'=> Patient::class,
@@ -48,7 +49,7 @@ class ConsultationType extends AbstractType
 		        'remote_route'=>'drug_search',
 		        'class'=> Drug::class,
 		        'primary_key' => 'id',
-		        'text_property' => 'name',
+		        'text_property' => 'denomination',
 		        'minimum_input_length' => 2,
 		        'page_limit' => 10,
 		        'allow_clear' => true,

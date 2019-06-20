@@ -12,7 +12,6 @@ namespace App\Controller;
 use App\Entity\Consultation;
 use App\Entity\Patient;
 use App\Form\ConsultationType;
-use App\Repository\ConsultationRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -25,27 +24,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ConsultationController extends AbstractController
 {
-    private $repo;
-    /**
-     * @var ObjectManager
-     */
-    private $em;
-
 	/**
-	 * PropertyController constructor.
-	 *
-	 * @param ConsultationRepository $repo
-	 * @param ObjectManager $sm
-	 */
-    public function __construct(ConsultationRepository $repo, ObjectManager $sm)
-    {
-        $this->repo = $repo;
-        /** @noinspection UnusedConstructorDependenciesInspection */
-        /** @noinspection UnusedConstructorDependenciesInspection */
-        $this->em = $sm;
-    }
-
-    /**
      * @Route("/consultation/", name="consultation_index")
      */
     public function indexAction(): Response
@@ -79,7 +58,7 @@ class ConsultationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $manager->persist($entity);
             $manager->flush();
-            $this->addFlash('success', 'La consultation a été enregistré avec succès');
+            $this->addFlash('success', 'La consultation a été enregistrée avec succès');
 	        $idPatient=$entity->getPatient()->getId();
 
         return $this->redirect($this->generateUrl('patient_show', array('id' => $idPatient)));
@@ -122,7 +101,6 @@ class ConsultationController extends AbstractController
 	 * @param Consultation $consultation
 	 * @param Request $request
 	 * @param ObjectManager $manager
-	 *
 	 * @return RedirectResponse|Response
 	 */
 	public function editAction (Consultation $consultation, Request $request, ObjectManager $manager )
@@ -142,9 +120,7 @@ class ConsultationController extends AbstractController
 		return $this->render( 'admin/consultation/edit.html.twig', [
 			'form'    => $form->createView(),
 			'consultation' => $consultation,
-
 		] );
-
 	}
 
 	/**
@@ -161,7 +137,6 @@ class ConsultationController extends AbstractController
 		$idPatient=$consultation->getPatient()->getId();
 
 		return $this->redirect($this->generateUrl('patient_show', array ( 'id' => $idPatient)));
-
 	}
 
 
