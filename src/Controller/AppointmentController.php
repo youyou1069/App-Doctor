@@ -58,7 +58,7 @@ class AppointmentController extends AbstractController
 	public function indexAction( PaginatorInterface $paginator, Request $request ): Response
 	{
 		$appointments = $paginator->paginate(
-			$this->repo->findActive(new DateTime('-12hours')),
+			$this->repo->findActive(new DateTime('-12 hours')),
 			$request->query->getInt( 'page', 1 ),
 			20
 		);

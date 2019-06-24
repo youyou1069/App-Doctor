@@ -21,7 +21,7 @@
             <tr>
                 <td>{{ appointment.DOCTOR.FullName }}</td>
                 <td>{{ appointment.patient }}</td>
-                <td>{{ appointment.startAt ? appointment.startAt|date('d-m-Y H:i:s') : '' }}</td>
+                <td>{{appointment.startAt|date('d-m-Y H:i:s')}}</td>
                 <td>
                     <a href="{{ path('appointment_show', {'id':appointment.id }) }}" class="btn btn-secondary"> <i class="fa fa-file-o" aria-hidden="true"></i> Fiche Rdv </a>
                     <a href="{{ path('appointment_new', {'id':appointment.patient.id }) }}" class="btn btn-secondary"> <i
@@ -50,11 +50,11 @@
         </tr>
         </thead>
         <tbody>
-        {% for appointment in app.user.appointments %}
+        {% for appointment in app.user.appointments  %}
             <tr>
 
                 <td>{{ appointment.patient }}</td>
-                <td>{{ appointment.startAt ? appointment.startAt|date('d-m-Y H:i:s') : '' }}</td>
+                <td>{{appointment.startAt | date('d-m-Y H:i:s') }}</td>
                 <td>
                     <a href="{{ path('appointment_show', {'id':appointment.id }) }}" class="btn btn-secondary"> <i class="fa fa-file-o" aria-hidden="true"></i> Fiche Rdv </a>
                     <a href="{{ path('appointment_new', {'id':appointment.patient.id }) }}" class="btn btn-secondary"> <i

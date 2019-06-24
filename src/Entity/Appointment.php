@@ -20,6 +20,7 @@ class Appointment
 	/**
 	 * @ORM\Column(type="datetime")
 	 * @Assert\GreaterThan("UTC + 2hours")
+	 *
 	 */
     private $startAt;
 
