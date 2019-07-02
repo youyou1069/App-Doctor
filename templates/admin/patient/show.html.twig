@@ -27,8 +27,8 @@
                          <h4 style=" text-align: center"><i class="fa fa-tag"></i> Identité du patient</h4>
                      </header>
                      <ul class="list-group">
-                         <li class="list-group-item"><strong>Nom :</strong> {{ patient.lastName }}</li>
-                         <li class="list-group-item"><strong>Prénom :</strong> {{ patient.firstname }} </li>
+                         <li class="list-group-item"><strong>Nom :</strong> {{ patient.lastName  |upper}}</li>
+                         <li class="list-group-item"><strong>Prénom :</strong> {{ patient.firstname |striptags|title }} </li>
                          <li class="list-group-item"><strong>Date de naissance :</strong> {{ patient.birthAt|date('d/m/Y') }}</li>
                          <li class="list-group-item"><strong>Sexe :</strong> {{ patient.gender }}</li>
                          <li class="list-group-item"><strong>NIR :</strong> {{ patient.nir }}</li>
@@ -43,7 +43,7 @@
                      <ul class="list-group">
                          <Li class="list-group-item"><strong>Adresse :</strong> {{ patient.address }}</li>
                          <li class="list-group-item"><strong>Ville :</strong> {{ patient.city }}</li>
-                         <li class="list-group-item"><strong>Code Postale :</strong> {{ patient.postcode }}</li>
+                         <li class="list-group-item"><strong>Code Postal :</strong> {{ patient.postcode }}</li>
                          <li class="list-group-item"><strong>Tél :</strong> {{ patient.phone }}</li>
                          <li class="list-group-item"><strong>Adresse email :</strong> <a
                                      href="mailto:{{ patient.email }}">{{ patient.email }}</a></li>

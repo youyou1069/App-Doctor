@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Liste Patients {% endblock %}
+{% block title %} Liste des patients {% endblock %}
 
 {% block body %}
 
     <table class="table table-striped">
-        <h4>Liste Patient</h4>
+        <h4>Liste des patient</h4>
         <head>
             <tr>
                 <th><input type="checkbox" id="master"></th>
@@ -22,8 +22,8 @@
                     <input type="checkbox" class="sub_chk" data-id=" {{ patient.id }}"/>
                 </td>
 {#                <td>{{ patient.DOCTOR }}</td>#}
-                <td>{{ patient.lastName }}</td>
-                <td>{{ patient.firstName }}</td>
+                <td>{{ patient.lastName |upper  }}</td>
+                <td>{{ patient.firstName  |striptags|title   }}</td>
                 <td style="text-align: right">
 
                     <a href="{{ path('patient_show', {'id':patient.id }) }}" class="btn btn-secondary"> <i
