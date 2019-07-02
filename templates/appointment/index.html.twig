@@ -1,17 +1,22 @@
 {% extends 'base.html.twig' %}
 
 {% block title %} Afficher les rdv {% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    {{ parent() }}
 
+{% endblock %}
 {% block body %}
     <h1>Liste des rdv </h1>
 
-    <table class="table">
+    <table class="table display" id="table_id">
         {% if is_granted('ROLE_COLLABORATOR') %}
         <thead>
         <tr>
+            <th><label for="master"></label><input type="checkbox" id="master"></th>
             <th>Docteur </th>
             <th>Patient </th>
-            <th>Date du Rdv </th>
+            <th>Date du rdv </th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -19,8 +24,9 @@
 
         {% for appointment in appointments %}
             <tr>
+                <td><label for="master"></label><input type="checkbox" class="sub_chk" id="master" data-id=" {{ appointment.id }}"></td>
                 <td>{{ appointment.DOCTOR.FullName }}</td>
-                <td>{{ appointment.patient }}</td>
+                <td>{{ appointment.patient | upper }}</td>
                 <td>{{appointment.startAt|date('d-m-Y H:i:s')}}</td>
                 <td>
                     <a href="{{ path('appointment_show', {'id':appointment.id }) }}" class="btn btn-secondary"> <i class="fa fa-file-o" aria-hidden="true"></i> Fiche Rdv </a>
@@ -44,15 +50,16 @@
         {% if is_granted('ROLE_DOCTOR') %}
         <thead>
         <tr>
+            <th><label for="master"></label><input type="checkbox" id="master"></th>
             <th>Patient </th>
-            <th>Date du Rdv </th>
+            <th>Date du rdv </th>
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
         {% for appointment in app.user.appointments  %}
             <tr>
-
+                <td><label for="master"></label><input type="checkbox" class="sub_chk" id="master" data-id=" {{ appointment.id }}"></td>
                 <td>{{ appointment.patient }}</td>
                 <td>{{appointment.startAt | date('d-m-Y H:i:s') }}</td>
                 <td>
@@ -76,6 +83,8 @@
         </tbody>
     </table>
     <div class="text">
+        <button class="btn btn-danger delete_all" data-url="/itemDelete"><i class="fa fa-trash-o"></i> Supprimer tout
+        </button>
         <a href="{{ path('appointment_new') }}" class="btn btn-primary"> <i class="fa fa-plus-circle" aria-hidden="true"></i> Nouveau Rdv</a>
     </div>
 
@@ -83,5 +92,69 @@
     <br/>
 
     <div class="text-center">{{ knp_pagination_render(appointments) }}</div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready( function () {
+            $('#table_id').DataTable({
+                dom: 'ftlp',
+                pagingType: "simple_numbers",
+            //     columnDefs : [
+            //     { "orderable": false, "targets": 3 }
+            // ],
+                language: {
+                    url: "/DataTables/media/French.json"
+                },
+            });
+        });
+        $(document).ready(function () {
 
+            $('#master').on('click', function (e) {
+                if ($(this).is(':checked', true)) {
+                    $(".sub_chk").prop('checked', true);
+                } else {
+                    $(".sub_chk").prop('checked', false);
+                }
+            });
+
+            $('.delete_all').on('click', function (e) {
+
+                var allVals = [];
+                $(".sub_chk:checked").each(function () {
+                    allVals.push($(this).attr('data-id'));
+                });
+
+                if (allVals.length <= 0) {
+                    alert("Sélectionner un patient");
+                } else {
+
+                    var check = confirm("Etes vous sur de supprimer ?");
+                    if (check === true) {
+
+                        var join_selected_values = allVals.join(",");
+                        console.log(join_selected_values);
+                        $.ajax({
+                            url: '/item/deleteAll_appointment/',
+                            type: 'post',
+                            data: 'ids=' + join_selected_values,
+
+                            success: function (data) {
+                                console.log(data);
+                                $(".sub_chk:checked").each(function () {
+                                    $(this).parents("tr").remove();
+                                });
+                                alert("Elément(s) supprimé(s) avec succès!");
+                            },
+                            error: function (data) {
+                                alert(data.responseText);
+                            }
+                        });
+
+                        $.each(allVals, function (index, value) {
+                            $('table tr').filter("[data-row-id='" + value + "']").remove();
+                        });
+                    }
+                }
+            });
+        });
+    </script>
 {% endblock %}

@@ -7,6 +7,7 @@ use App\Entity\Patient;
 use App\Form\AppointmentType;
 use App\Repository\AppointmentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -171,5 +172,28 @@ class AppointmentController extends AbstractController
 		$this->addFlash( 'success', 'Le rendez-vous a bien été supprime' );
 
 		return $this->redirectToRoute( 'appointment_index' );
+	}
+	/**
+	 * @Route("/item/deleteAll_appointment/", name="delete_item_appointment", methods={"POST"})
+	 * @param ObjectManager $manager
+	 * @param Request $request
+	 *
+	 * @return JsonResponse
+	 */
+	public function deleteAll( ObjectManager $manager, Request $request ): JsonResponse {
+
+		$ids = explode( ',', $request->get( 'ids' ) );
+		foreach ( $ids as $id ) {
+			$appointments = $this->repo->findBy( array( 'id' => $ids ) );
+			foreach ( $appointments as $appointment ) {
+				$manager->remove( $appointment );
+			}
+			$manager->flush();
+
+			return new JsonResponse( $ids );
+		}
+		$this->addFlash( 'success', 'le RDV a bien été supprimé' );
+
+		return new JsonResponse( 'Pas de résultats', Response::HTTP_NOT_FOUND );
 	}
 }

@@ -131,5 +131,7 @@
     <orderEntry type="library" name="jquery-3.4.1" level="application" />
     <orderEntry type="library" name="bootstrap-datetimepicker" level="application" />
     <orderEntry type="library" name="fr-ca" level="application" />
+    <orderEntry type="library" name="jquery.dataTables" level="application" />
+    <orderEntry type="library" name="datetime" level="application" />
   </component>
 </module>

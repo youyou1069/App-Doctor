@@ -1,42 +1,39 @@
 {% extends 'base.html.twig' %}
 
 {% block title %} Liste des patients {% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    {{ parent() }}
 
+{% endblock %}
 {% block body %}
-
-    <table class="table table-striped">
-        <h4>Liste des patient</h4>
-        <head>
-            <tr>
-                <th><input type="checkbox" id="master"></th>
-{#                <th>Doctor</th>#}
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th style="text-align: center">Action</th>
-            </tr>
-        </head>
+    <h4>Liste des patients</h4>
+    <table class="table table-striped display" id="table_id">
+        <thead>
+        <tr>
+            <th><label for="master"></label><input type="checkbox" id="master"></th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th style="text-align: center">Action</th>
+        </tr>
+        </thead>
         <tbody>
         {% for patient in patients %}
             <tr>
-                <td>
-                    <input type="checkbox" class="sub_chk" data-id=" {{ patient.id }}"/>
-                </td>
-{#                <td>{{ patient.DOCTOR }}</td>#}
-                <td>{{ patient.lastName |upper  }}</td>
-                <td>{{ patient.firstName  |striptags|title   }}</td>
+                <td><label for="master"></label><input type="checkbox" class="sub_chk" id="master"
+                                                       data-id=" {{ patient.id }}"></td>
+                <td>{{ patient.lastName |upper }}</td>
+                <td>{{ patient.firstName  |striptags|title }}</td>
                 <td style="text-align: right">
-
                     <a href="{{ path('patient_show', {'id':patient.id }) }}" class="btn btn-secondary"> <i
                                 class="fa fa-folder-o" aria-hidden="true"></i> Dossier Médical </a>
-
                     <a href="{{ path('consultation_new', {'id':patient.id }) }}" class="btn btn-secondary"> <i
                                 class="fa fa-plus-circle" aria-hidden="true"></i> Nouvelle Consultation </a>
-
                     <a href="{{ path('patient_edit', {'id':patient.id }) }}" class="btn btn-secondary "> <i
                                 class="fa fa-pencil"></i> </a>
-
                     <form method="post" action="{{ path('patient_delete', {'id':patient.id }) }}"
-                          style="display: inline-block" onsubmit="return confirm('Vous voulez vraiment supprimer ce patient ?')">
+                          style="display: inline-block"
+                          onsubmit="return confirm('Vous voulez vraiment supprimer ce patient ?')">
                         <input type="hidden" name="_method" value="DELETE">
                         <button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
                     </form>
@@ -62,11 +59,21 @@
     <br/>
     <br/>
 
-
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript">
 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#table_id').DataTable({
+                dom: 'ftlp',
+                pagingType: "simple_numbers",
+                columnDefs: [
+                    {"orderable": false, "targets": 3}
+                ],
+                language: {
+                    url: "DataTables/media/French.json"
+                }
+            });
+        });
         $(document).ready(function () {
 
             $('#master').on('click', function (e) {
