@@ -34,13 +34,14 @@ class PatientController extends AbstractController {
 	 */
 	public function indexAction(PaginatorInterface $paginator, Request $request ): Response
 	{
+		$repo= $this->getDoctrine()->getRepository(Patient::class);
 //		Récupération de l'identifiant de l'utilisateur connecté
 		$user = $this->getUser()->getId();
 //		Creation d'une pagination avec KnpPaginator
 		$patients = $paginator->paginate(
 //	    Requête qui permet de sélectionner tous les éléments de la table patient
 //		en passant un paramètre l'idendifiant de l'utlisateur
-			$this->repo->findBy( [ 'DOCTOR' => $user ] ),
+			$repo->findBy( [ 'DOCTOR' => $user ] ),
 			$request->query->getInt( 'page', 1 ),
 			8
 		);

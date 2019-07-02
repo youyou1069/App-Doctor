@@ -95,7 +95,6 @@ class Patient
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Appointment", mappedBy="patient" , cascade={"remove"})
-     * @ORM\OrderBy({"order" = "DESC", "id" = "DESC"})
      */
     private $appointments;
 
