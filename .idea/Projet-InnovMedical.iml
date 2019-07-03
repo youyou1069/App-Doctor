@@ -133,5 +133,6 @@
     <orderEntry type="library" name="fr-ca" level="application" />
     <orderEntry type="library" name="jquery.dataTables" level="application" />
     <orderEntry type="library" name="datetime" level="application" />
+    <orderEntry type="library" name="datetime-moment" level="application" />
   </component>
 </module>

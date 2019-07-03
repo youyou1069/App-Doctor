@@ -50,6 +50,25 @@ class AppointmentController extends AbstractController
 	}
 
 	/**
+	 * @Route("/appointment_user", name="appointment_user_index")
+	 * @return Response
+	 * @throws Exception
+	 */
+	public function indexUserAction(): Response
+	{
+		$repo= $this->getDoctrine()->getRepository(Appointment::class);
+//		Récupération de l'identifiant de l'utilisateur connecté
+		$user = $this->getUser()->getId();
+//		Creation d'une pagination avec KnpPaginator
+		$appointments = $repo->findActive(new DateTime('-12hours'), $user );
+//		Affiche la vue, en passant un tableau contenant tous les enregistrements de la table.
+		return $this->render( 'appointment/index.html.twig', [
+			'current_menu' => '$appointments',
+			'appointments'     => $appointments,
+		] );
+	}
+
+	/**
 	 * @Route("/appointment/", name="appointment_index")
 	 * @param PaginatorInterface $paginator
 	 * @param Request $request
@@ -59,7 +78,7 @@ class AppointmentController extends AbstractController
 	public function indexAction( PaginatorInterface $paginator, Request $request ): Response
 	{
 		$appointments = $paginator->paginate(
-			$this->repo->findActive(new DateTime('-12 hours')),
+			$this->repo->findDate(new DateTime('-12 hours')),
 			$request->query->getInt( 'page', 1 ),
 			20
 		);
@@ -104,8 +123,13 @@ class AppointmentController extends AbstractController
 			$entityManager->persist( $appointment );
 			$entityManager->flush();
 			$this->addFlash('success', 'Le rendez-vous à bien enregistré');
+			if (true === $this->get('security.authorization_checker')->isGranted('ROLE_DOCTOR')) {
+				return $this->redirectToRoute( 'appointment_user_index' );
+			}
 			return $this->redirectToRoute( 'appointment_index' );
-		}
+			}
+
+
 		return $this->render( 'appointment/new.html.twig', [
 			'appointment' => $appointment,
 			'form'    => $form->createView(),

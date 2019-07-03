@@ -19,7 +19,18 @@ class AppointmentRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Appointment::class);
     }
-	public function findActive(DateTime $date)
+	public function findActive(DateTime $date, $user)
+	{
+		return $this->createQueryBuilder('j')
+		            ->andWhere('j.startAt > :date')
+		            ->setParameter('date', $date)
+					->andWhere('j.doctor =  :doctor')
+					->setParameter('doctor', $user)
+		            ->orderBy('j.startAt', 'ASC')
+		            ->getQuery()
+		            ->getResult();
+	}
+	public function findDate(DateTime $date)
 	{
 		return $this->createQueryBuilder('j')
 		            ->andWhere('j.startAt > :date')
@@ -28,7 +39,6 @@ class AppointmentRepository extends ServiceEntityRepository
 		            ->getQuery()
 		            ->getResult();
 	}
-
 	public function newEvent($title, $startAt, $endAt)
 	{
 		return $this

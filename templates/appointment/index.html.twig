@@ -14,9 +14,9 @@
         <thead>
         <tr>
             <th><label for="master"></label><input type="checkbox" id="master"></th>
+            <th>Date du rdv </th>
             <th>Docteur </th>
             <th>Patient </th>
-            <th>Date du rdv </th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -25,9 +25,9 @@
         {% for appointment in appointments %}
             <tr>
                 <td><label for="master"></label><input type="checkbox" class="sub_chk" id="master" data-id=" {{ appointment.id }}"></td>
+                <td>{{appointment.startAt|date('d-m-Y H:i:s')}}</td>
                 <td>{{ appointment.DOCTOR.FullName }}</td>
                 <td>{{ appointment.patient | upper }}</td>
-                <td>{{appointment.startAt|date('d-m-Y H:i:s')}}</td>
                 <td>
                     <a href="{{ path('appointment_show', {'id':appointment.id }) }}" class="btn btn-secondary"> <i class="fa fa-file-o" aria-hidden="true"></i> Fiche Rdv </a>
                     <a href="{{ path('appointment_new', {'id':appointment.patient.id }) }}" class="btn btn-secondary"> <i
@@ -44,6 +44,7 @@
             <tr>
                 <td colspan="5">Aucun résultat</td>
             </tr>
+            <div class="text-center">{{ knp_pagination_render(appointments) }}</div>
         {% endfor %}
         {% endif %}
         </tbody>
@@ -51,17 +52,17 @@
         <thead>
         <tr>
             <th><label for="master"></label><input type="checkbox" id="master"></th>
-            <th>Patient </th>
             <th>Date du rdv </th>
+            <th>Patient </th>
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
-        {% for appointment in app.user.appointments  %}
+        {% for appointment in appointments  %}
             <tr>
                 <td><label for="master"></label><input type="checkbox" class="sub_chk" id="master" data-id=" {{ appointment.id }}"></td>
-                <td>{{ appointment.patient }}</td>
                 <td>{{appointment.startAt | date('d-m-Y H:i:s') }}</td>
+                <td>{{ appointment.patient | upper }}</td>
                 <td>
                     <a href="{{ path('appointment_show', {'id':appointment.id }) }}" class="btn btn-secondary"> <i class="fa fa-file-o" aria-hidden="true"></i> Fiche Rdv </a>
                     <a href="{{ path('appointment_new', {'id':appointment.patient.id }) }}" class="btn btn-secondary"> <i
@@ -78,6 +79,7 @@
             <tr>
                 <td colspan="5">Aucun résultat</td>
             </tr>
+            <div class="text-center">{{ knp_pagination_render(appointments) }}</div>
         {% endfor %}
         {% endif %}
         </tbody>
@@ -91,16 +93,21 @@
     <br/>
     <br/>
 
-    <div class="text-center">{{ knp_pagination_render(appointments) }}</div>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript">
-        $(document).ready( function () {
+        $(document).ready(function() {
+            $.fn.dataTable.moment('DD-MM-YYYY HH:mm:ss');
+
             $('#table_id').DataTable({
                 dom: 'ftlp',
+
                 pagingType: "simple_numbers",
-            //     columnDefs : [
-            //     { "orderable": false, "targets": 3 }
-            // ],
+                columnDefs : [
+                    {"orderable": false, "targets": 0},
+            //         { type: 'fr_datetime', targets: 1 },
+            // //     { "orderable": false, "targets": 3 }
+            ],
                 language: {
                     url: "/DataTables/media/French.json"
                 },

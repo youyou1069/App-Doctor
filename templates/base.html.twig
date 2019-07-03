@@ -103,8 +103,14 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('consultation_new') }}">Nouvelle consultation</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('appointment_user_index') }}">Liste des Rdv</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('appointment_new') }}">Nouveau Rdv</a>
+                        </li>
                     {% endif %}
-                    {% if is_granted('ROLE_USER') %}
+                    {% if is_granted('ROLE_COLLABORATOR') %}
 
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('appointment_index') }}">Liste des Rdv</a>
@@ -147,6 +153,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/plug-ins/1.10.19/dataRender/datetime.js"> </script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/plug-ins/1.10.19/sorting/datetime-moment.js"> </script>
 {% endblock javascripts %}
 
 </body>
