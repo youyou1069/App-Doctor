@@ -17,8 +17,8 @@
             {{ form_row(form.medicament, {'attr':{'placeholder': "Médicament"}}) }}
         </div>
         <div class="col-md-6">
-            {{ form_label(form.treatment, 'Traitement') }}
-            {{ form_widget(form.treatment, {'attr':{'placeholder': "Traitement préconisé"}}) }}
+            {{ form_label(form.treatment  | raw, 'Traitement') }}
+            {{ form_widget(form.treatment | raw, {'attr':{'placeholder': "Traitement préconisé"}}) }}
         </div>
     </div>
     <br>

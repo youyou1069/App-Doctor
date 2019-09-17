@@ -81,7 +81,7 @@
                                        <i style="color:darkslategray" class="fa fa-download"></i> </a>
                             </td>
                             <td>{{ item.diagnostic }}</td>
-                            <td>{{ item.treatment }}</td>
+                            <td>{{ item.treatment  | raw }}</td>
                             <td style="text-align: right">
                                 <a href="{{ path('consultation_edit', {'id': item.id }) }}"  class="btn btn-secondary "> <i class="fa fa-pencil"></i>  </a>
                                 <form method="post" action="{{ path('consultation_delete', {'id':item.id }) }}"

@@ -6,6 +6,7 @@ use App\Entity\Consultation;
 use App\Entity\Drug;
 use App\Entity\Patient;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -63,10 +64,14 @@ class ConsultationType extends AbstractType
 			        'tag_separators' => '[",", " "]'
 		        ],
 	        ))
-            ->add('treatment', TextType::class, [
-	            'required' =>  false,
-	            'label'   => false,
-            ])
+	        ->add('treatment', TextareaType::class, array(
+	        	'attr' => array('class' => 'ckeditor'),
+		        'required' =>  false,
+		        'label'   => false,
+//            ->add('treatment', TextType::class, [
+//	            'required' =>  false,
+//	            'label'   => false,
+            ))
             ->add('decision', TextType::class, [
 	            'required' =>  false,
 	            'label'   => false,
