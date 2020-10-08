@@ -49,24 +49,30 @@ class AppointmentController extends AbstractController
 		return $this->render( 'appointment/calendar.html.twig' );
 	}
 
-	/**
-	 * @Route("/appointment_user", name="appointment_user_index")
-	 * @return Response
-	 * @throws Exception
-	 */
-	public function indexUserAction(): Response
-	{
-		$repo= $this->getDoctrine()->getRepository(Appointment::class);
-//		Récupération de l'identifiant de l'utilisateur connecté
-		$user = $this->getUser()->getId();
-//		Creation d'une pagination avec KnpPaginator
-		$appointments = $repo->findActive(new DateTime('-12hours'), $user );
-//		Affiche la vue, en passant un tableau contenant tous les enregistrements de la table.
-		return $this->render( 'appointment/index.html.twig', [
-			'current_menu' => '$appointments',
-			'appointments'     => $appointments,
-		] );
-	}
+//	/**
+//	 * @Route("/appointment_user", name="appointment_user_index")
+//	 * @param PaginatorInterface $paginator
+//	 * @param Request $request
+//	 * @return Response
+//	 * @throws Exception
+//	 */
+//	public function indexUserAction( PaginatorInterface $paginator, Request $request ): Response
+//	{
+//		$repo= $this->getDoctrine()->getRepository(Appointment::class);
+////		Récupération de l'identifiant de l'utilisateur connecté
+//		$user = $this->getUser()->getId();
+////		Creation d'une pagination avec KnpPaginator
+//		$appointments = $paginator->paginate(
+//		$this->$repo->findActive(new DateTime('-12hours'), $user ),
+//		$request->query->getInt( 'page', 1 ),
+//			20
+//		);
+////		Affiche la vue, en passant un tableau contenant tous les enregistrements de la table.
+//		return $this->render( 'appointment/index.html.twig', [
+//			'current_menu' => '$appointments',
+//			'appointments'     => $appointments,
+//		] );
+//	}
 
 	/**
 	 * @Route("/appointment/", name="appointment_index")
@@ -124,7 +130,7 @@ class AppointmentController extends AbstractController
 			$entityManager->flush();
 			$this->addFlash('success', 'Le rendez-vous à bien enregistré');
 			if (true === $this->get('security.authorization_checker')->isGranted('ROLE_DOCTOR')) {
-				return $this->redirectToRoute( 'appointment_user_index' );
+				return $this->redirectToRoute( 'appointment_index' );
 			}
 			return $this->redirectToRoute( 'appointment_index' );
 			}

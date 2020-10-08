@@ -88,7 +88,7 @@
             <tr>
                 <td colspan="5">Aucun résultat</td>
             </tr>
-            <div class="text-center">{{ knp_pagination_render(appointments) }}</div>
+
         {% endfor %}
         {% endif %}
         </tbody>
@@ -99,7 +99,8 @@
         <a href="{{ path('appointment_new') }}" class="btn btn-primary"> <i class="fa fa-plus-circle"
                                                                             aria-hidden="true"></i> Nouveau Rdv</a>
     </div>
-
+    <div class="text-center">{{ knp_pagination_render(appointments) }}</div>
+    <div class="text-center">{{ knp_pagination_render(appointments) }}</div>
     <br/>
     <br/>
 
