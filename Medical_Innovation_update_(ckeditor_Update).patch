@@ -1,0 +1,222 @@
+Index: templates/base.html.twig
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- templates/base.html.twig	(revision 42bf9aea77a964807464781c468ee9c9887df2d0)
++++ templates/base.html.twig	(date 1569310960973)
+@@ -104,7 +104,7 @@
+                             <a class="nav-link" href="{{ path('consultation_new') }}">Nouvelle consultation</a>
+                         </li>
+                         <li class="nav-item">
+-                            <a class="nav-link" href="{{ path('appointment_user_index') }}">Liste des Rdv</a>
++                            <a class="nav-link" href="{{ path('appointment_index') }}">Liste des Rdv</a>
+                         </li>
+                         <li class="nav-item">
+                             <a class="nav-link" href="{{ path('appointment_new') }}">Nouveau Rdv</a>
+Index: templates/appointment/index.html.twig
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- templates/appointment/index.html.twig	(revision 42bf9aea77a964807464781c468ee9c9887df2d0)
++++ templates/appointment/index.html.twig	(date 1569312801770)
+@@ -88,7 +88,7 @@
+             <tr>
+                 <td colspan="5">Aucun résultat</td>
+             </tr>
+-            <div class="text-center">{{ knp_pagination_render(appointments) }}</div>
++
+         {% endfor %}
+         {% endif %}
+         </tbody>
+@@ -99,7 +99,8 @@
+         <a href="{{ path('appointment_new') }}" class="btn btn-primary"> <i class="fa fa-plus-circle"
+                                                                             aria-hidden="true"></i> Nouveau Rdv</a>
+     </div>
+-
++    <div class="text-center">{{ knp_pagination_render(appointments) }}</div>
++    <div class="text-center">{{ knp_pagination_render(appointments) }}</div>
+     <br/>
+     <br/>
+ 
+Index: .idea/jsLibraryMappings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/jsLibraryMappings.xml	(date 1562138108052)
++++ .idea/jsLibraryMappings.xml	(date 1562138108052)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="JavaScriptLibraryMappings">
++    <file url="PROJECT" libraries="{bootstrap-datetimepicker, datetime, datetime-moment, fr-ca, jquery-3.4.1, jquery-migrate-1.4.1, jquery.dataTables}" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/Projet-InnovMedical.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/Projet-InnovMedical.iml	(revision 42bf9aea77a964807464781c468ee9c9887df2d0)
++++ .idea/Projet-InnovMedical.iml	(date 1602165185719)
+@@ -4,6 +4,7 @@
+     <content url="file://$MODULE_DIR$">
+       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" packagePrefix="App\Tests\" />
+       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" packagePrefix="App\" />
++      <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
+       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
+       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/annotations" />
+       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/cache" />
+Index: .idea/codeStyles/Project.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/codeStyles/Project.xml	(revision 42bf9aea77a964807464781c468ee9c9887df2d0)
++++ .idea/codeStyles/Project.xml	(date 1602164875773)
+@@ -24,29 +24,5 @@
+         <option name="ITERATION_ELEMENTS_WRAPPING" value="chop_down_if_not_single" />
+       </formatting-settings>
+     </DBN-SQL>
+-    <DBN-PSQL>
+-      <case-options enabled="true">
+-        <option name="KEYWORD_CASE" value="lower" />
+-        <option name="FUNCTION_CASE" value="lower" />
+-        <option name="PARAMETER_CASE" value="lower" />
+-        <option name="DATATYPE_CASE" value="lower" />
+-        <option name="OBJECT_CASE" value="preserve" />
+-      </case-options>
+-      <formatting-settings enabled="false" />
+-    </DBN-PSQL>
+-    <DBN-SQL>
+-      <case-options enabled="true">
+-        <option name="KEYWORD_CASE" value="lower" />
+-        <option name="FUNCTION_CASE" value="lower" />
+-        <option name="PARAMETER_CASE" value="lower" />
+-        <option name="DATATYPE_CASE" value="lower" />
+-        <option name="OBJECT_CASE" value="preserve" />
+-      </case-options>
+-      <formatting-settings enabled="false">
+-        <option name="STATEMENT_SPACING" value="one_line" />
+-        <option name="CLAUSE_CHOP_DOWN" value="chop_down_if_statement_long" />
+-        <option name="ITERATION_ELEMENTS_WRAPPING" value="chop_down_if_not_single" />
+-      </formatting-settings>
+-    </DBN-SQL>
+   </code_scheme>
+ </component>
+\ No newline at end of file
+Index: .idea/.gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/.gitignore	(date 1602164839137)
++++ .idea/.gitignore	(date 1602164839137)
+@@ -0,0 +1,6 @@
++# Default ignored files
++/workspace.xml
++
++# Datasource local storage ignored files
++/dataSources/
++/dataSources.local.xml
+\ No newline at end of file
+Index: .env
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .env	(revision 42bf9aea77a964807464781c468ee9c9887df2d0)
++++ .env	(date 1602165509173)
+@@ -24,7 +24,7 @@
+ # Format described at http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connecting-using-a-url
+ # For an SQLite database, use: "sqlite:///%kernel.project_dir%/var/data.db"
+ # Configure your db driver and server_version in config/packages/doctrine.yaml
+-DATABASE_URL=mysql://root:@127.0.0.1:3306/innov_med
++DATABASE_URL=mysql://root:@127.0.0.1:3306/innov-med
+ ###< doctrine/doctrine-bundle ###
+ 
+ ###> symfony/swiftmailer-bundle ###
+Index: src/Controller/AppointmentController.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/Controller/AppointmentController.php	(revision 42bf9aea77a964807464781c468ee9c9887df2d0)
++++ src/Controller/AppointmentController.php	(date 1569313391680)
+@@ -49,24 +49,30 @@
+ 		return $this->render( 'appointment/calendar.html.twig' );
+ 	}
+ 
+-	/**
+-	 * @Route("/appointment_user", name="appointment_user_index")
+-	 * @return Response
+-	 * @throws Exception
+-	 */
+-	public function indexUserAction(): Response
+-	{
+-		$repo= $this->getDoctrine()->getRepository(Appointment::class);
+-//		Récupération de l'identifiant de l'utilisateur connecté
+-		$user = $this->getUser()->getId();
+-//		Creation d'une pagination avec KnpPaginator
+-		$appointments = $repo->findActive(new DateTime('-12hours'), $user );
+-//		Affiche la vue, en passant un tableau contenant tous les enregistrements de la table.
+-		return $this->render( 'appointment/index.html.twig', [
+-			'current_menu' => '$appointments',
+-			'appointments'     => $appointments,
+-		] );
+-	}
++//	/**
++//	 * @Route("/appointment_user", name="appointment_user_index")
++//	 * @param PaginatorInterface $paginator
++//	 * @param Request $request
++//	 * @return Response
++//	 * @throws Exception
++//	 */
++//	public function indexUserAction( PaginatorInterface $paginator, Request $request ): Response
++//	{
++//		$repo= $this->getDoctrine()->getRepository(Appointment::class);
++////		Récupération de l'identifiant de l'utilisateur connecté
++//		$user = $this->getUser()->getId();
++////		Creation d'une pagination avec KnpPaginator
++//		$appointments = $paginator->paginate(
++//		$this->$repo->findActive(new DateTime('-12hours'), $user ),
++//		$request->query->getInt( 'page', 1 ),
++//			20
++//		);
++////		Affiche la vue, en passant un tableau contenant tous les enregistrements de la table.
++//		return $this->render( 'appointment/index.html.twig', [
++//			'current_menu' => '$appointments',
++//			'appointments'     => $appointments,
++//		] );
++//	}
+ 
+ 	/**
+ 	 * @Route("/appointment/", name="appointment_index")
+@@ -124,7 +130,7 @@
+ 			$entityManager->flush();
+ 			$this->addFlash('success', 'Le rendez-vous à bien enregistré');
+ 			if (true === $this->get('security.authorization_checker')->isGranted('ROLE_DOCTOR')) {
+-				return $this->redirectToRoute( 'appointment_user_index' );
++				return $this->redirectToRoute( 'appointment_index' );
+ 			}
+ 			return $this->redirectToRoute( 'appointment_index' );
+ 			}
+Index: templates/admin/consultation/show.html.twig
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- templates/admin/consultation/show.html.twig	(revision 42bf9aea77a964807464781c468ee9c9887df2d0)
++++ templates/admin/consultation/show.html.twig	(date 1569312201127)
+@@ -53,7 +53,7 @@
+ 
+         {% endfor %}
+ 
+-        <p>{{ consultation.treatment|nl2br }}</p>
++        <p>{{ consultation.treatment|raw }}</p>
+ 
+ 
+ 
